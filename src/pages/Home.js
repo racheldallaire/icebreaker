@@ -2,10 +2,21 @@ import React from 'react'
 
 const Home = () => 
 <div>
+
 <div>
 Icebreaker App!
 </div>
-<div className="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+
+<form method="post" action="/register">
+  Email Address:<br/>
+  	<input type="text" name="email"/><br/>
+  Username:<br/>
+	  <input type="text" name="username"/><br/>
+  Password:<br/>
+	  <input type="password" name="password"/><br/>
+	  <input type="submit" value="Register"/>
+</form>
+
 </div>
 
 export default Home
