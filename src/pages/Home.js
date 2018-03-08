@@ -1,5 +1,5 @@
 import React from 'react'
 
-const Home = () => <div>Hello World!</div>
+const Home = () => <div>Icebreaker App!</div>
 
 export default Home
