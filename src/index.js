@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import 'bootstrap/dist/css/bootstrap.css';
 
 // Load up the application styles
 require("./stylesheets/application.scss");
