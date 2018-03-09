@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
       table.boolean('female');
       table.boolean('male');
       table.boolean('other');
-      table.string('location')
+      table.integer('radius')
     })
   ]);
 };
