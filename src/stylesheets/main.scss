@@ -1,9 +1,35 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans');
+
 $font-stack:    Helvetica, sans-serif;
 $primary-color: #4E5151  ;
 $color-background: #DFF7F7;
 
-body {
+body, html {
+  height: 100%;
   font: 100% $font-stack;
   color: $primary-color;
   color-background:  $primary-color;
+}
+
+.bg {
+    /* The image used */
+    background-image: url("https://www.dropbox.com/s/0avytix7b67ta5n/white.jpg?raw=1");
+    opacity: 0.9;
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg-head {
+  padding-top: 3.5em;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  text-transform: lowercase;
+  color: #343434;
 }
