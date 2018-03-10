@@ -1,9 +1,33 @@
 $font-stack:    Helvetica, sans-serif;
-$primary-color: #4E5151  ;
+$primary-color: #4CDBE4  ;
 $color-background: #DFF7F7;
 
 body {
   font: 100% $font-stack;
   color: $primary-color;
   color-background:  $primary-color;
+}
+
+.matchesUserCard{
+  margin: auto;
+  width: 50%;
+  height: 90%;
+  font: 100% $font-stack;
+  color: $primary-color;
+}
+.like-user {
+float: top;
+float: right;
+}
+.reject-user {
+float: top;
+float: left;
+
+}
+.friendsUserCard{
+  margin: auto;
+  width: 20%;
+  height: 50%;
+  font: 100% $font-stack;
+  color: $primary-color;
 }
