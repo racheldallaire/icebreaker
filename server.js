@@ -6,6 +6,8 @@ const webpackMiddleware = require("webpack-dev-middleware");
 const webpackConfig = require('./webpack.config.js');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
+const bodyParser = require("body-parser");
+const DataHelpers = require('./datahelpers/data-helpers.js');
 const knex = require('knex')({
   client: 'pg',
   version: '7.2',
