@@ -24,6 +24,7 @@ import Head from './pages/Head'
 import Home from './pages/Home'
 import Landing from './pages/Landing'
 import Profile from './pages/Profile'
+import Signup from './pages/Signup'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -59,6 +60,7 @@ export default class App extends React.Component {
         </Navbar>
       <Route exact path="/" component={Home}/>
       <Route path="/profile" component={Profile}/>
+      <Route path="/signup" component={Signup}/>
       </div>
       </Router>
     );

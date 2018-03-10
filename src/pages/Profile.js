@@ -3,37 +3,29 @@ import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button, Container, Row, Col } from 'reactstrap';
 
 
-const Books = () => 
-<div> 
-Hey you!
-Thanks for joining Icebreaker!
-Please help us find your ideal matches by filling out your info!
-<form method="post" action="/register">
-  <label>
-    First Name:
-    <input type="text" name="first_name" />
-  </label>
-  <label>
-    Last Name:
-    <input type="text" name="last_name" />
-  </label>
-  <label>
-    Age:
-    <input type="text" name="age" />
-  </label>
-  <label>
-    Gender:
-    	<select>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Other">Other</option>
-      </select>
-  </label>
-  <input type="submit" value="Submit" />
-	</form>
-</div>
+const Profile = (props) => {
+  return (
+    <Container fluid>
+    <Row>
+    <Col sm="4">
+    <div>
+      <Card>
+        <CardBody>
+        <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+          <CardTitle>Name, Age</CardTitle>
+          <CardTitle>Gender</CardTitle>
+          
+          <Button>Edit</Button>
+        </CardBody>
+      </Card>
+    </div>
+</Col>
+</Row>
+</Container>
+    );
+};
 
 
-export default Books
+export default Profile
 
 
