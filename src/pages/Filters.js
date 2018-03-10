@@ -1,17 +1,10 @@
 import React from 'react'
 
-navigator.geolocation.getCurrentPosition(showPosition)
-
-function showPosition(pos) {
-  console.log(pos);
-}
-
-const Signup = () => 
+const Filters = () => 
 <div> 
-Hey you!
-Thanks for joining Icebreaker!
-Please help us find your ideal matches by filling out your info!
-<form method="post" action="/signup">
+Awesome, nice to meet you!
+Now, would you let us know what you're looking for?
+<form method="post" action="/filters">
   <label>
     First Name:
     <input type="text" name="first_name" />
@@ -37,4 +30,4 @@ Please help us find your ideal matches by filling out your info!
 </div>
 
 
-export default Signup
+export default Filters

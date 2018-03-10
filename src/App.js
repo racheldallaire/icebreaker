@@ -27,6 +27,7 @@ import Profile from './pages/Profile'
 import Signup from './pages/Signup'
 import Matches from './pages/Matches'
 import Friends from './pages/Friends'
+import Filters from './pages/Filters'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -70,6 +71,7 @@ export default class App extends React.Component {
       <Route path="/profile" component={Profile}/>
 
       <Route path="/signup" component={Signup}/>
+      <Route path="/filters" component={Filters}/>
 
       <Route path="/matches" component={Matches}/>
       <Route path="/friends" component={Friends}/>
