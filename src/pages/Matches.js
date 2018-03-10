@@ -4,10 +4,11 @@ import { Card, CardImg, CardText, CardBody,
 
 
 const Matches= (props) => {
-
+console.log("props", props)
   return (
 
     <div>
+
       <Button className="reject-user">Reject</Button>
       <Button className="like-user">Like</Button>
         <Card className="matchesUserCard">
