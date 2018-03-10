@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans');
 
 $font-stack:    Helvetica, sans-serif;
-$primary-color: #4E5151  ;
+$primary-color: #4CDBE4  ;
 $color-background: #DFF7F7;
 
 body, html {
@@ -10,6 +10,7 @@ body, html {
   color: $primary-color;
   color-background:  $primary-color;
 }
+
 
 .bg {
     /* The image used */
@@ -33,3 +34,28 @@ body, html {
   text-transform: lowercase;
   color: #343434;
 }
+
+.matchesUserCard{
+  margin: auto;
+  width: 50%;
+  height: 90%;
+  font: 100% $font-stack;
+  color: $primary-color;
+}
+.like-user {
+float: top;
+float: right;
+}
+.reject-user {
+float: top;
+float: left;
+
+}
+.friendsUserCard{
+  margin: auto;
+  width: 20%;
+  height: 50%;
+  font: 100% $font-stack;
+  color: $primary-color;
+}
+

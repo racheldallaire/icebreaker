@@ -55,15 +55,35 @@ export default class App extends React.Component {
               <NavItem>
                 <NavLink><Link to="/profile">Profile</Link></NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink><Link to="/Matches">Matches</Link></NavLink>
+              </NavItem>
+                 <NavItem>
+                <NavLink><Link to="/Friends">Friends</Link></NavLink>
+              </NavItem>
             </Nav>
           </Collapse>
         </Navbar>
       <Route exact path="/" component={Home}/>
       <Route path="/profile" component={Profile}/>
+<<<<<<< HEAD
       <Route path="/signup" component={Signup}/>
+=======
+      <Route path="/matches" component={Matches}/>
+      <Route path="/friends" component={Friends}/>
+>>>>>>> 093d488e64e09eeb01e1887ff639640e449cf129
       </div>
       </Router>
     );
   }
 }
 
+<<<<<<< HEAD
+=======
+import Head from './pages/Head'
+import Home from './pages/Home'
+import Landing from './pages/Landing'
+import Profile from './pages/Profile'
+import Matches from './pages/Matches'
+import Friends from './pages/Friends'
+>>>>>>> 093d488e64e09eeb01e1887ff639640e449cf129
