@@ -25,7 +25,7 @@ passport.use(new FacebookStrategy({
     callbackURL: "http://localhost:8080/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    knex.select().table('users').where({first_name: 'Barack'})
+    knex.select().table('users').where({first_name: 'Baracko'})
     .then(function(user) {
       console.log("WOWOWWOWOWOWW", user);
       if(user.length < 1){
@@ -60,8 +60,14 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { successRedirect: '/jammin!!!',
                                       failureRedirect: '/profile' }));
 
+
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));
+});
+
+app.post('/register', (req, res) => {
+  console.log("clicked on extra info yaaaaa!");
 });
 
 app.listen(8080, () => console.log('Server listening on 8080'));
