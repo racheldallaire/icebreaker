@@ -1,10 +1,13 @@
 import React from 'react'
+
 import {
   BrowserRouter as Router,
   Route,
   Link
 } from 'react-router-dom'
+
 import {
+  Button,
   Collapse,
   Navbar,
   NavbarToggler,
@@ -16,6 +19,11 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap';
+
+import Head from './pages/Head'
+import Home from './pages/Home'
+import Landing from './pages/Landing'
+import Profile from './pages/Profile'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -36,7 +44,7 @@ export default class App extends React.Component {
       <Router>
       <div>
         <Navbar color="faded" light expand="md">
-          <NavbarBrand href="/">Icebreaker</NavbarBrand>
+          <NavbarBrand><Link to="/">Icebreaker</Link></NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
@@ -57,7 +65,3 @@ export default class App extends React.Component {
   }
 }
 
-import Head from './pages/Head'
-import Home from './pages/Home'
-import Landing from './pages/Landing'
-import Profile from './pages/Profile'

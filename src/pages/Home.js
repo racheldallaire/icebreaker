@@ -1,13 +1,17 @@
 import React from 'react'
+import { Jumbotron, Button } from 'reactstrap';
 
-const Home = () =>
+const Home = (props) => {
+  return (
+      <div className="bg" align="center">
 
-<div>
+          <h1 className="bg-head"><b>Welcome to Icebreaker.</b></h1>
 
-Icebreaker App!
+          <p>
+            <Button color="primary" href="/auth/facebook">Login with Facebook</Button>
+          </p>
+      </div>
+    );
+};
 
-<a href="/auth/facebook">Login with Facebook</a>
-
-</div>
-
-export default Home
+export default Home;
