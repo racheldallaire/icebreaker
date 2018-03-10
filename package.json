@@ -25,13 +25,13 @@
     "webpack-dev-middleware": "^1.10.1"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "dotenv": "^5.0.1",
     "knex": "^0.14.4",
     "node-sass": "^4.7.2",
-    "pg": "^7.4.1",
-    "body-parser": "^1.18.2",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
+    "pg": "^7.4.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-router-dom": "^4.1.1"
