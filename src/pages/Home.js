@@ -3,7 +3,7 @@ import { Jumbotron, Button } from 'reactstrap';
 
 const Home = (props) => {
   return (
-      <div className="bg" align="center">
+      <div className="bg" style={{textAlign:"center"}}>
 
           <h1 className="bg-head"><b>Welcome to Icebreaker.</b></h1>
 
