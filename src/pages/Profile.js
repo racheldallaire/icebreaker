@@ -5,7 +5,7 @@ import { Card, CardImg, CardText, CardHeader, CardFooter, CardBody,
 
 const Profile = (props) => {
   return (
-    <div className="bg">
+    <div>
       <Container fluid>
       <Row>
 
