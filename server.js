@@ -2,24 +2,25 @@ const express = require('express');
 const path = require('path');
 const webpack = require('webpack');
 const app = express();
+const databaseRoutes  = express.Router();
 const webpackMiddleware = require("webpack-dev-middleware");
+const morgan = require('morgan')
 const webpackConfig = require('./webpack.config.js');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const bodyParser = require("body-parser");
-const DataHelpers = require('./datahelpers/data-helpers.js');
 const knex = require('knex')({
   client: 'pg',
   version: '7.2',
   connection: {
+    port: 5432,
     host : 'localhost',
     user : 'final',
     password : 'final',
     database : 'icebreaker'
   }
 });
-
-
+const DataHelpers = require('./datahelpers/data-helpers.js')(knex);
 
 passport.use(new FacebookStrategy({
     clientID: "575115656176298",
@@ -49,13 +50,46 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
+const users =  knex.select("*")
+        .from("users")
+        .then((result) => {
+          console.log(result)
+          return result;
+        })
+
+
+app.get("/", function(req, res) {
+  console.log("users ", users)
+ res.json(users);
+    });
+
+app.use( )
+
+
+
 app.use(webpackMiddleware(
   webpack(webpackConfig),
   { publicPath: '/' }
 ));
 app.use( passport.initialize());
 app.use( passport.session());
+app.use( bodyParser.json());
+app.use( bodyParser.urlencoded({ extended: true }))
+app.use(morgan('dev'));
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+//from tutorial
+// app.get('/', function(req, res, next) {
+//   // Handle the get for this route
+// });
+
+// app.post('/', function(req, res, next) {
+//  // Handle the post for this route
+// });
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile']}));
 
 app.get('/auth/facebook/callback',

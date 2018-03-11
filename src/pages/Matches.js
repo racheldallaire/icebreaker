@@ -3,8 +3,8 @@ import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
 
 
-const Matches= (props) => {
-console.log("props", props)
+
+const Matches = (props) => {
   return (
 
     <div>
