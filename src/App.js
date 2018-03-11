@@ -28,8 +28,7 @@ import Signup from './pages/Signup'
 import Matches from './pages/Matches'
 import Friends from './pages/Friends'
 import axios from 'axios';
-
-
+import Filters from './pages/Filters'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -85,6 +84,7 @@ export default class App extends React.Component {
       <Route exact path="/" component={Home}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/signup" component={Signup}/>
+      <Route path="/filters" component={Filters}/>
       <Route path="/matches" component={Matches}/>
       <Route path="/friends" component={Friends}/>
       </div>

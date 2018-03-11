@@ -21,6 +21,10 @@ const knex = require('knex')({
   }
 });
 
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 passport.use(new FacebookStrategy({
     clientID: "575115656176298",
     clientSecret: "4d3a4ba21f529ae6b035cc38f95fbeb6",
@@ -56,13 +60,14 @@ app.use(webpackMiddleware(
 app.use( passport.initialize());
 app.use( passport.session());
 app.use( bodyParser.json());
-app.use( bodyParser.urlencoded({ extended: true }))
+app.use( bodyParser.urlencoded({ extended: true }));
 
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile']}));
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { successRedirect: '/jammin!!!',
-                                      failureRedirect: '/profile' }));
+                                      failureRedirect: '/signup' }));
+
 app.get('/api/matches', (req, res) => {
   knex.select("*")
         .from("users")
@@ -76,8 +81,14 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));
 });
 
-app.post('/register', (req, res) => {
-  console.log("clicked on extra info yaaaaa!");
+app.post('/signup', (req, res) => {
+  console.log(req.body);
+  res.redirect('/filters');
+});
+
+app.post('/filters', (req, res) => {
+  console.log(req.body);
+  res.redirect('/matches');
 });
 
 app.listen(8080, () => console.log('Server listening on 8080'));
