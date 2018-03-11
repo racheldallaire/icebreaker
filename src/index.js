@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.css';
+import axios from 'axios';
 
 // Load up the application styles
 require("./stylesheets/application.scss");

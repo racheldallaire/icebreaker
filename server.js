@@ -2,24 +2,24 @@ const express = require('express');
 const path = require('path');
 const webpack = require('webpack');
 const app = express();
+const databaseRoutes  = express.Router();
 const webpackMiddleware = require("webpack-dev-middleware");
+const morgan = require('morgan')
 const webpackConfig = require('./webpack.config.js');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const bodyParser = require("body-parser");
-const DataHelpers = require('./datahelpers/data-helpers.js');
 const knex = require('knex')({
   client: 'pg',
   version: '7.2',
   connection: {
+    // port: 5432,
     host : 'localhost',
     user : 'final',
     password : 'final',
     database : 'icebreaker'
   }
 });
-
-
 
 passport.use(new FacebookStrategy({
     clientID: "575115656176298",
@@ -55,14 +55,22 @@ app.use(webpackMiddleware(
 ));
 app.use( passport.initialize());
 app.use( passport.session());
+app.use( bodyParser.json());
+app.use( bodyParser.urlencoded({ extended: true }))
 
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile']}));
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { successRedirect: '/jammin!!!',
                                       failureRedirect: '/profile' }));
-
-
+app.get('/api/matches', (req, res) => {
+  knex.select("*")
+        .from("users")
+        .then((result) => {
+          console.log(result)
+          res.send( result)
+        })
+});
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));

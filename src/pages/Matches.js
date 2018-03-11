@@ -1,14 +1,13 @@
 import React from 'react'
 import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
+import axios from 'axios';
 
 
-const Matches= (props) => {
-console.log("props", props)
+const Matches = (props) => {
+
   return (
-
     <div>
-
       <Button className="reject-user">Reject</Button>
       <Button className="like-user">Like</Button>
         <Card className="matchesUserCard">
@@ -20,7 +19,6 @@ console.log("props", props)
           </CardBody>
         </Card>
     </div>
-
   );
 };
 
