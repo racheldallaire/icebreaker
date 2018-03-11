@@ -8,7 +8,7 @@ const Home = (props) => {
           <h1 className="bg-head"><b>Welcome to Icebreaker.</b></h1>
 
           <p>
-            <Button color="primary" href="/auth/facebook">Login with Facebook</Button>
+            <Button color="primary" href="/auth/facebook">Continue with Facebook</Button>
           </p>
       </div>
     );
