@@ -27,6 +27,8 @@ import Profile from './pages/Profile'
 import Signup from './pages/Signup'
 import Matches from './pages/Matches'
 import Friends from './pages/Friends'
+import axios from 'axios';
+
 
 
 export default class App extends React.Component {
@@ -38,6 +40,19 @@ export default class App extends React.Component {
       isOpen: false
     };
   }
+
+    componentDidMount(){
+      axios.get('/api/matches')
+      .then(response => {
+        console.log("response ", response)
+           console.log("response.data ", response.data )
+        this.setState({ users: response.data });
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+}
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -69,12 +84,9 @@ export default class App extends React.Component {
         </Navbar>
       <Route exact path="/" component={Home}/>
       <Route path="/profile" component={Profile}/>
-
       <Route path="/signup" component={Signup}/>
-
       <Route path="/matches" component={Matches}/>
       <Route path="/friends" component={Friends}/>
-
       </div>
       </Router>
     );
