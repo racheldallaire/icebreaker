@@ -1,16 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans');
 
-$font-stack:    Helvetica, sans-serif;
-$primary-color: #4CDBE4  ;
+$font-stack: Open Sans, sans-serif;
+$primary-color: #343434;
 $color-background: #DFF7F7;
 
 body, html {
   height: 100%;
   font: 100% $font-stack;
   color: $primary-color;
-  color-background:  $primary-color;
+  background-color: none;
 }
 
+/*Home page*/
 
 .bg {
     /* The image used */
@@ -34,6 +35,48 @@ body, html {
   text-transform: lowercase;
   color: #343434;
 }
+
+/*Profile*/
+
+.card {
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 5px 10px 18px #d4d4d4;
+  text-align: center;
+}
+
+.card-title {
+  opacity: 0.7;
+}
+
+.card-body {
+  text-align: center;
+  background: linear-gradient(to bottom right, #67B26F, #4ca2cd);
+  color: white;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  opacity: 0.7;
+}
+
+.card-img-top {
+  width: 50%;
+  border-radius: 50%;
+}
+
+img {
+  border: 7px solid;
+  border-color: white;
+  border-radius: 50%;
+  object-fit: cover;
+  height: 200px;
+  width: 200px;
+}
+
+/*Slider*/
+
+
+
+/*Matches*/
 
 .matchesUserCard{
   margin: auto;
