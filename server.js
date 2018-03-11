@@ -19,8 +19,8 @@ const knex = require('knex')({
   }
 });
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 passport.use(new FacebookStrategy({
     clientID: "575115656176298",
@@ -70,8 +70,13 @@ app.get('*', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-  console.log(JSON.stringify(req.body, null, 2));
+  console.log(req.body);
   res.redirect('/filters');
+});
+
+app.post('/filters', (req, res) => {
+  console.log(req.body);
+  res.redirect('/matches');
 });
 
 app.listen(8080, () => console.log('Server listening on 8080'));
