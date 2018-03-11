@@ -5,6 +5,7 @@ const Head = () =>
 <head>
   <meta charset="UTF-8"/>
     <title>Icebreaker</title>
+    <link rel="stylesheet" href="profile.scss" type="text/css"/>
     <link rel="stylesheet" href="main.scss" type="text/css"/>
 </head>
 
