@@ -75,7 +75,6 @@ export default class App extends React.Component {
           </Collapse>
         </Navbar>
 
-       <Matches users= {this.state.users}/>
       <Route exact path="/" component={Home}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/signup" component={Signup}/>
