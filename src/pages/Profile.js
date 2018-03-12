@@ -1,47 +1,53 @@
 import React from 'react'
 import { Card, CardImg, CardText, CardHeader, CardFooter, CardBody,
   CardTitle, CardSubtitle, Button, Container, Row, Col } from 'reactstrap';
+import Slider from './Slider.js'
 
 
-const Profile = (props) => {
+export default class Profile extends React.Component {
+
+  render() {
   return (
-    <div className="bg">
+    <div>
+
       <Container fluid>
       <Row>
 
-        <Col sm="6">
+        <Col sm="7">
             <Card>
-              <CardHeader className="card-header"><b>Your profile</b></CardHeader>
-              <CardBody>
-              <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+              <CardBody className="card-body">
+              <CardImg top width="50%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180" alt="Card image cap" /><p/>
                 <CardTitle>First Name Last Name</CardTitle>
-                <CardTitle>Age</CardTitle>
-                <CardTitle>Gender</CardTitle>
-                <Button color="primary" size="sm">Edit your information</Button>
+                <p>Age | Gender</p>
+                <Button className="cool-button">Edit </Button>
               </CardBody>
-              <CardFooter></CardFooter>
+              <CardFooter>Bio goes here</CardFooter>
             </Card>
         </Col>
 
-        <Col sm="6">
+        <Col sm="5">
           <Card>
-            <CardHeader><b className="card-head">What you're looking for:</b></CardHeader>
-            <CardBody>
-            <CardTitle>Special Title Treatment</CardTitle>
-            <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-            <Button color="primary" size="sm"> Change Preferences</Button>
+            <CardBody className="card-body">
+            <CardTitle>Age</CardTitle>
+            <CardTitle>Location</CardTitle>
+            <CardTitle>Gender</CardTitle>
+
+            <CardText>
+
+            <div className="slidecontainer">
+              <input type="range" min="1" max="100" defaultValue="50" className="slider" id="myRange"/>
+            </div>
+
+            </CardText>
+           <Button className="cool-button"> Change Preferences</Button>
             </CardBody>
-            <CardFooter></CardFooter>
+            <CardFooter>Something goes here</CardFooter>
           </Card>
         </Col>
 
       </Row>
       </Container>
     </div>
-    );
-};
-
-
-export default Profile
-
-
+    )
+  }
+}
