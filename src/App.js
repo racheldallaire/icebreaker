@@ -40,17 +40,17 @@ export default class App extends React.Component {
     };
   }
 
-    componentDidMount(){
-      axios.get('/api/matches')
-      .then(response => {
-        console.log("response ", response)
-           console.log("response.data ", response.data )
-        this.setState({ users: response.data });
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-}
+  componentDidMount(){
+    axios.get('/api/matches')
+    .then(response => {
+      console.log("response ", response)
+         console.log("response.data ", response.data )
+      this.setState({ users: response.data });
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+  }
 
   toggle() {
     this.setState({

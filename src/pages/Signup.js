@@ -14,15 +14,15 @@ Please help us find your ideal matches by filling out your info!
 <form method="post" action="/signup">
   <label>
     First Name:
-    <input type="text" name="first_name" />
+    <input type="text" name="first_name" required />
   </label>
   <label>
     Last Name:
-    <input type="text" name="last_name" />
+    <input type="text" name="last_name" required />
   </label>
   <label>
     Age:
-      <select name='age'>
+      <select name='age' required>
         <option value="18">18</option>
         <option value="19">19</option>
         <option value="20">20</option>
@@ -65,7 +65,7 @@ Please help us find your ideal matches by filling out your info!
   </label>
   <label>
     Gender:
-      <select name='gender'>
+      <select name='gender' required>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
         <option value="Other">Other</option>
@@ -73,7 +73,7 @@ Please help us find your ideal matches by filling out your info!
   </label>
   <label>
     Description:
-    <textarea name="description" />
+    <textarea name="description" required />
   </label>
   <input type="submit" value="Submit" />
   </form>

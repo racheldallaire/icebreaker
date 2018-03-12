@@ -1,10 +1,10 @@
 const express = require('express');
+const cookieSession = require('cookie-session');
 const path = require('path');
 const webpack = require('webpack');
 const app = express();
 const databaseRoutes  = express.Router();
 const webpackMiddleware = require("webpack-dev-middleware");
-const morgan = require('morgan')
 const webpackConfig = require('./webpack.config.js');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
@@ -13,7 +13,7 @@ const knex = require('knex')({
   client: 'pg',
   version: '7.2',
   connection: {
-    // port: 5432,
+    //port: 5432,
     host : 'localhost',
     user : 'final',
     password : 'final',
@@ -21,9 +21,18 @@ const knex = require('knex')({
   }
 });
 
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2']
+}));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+let fbid = "";
+let acc_token = "";
+
+///////////FACEBOOK AUTHENTICATION//////////////////////////////
 
 passport.use(new FacebookStrategy({
     clientID: "575115656176298",
@@ -31,16 +40,14 @@ passport.use(new FacebookStrategy({
     callbackURL: "http://localhost:8080/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    knex.select().table('users').where({first_name: 'Baracko'})
+    acc_token = accessToken;
+    fbid = profile.id;
+    knex.select().table('users').where({facebook_id: fbid})
     .then(function(user) {
-      console.log("WOWOWWOWOWOWW", user);
       if(user.length < 1){
         done(null, console.log("need to register"));
-        //Needs to save fbid as cookie, redirect to complete registration page on which it will then save to db and redirect to dashboard
       } else {
         done(null, user = user);
-        //done(null, console.log(accessToken, profile.id));
-        //Needs to set cookies and redirect to dashboard
       }
     });
   }
@@ -57,24 +64,29 @@ app.use(webpackMiddleware(
   webpack(webpackConfig),
   { publicPath: '/' }
 ));
-app.use( passport.initialize());
-app.use( passport.session());
-app.use( bodyParser.json());
-app.use( bodyParser.urlencoded({ extended: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile']}));
 
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { successRedirect: '/jammin!!!',
+  passport.authenticate('facebook', { successRedirect: '/matches',
                                       failureRedirect: '/signup' }));
+
+///////////ROUTES//////////////////////////////
 
 app.get('/api/matches', (req, res) => {
   knex.select("*")
         .from("users")
         .then((result) => {
-          console.log(result)
-          res.send( result)
-        })
+          res.send(result);
+        });
+});
+
+app.get('/api/filters', (req, res) => {
+  res.send('HELLO MOTO!');
 });
 
 app.get('*', (req, res) => {
@@ -82,7 +94,14 @@ app.get('*', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-  console.log(req.body);
+  console.log(fbid);
+  let facebook_id = fbid;
+  let first_name = req.body.first_name;
+  let last_name = req.body.last_name;
+  let age = req.body.age;
+  let gender = req.body.gender;
+  let description = req.body.description;
+  knex('users').insert({facebook_id: facebook, first_name: first_name, last_name: last_name, age: age, gender: gender, description: description});
   res.redirect('/filters');
 });
 
