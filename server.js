@@ -76,6 +76,13 @@ app.get('/api/matches', (req, res) => {
           res.send(result)
         })
 });
+//
+app.post('/api/matches', (req, res) => {
+    knex('users').whereIn("id", req.body).del().then(function (count) {
+  console.log(count);
+})
+});
+
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));

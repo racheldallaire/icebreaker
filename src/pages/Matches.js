@@ -14,12 +14,12 @@ class Matches extends React.Component{
       hasData: false,
       users:[]
     }
+     this.removeFromMatchesArray = this.removeFromMatchesArray.bind(this);
   }
 
   componentDidMount(e){
       axios.get('/api/matches')
       .then(response => {
-        console.log(response.data)
         this.setState({
             hasData: true,
             users: response.data
@@ -27,30 +27,24 @@ class Matches extends React.Component{
       })
     }
 
-// removeFromMatchesArray(e){
-//   console.log("remove from Matches clicked")
-//     event.preventDefault();
-//       axios.get('/api/matches')
-//       .then(response => {
-//         console.log("remove response", response)
-//         var matches = response.data
-//         matches = matches.reverse.shift()
-//         console.log(matches)
-//         this.setState({
-//             hasData: true,
-//             users: matches
-//         });
-//       })
-//   }
-
-
+  removeFromMatchesArray(e){
+    console.log("remove from Matches clicked")
+    var data = []
+     data = this.state.users
+        this.setState({
+            hasData: true,
+            users: data.splice(1)
+        });
+      console.log(this.state.users)
+    // axios.post('/api/matches', this.state.users)
+  }
 
   render() {
 
     var usercard = 'data here';
     if (this.state.hasData) {
-      var matchesArray = this.state.users
-       for (let user of  matchesArray ){
+      var user= this.state.users[0]
+       // for (let user of  matchesArray){
         console.log("user", user)
         usercard =
       <div>
@@ -58,7 +52,7 @@ class Matches extends React.Component{
     <Row>
 
     <Col xs="6" sm="3">
-    <Button  className="reject-user">✘</Button>
+    <Button onClick={this.removeFromMatchesArray} className="reject-user">✘</Button>
     </Col>
 
 
@@ -80,7 +74,7 @@ class Matches extends React.Component{
         </Row>
         </Container>
     </div>
-        }
+
      }
 
   return (
