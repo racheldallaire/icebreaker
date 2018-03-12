@@ -19,7 +19,7 @@ export default class Profile extends React.Component {
               <CardImg top width="50%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180" alt="Card image cap" /><p/>
                 <CardTitle>First Name Last Name</CardTitle>
                 <p>Age | Gender</p>
-                <Button color="primary" size="sm">Edit your information</Button>
+                <Button className="cool-button">Edit </Button>
               </CardBody>
               <CardFooter>Bio goes here</CardFooter>
             </Card>
@@ -39,7 +39,7 @@ export default class Profile extends React.Component {
             </div>
 
             </CardText>
-            <Button color="primary" size="sm"> Change Preferences</Button>
+           <Button className="cool-button"> Change Preferences</Button>
             </CardBody>
             <CardFooter>Something goes here</CardFooter>
           </Card>
