@@ -44,9 +44,7 @@ export default class App extends React.Component {
     this.setState({
       isOpen: !this.state.isOpen
     });
-
   }
-
 
   render() {
 

@@ -1,33 +1,53 @@
 import React from 'react'
+import axios from 'axios';
 
-const Filters = () => 
-<div> 
-Awesome, nice to meet you!
-Now, would you let us know what you're looking for?
-<form method="post" action="/filters">
-  <label>
-    First Name:
-    <input type="text" name="first_name" />
-  </label>
-  <label>
-    Last Name:
-    <input type="text" name="last_name" />
-  </label>
-  <label>
-    Age:
-    <input type="text" name="age" />
-  </label>
-  <label>
-    Gender:
-      <select>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Other">Other</option>
-      </select>
-  </label>
-  <input type="submit" value="Submit" />
-  </form>
-</div>
+class Filters extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {fb_pic: "hi"};
+  }
 
+  componentDidMount(){
+    axios.get('/api/filters')
+    .then(response => {
+      console.log("response.data ", response.data);
+      this.setState({ fb_pic: response.data });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  render() {
+    return (
+      <div> 
+        <img src={this.state.fb_pic} />
+        Awesome, nice to meet you!
+        Now, would you let us know what you're looking for?
+        <form method="post" action="/filters">
+          <label>
+            Minimum Age
+            <input type="number" name="min_age" min="18" required />
+          </label>
+          <label>
+            Maximum Age:
+            <input type="number" name="max_age" required />
+          </label>
+          <label>
+            Maximum Distance:
+            <input type="number" name="distance" required />
+          </label>
+          <label>
+            Gender:
+                <input type="checkbox" name="gender" value="Male" /> Male<br/>
+                <input type="checkbox" name="gender" value="Female" /> Female<br/>
+                <input type="checkbox" name="gender" value="Other" /> Other<br/>
+          </label>
+          <input type="submit" value="Submit" />
+          </form>
+        </div>
+    )
+  }
+}
 
 export default Filters

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 navigator.geolocation.getCurrentPosition(showPosition);
 
@@ -14,15 +14,15 @@ Please help us find your ideal matches by filling out your info!
 <form method="post" action="/signup">
   <label>
     First Name:
-    <input type="text" name="first_name" />
+    <input type="text" name="first_name" required />
   </label>
   <label>
     Last Name:
-    <input type="text" name="last_name" />
+    <input type="text" name="last_name" required />
   </label>
   <label>
     Age:
-      <select name='age'>
+      <select name='age' required>
         <option value="18">18</option>
         <option value="19">19</option>
         <option value="20">20</option>
@@ -65,15 +65,15 @@ Please help us find your ideal matches by filling out your info!
   </label>
   <label>
     Gender:
-      <select name='gender'>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Other">Other</option>
+      <select name='gender' required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
       </select>
   </label>
   <label>
     Description:
-    <textarea name="description" />
+    <textarea name="description" required />
   </label>
   <input type="submit" value="Submit" />
   </form>
