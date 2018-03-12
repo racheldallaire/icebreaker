@@ -29,7 +29,7 @@ class Filters extends React.Component {
         <Col sm={{ size: 8, offset: 2 }}>
             <Card>
               <CardBody className="card-body">
-              <CardImg top src={this.state.fb_pic} /><p/>
+              <CardImg top src={this.state.fb_pic} alt="Image Not Found" /><p/>
                 <CardTitle>Awesome! Looking good 😉</CardTitle>
                 <p>Now tell us a little more about what you're looking for in a friend.</p>
               </CardBody>
@@ -143,15 +143,15 @@ class Filters extends React.Component {
           <legend>Looking For</legend>
           <FormGroup check>
           <Label check>
-            <Input type="checkbox" />{' '}
+            <Input type="checkbox" required />{' '}
             Men
           </Label>
           <Label check>
-            <Input type="checkbox" />{' '}
+            <Input type="checkbox" required />{' '}
             Women
           </Label>
           <Label check>
-            <Input type="checkbox" />{' '}
+            <Input type="checkbox" required />{' '}
             Other
           </Label>
         </FormGroup>
