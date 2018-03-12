@@ -36,7 +36,8 @@ export default class App extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      users: []
     };
   }
 
@@ -44,8 +45,12 @@ export default class App extends React.Component {
     this.setState({
       isOpen: !this.state.isOpen
     });
+
   }
+
+
   render() {
+
     return (
       <Router>
       <div>
@@ -69,12 +74,15 @@ export default class App extends React.Component {
             </Nav>
           </Collapse>
         </Navbar>
+
+       <Matches users= {this.state.users}/>
       <Route exact path="/" component={Home}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/signup" component={Signup}/>
       <Route path="/filters" component={Filters}/>
       <Route path="/matches" component={Matches}/>
       <Route path="/friends" component={Friends}/>
+
       </div>
       </Router>
     );
