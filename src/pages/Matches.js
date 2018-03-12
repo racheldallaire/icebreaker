@@ -15,6 +15,7 @@ class Matches extends React.Component{
       users:[]
     }
      this.removeFromMatchesArray = this.removeFromMatchesArray.bind(this);
+     this.addToUserLikes = this.addToUserLikes.bind(this);
   }
 
   componentDidMount(e){
@@ -29,6 +30,17 @@ class Matches extends React.Component{
 
   removeFromMatchesArray(e){
     console.log("remove from Matches clicked")
+    var data = []
+     data = this.state.users
+        this.setState({
+            hasData: true,
+            users: data.splice(1)
+        });
+      console.log(this.state.users)
+    // axios.post('/api/matches', this.state.users)
+  }
+
+  addToUserLikes(e){
     var data = []
      data = this.state.users
         this.setState({
@@ -68,7 +80,7 @@ class Matches extends React.Component{
         </Card>
         </Col>
         <Col xs="6" sm="3">
-    <Button  className="like-user">✔</Button>
+    <Button onClick={this.addToUserLikes}  className="like-user">✔</Button>
     </Col>
 
         </Row>
