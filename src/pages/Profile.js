@@ -16,7 +16,7 @@ export default class Profile extends React.Component {
         <Col sm="7">
             <Card>
               <CardBody className="card-body">
-              <CardImg top width="50%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180" alt="Card image cap" /><p/>
+              <CardImg top src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180" alt="Card image cap" /><p/>
                 <CardTitle>First Name Last Name</CardTitle>
                 <p>Age | Gender</p>
                 <Button className="cool-button">Edit </Button>
@@ -28,9 +28,9 @@ export default class Profile extends React.Component {
         <Col sm="5">
           <Card>
             <CardBody className="card-body">
-            <CardTitle>Age</CardTitle>
-            <CardTitle>Location</CardTitle>
-            <CardTitle>Gender</CardTitle>
+            <CardTitle>Preferences</CardTitle>
+            <p>Location</p>
+            <p>Gender</p>
 
             <CardText>
 
@@ -39,7 +39,7 @@ export default class Profile extends React.Component {
             </div>
 
             </CardText>
-           <Button className="cool-button"> Change Preferences</Button>
+           <Button className="cool-button"> Change </Button>
             </CardBody>
             <CardFooter>Something goes here</CardFooter>
           </Card>
