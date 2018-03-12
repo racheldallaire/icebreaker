@@ -36,28 +36,33 @@ export default class App extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      users: []
     };
   }
 
     componentDidMount(){
       axios.get('/api/matches')
       .then(response => {
-        console.log("response ", response)
-           console.log("response.data ", response.data )
-        this.setState({ users: response.data });
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
+       //  this.setState(prevState => ({
+       // users: [...prevState.users, response.data]
+       //  }))
+        this.setState({
+        users: this.state.users.concat(response.data)
+        })
+ })
 }
 
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
+
   }
+
+
   render() {
+
     return (
       <Router>
       <div>
@@ -81,12 +86,15 @@ export default class App extends React.Component {
             </Nav>
           </Collapse>
         </Navbar>
+
+       <Matches users= {this.state.users}/>
       <Route exact path="/" component={Home}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/signup" component={Signup}/>
       <Route path="/filters" component={Filters}/>
       <Route path="/matches" component={Matches}/>
       <Route path="/friends" component={Friends}/>
+
       </div>
       </Router>
     );

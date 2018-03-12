@@ -73,7 +73,7 @@ app.get('/api/matches', (req, res) => {
         .from("users")
         .then((result) => {
           console.log(result)
-          res.send( result)
+          res.send(result)
         })
 });
 
