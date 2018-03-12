@@ -25,6 +25,7 @@ import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Signup from './pages/Signup'
 import Matches from './pages/Matches'
+import Potentials from './pages/Potentials'
 import Chats from './pages/Chats'
 import axios from 'axios';
 import Filters from './pages/Filters'
@@ -36,7 +37,7 @@ export default class App extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
-      users: []
+      potentials:[]
     };
   }
 
@@ -65,6 +66,9 @@ export default class App extends React.Component {
               <NavItem>
                 <NavLink><Link to="/Matches">Matches</Link></NavLink>
               </NavItem>
+               <NavItem>
+                <NavLink><Link to="/Potentials">Potentials</Link></NavLink>
+              </NavItem>
                  <NavItem>
                 <NavLink><Link to="/Chats">Chats</Link></NavLink>
               </NavItem>
@@ -76,7 +80,7 @@ export default class App extends React.Component {
       <Route path="/profile" component={Profile}/>
       <Route path="/signup" component={Signup}/>
       <Route path="/filters" component={Filters}/>
-      <Route path="/matches" component={Matches}/>
+      <Route path="/potentials" component={Potentials}/>
       <Route path="/chats" component={Chats}/>
 
       </div>
