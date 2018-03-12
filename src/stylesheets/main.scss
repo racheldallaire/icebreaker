@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans|Lato:300,400');
 
 $font-stack: Open Sans, sans-serif;
 $primary-color: #343434;
@@ -40,13 +40,15 @@ body, html {
 
 .cool-button {
   border-radius: 20px;
-  padding: 5px 25px;
+  padding: 10px 25px;
   background-color: white;
   color: #4ca2cd;
-  font-size: 12px;
   text-transform: uppercase;
-  box-shadow: 2px 5px 15px black;
-  margin-bottom: -35px;
+  box-shadow: 0px 7px 25px lightblue;
+  margin-bottom: -40px;
+  border: none;
+  font-size: 1.5vw;
+  letter-spacing: 2.2px;
 }
 
 .cool-button:hover {
@@ -58,6 +60,8 @@ body, html {
   border-radius: 10px;
   box-shadow: 5px 10px 18px #d4d4d4;
   text-align: center;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
 }
 
 .card-title {
@@ -71,11 +75,6 @@ body, html {
   color: white;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
-  opacity: 0.7;
-}
-
-.card-body:hover {
-  opacity: 1;
 }
 
 .card-img-top {
@@ -88,12 +87,16 @@ img {
   border-color: white;
   border-radius: 50%;
   object-fit: cover;
-  height: 200px;
-  width: 200px;
+  height: auto;
+  width: auto;
+  margin-top: 20px;
 }
 
 .card-footer {
-  padding-top: 30px;
+  padding-top: 37px;
+  padding-bottom: 25px;
+  color: gray;
+  border: none;
 }
 
 /*Slider*/
@@ -102,22 +105,22 @@ img {
 
 /*Matches*/
 
-.matchesUserCard{
-  margin: auto;
-  width: 50%;
-  height: 90%;
-  font: 100% $font-stack;
-  color: $primary-color;
-}
 .like-user {
-float: top;
-float: right;
+  border-radius: 50%;
+  background: linear-gradient(#56ab2f, #a8e063);
+  border: none;
+  display: block;
+  margin: 220 auto;
 }
-.reject-user {
-float: top;
-float: left;
 
+.reject-user {
+  border-radius: 50%;
+  background: linear-gradient(#cb2d3e, #ef473a);
+  border: none;
+  display: block;
+  margin: 220 auto;
 }
+
 .friendsUserCard{
   margin: auto;
   width: 20%;

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button } from 'reactstrap';
+  CardTitle, CardSubtitle, CardFooter, Button, Container, Row, Col } from 'reactstrap';
 import axios from 'axios';
 
 
@@ -41,23 +41,35 @@ class Matches extends React.Component{
 
         console.log("content", content)
     }
-    return (
 
-     <div>
-      <Button className="reject-user">Reject</Button>
-      <Button className="like-user">Like</Button>
-        <Card className="matchesUserCard">
-          <CardImg top width="80%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-          <CardBody>
-            <CardTitle> Alex Kim</CardTitle>
-          <div className="clearfix wrapper">
-          {content}
-        </div>
-            <CardSubtitle> 30 female </CardSubtitle>
+  return (
+    <div>
+    <Container fluid>
+    <Row>
 
-            <CardText> A quick description about myself</CardText>
+    <Col xs="6" sm="3">
+    <Button className="reject-user">✘</Button>
+    </Col>
+
+    <Col xs="12" sm="6">
+        <Card>
+            <CardBody className="card-body">
+            <CardImg top src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180" /><p/>
+            <CardTitle>Alex Kim</CardTitle>
+            <div className="anything">{content}</div>
+            <p>30 | Female</p>
+            <p> A quick description about myself</p>
           </CardBody>
+          <CardFooter>Something goes here</CardFooter>
         </Card>
+        </Col>
+
+    <Col xs="6" sm="3">
+    <Button className="like-user">✔</Button>
+    </Col>
+
+        </Row>
+        </Container>
     </div>
     );
   }
