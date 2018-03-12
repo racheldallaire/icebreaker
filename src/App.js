@@ -22,11 +22,10 @@ import {
 
 import Head from './pages/Head'
 import Home from './pages/Home'
-import Landing from './pages/Landing'
 import Profile from './pages/Profile'
 import Signup from './pages/Signup'
 import Matches from './pages/Matches'
-import Friends from './pages/Friends'
+import Chats from './pages/Chats'
 import axios from 'axios';
 import Filters from './pages/Filters'
 
@@ -45,9 +44,7 @@ export default class App extends React.Component {
     this.setState({
       isOpen: !this.state.isOpen
     });
-
   }
-
 
   render() {
 
@@ -69,7 +66,7 @@ export default class App extends React.Component {
                 <NavLink><Link to="/Matches">Matches</Link></NavLink>
               </NavItem>
                  <NavItem>
-                <NavLink><Link to="/Friends">Friends</Link></NavLink>
+                <NavLink><Link to="/Chats">Chats</Link></NavLink>
               </NavItem>
             </Nav>
           </Collapse>
@@ -80,7 +77,7 @@ export default class App extends React.Component {
       <Route path="/signup" component={Signup}/>
       <Route path="/filters" component={Filters}/>
       <Route path="/matches" component={Matches}/>
-      <Route path="/friends" component={Friends}/>
+      <Route path="/chats" component={Chats}/>
 
       </div>
       </Router>

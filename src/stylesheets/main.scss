@@ -11,6 +11,10 @@ body, html {
   background-color: none;
 }
 
+.h2 {
+  font-weight: 300;
+}
+
 /*Home page*/
 
 .bg {
@@ -36,6 +40,13 @@ body, html {
   color: #343434;
 }
 
+.home-button {
+  background-color: #4da2cd;
+  margin-top: 25px;
+  border: none;
+  padding: 10px;
+}
+
 /*Profile*/
 
 .cool-button {
@@ -52,6 +63,22 @@ body, html {
 }
 
 .cool-button:hover {
+  background-color: gray;
+}
+
+.cool-button2 {
+  border-radius: 20px;
+  padding: 10px 25px;
+  background-color: white;
+  color: #4ca2cd;
+  text-transform: uppercase;
+  box-shadow: 0px 7px 25px lightblue;
+  border: none;
+  font-size: 1.5vw;
+  letter-spacing: 2.2px;
+}
+
+.cool-button2:hover {
   background-color: gray;
 }
 
@@ -93,15 +120,19 @@ img {
 }
 
 .card-footer {
-  padding-top: 37px;
   padding-bottom: 25px;
   color: gray;
   border: none;
 }
 
-/*Slider*/
+label {
+  padding: 20px;
+}
 
-
+.after-button {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
 
 /*Matches*/
 

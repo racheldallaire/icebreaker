@@ -3,7 +3,7 @@ import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
 
 
-const Friends = (props) => {
+const Chats = (props) => {
 
   return (
 
@@ -22,4 +22,4 @@ const Friends = (props) => {
 };
 
 
-export default Friends
+export default Chats
