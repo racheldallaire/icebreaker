@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, CardImg, CardText, CardHeader, CardFooter, CardBody, CardTitle, CardSubtitle, Col, Container, Form, FormGroup, Label, Input, FormText, Row  } from 'reactstrap';
+import { Button, Card, CardImg, CardText, CardHeader, CardFooter, CardBody, CardTitle, CardSubtitle, Col, Container, Form, FormGroup, Label, Input, InputGroup, InputGroupText, InputGroupAddon, FormText, Row  } from 'reactstrap';
 
 
 export default class Profile extends React.Component {
@@ -11,7 +11,7 @@ export default class Profile extends React.Component {
       <Container fluid>
       <Row>
 
-        <Col sm="7">
+        <Col md={{ size: 5, offset: 1 }}>
             <Card>
               <CardBody className="card-body">
               <CardImg top src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180" alt="Card image cap" /><p/>
@@ -19,14 +19,14 @@ export default class Profile extends React.Component {
                 <p>Age | Gender</p>
                 <Button className="cool-button">Edit </Button>
               </CardBody>
-              <CardFooter>Bio goes here</CardFooter>
+              <CardFooter className="after-button">Bio goes here</CardFooter>
             </Card>
         </Col>
 
-        <Col sm="5">
+        <Col md="5">
           <Card>
             <CardBody className="card-body">
-            <h2>Preferences</h2>
+            <h3>Preferences</h3>
             </CardBody>
 
             <CardFooter>
@@ -126,6 +126,14 @@ export default class Profile extends React.Component {
             <option>59</option>
             <option>60+</option>
           </Input>
+        </FormGroup>
+
+        <FormGroup>
+        <legend>Distance</legend>
+        <InputGroup>
+        <Input placeholder="No more than" />
+        <InputGroupAddon addonType="append">km away</InputGroupAddon>
+        </InputGroup>
         </FormGroup>
 
         <FormGroup tag="fieldset">
