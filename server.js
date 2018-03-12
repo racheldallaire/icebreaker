@@ -2,11 +2,13 @@ const express = require('express');
 const cookieSession = require('cookie-session');
 const path = require('path');
 const webpack = require('webpack');
+const graph = require('fbgraph');
 const app = express();
 const databaseRoutes  = express.Router();
 const webpackMiddleware = require("webpack-dev-middleware");
 const webpackConfig = require('./webpack.config.js');
 const passport = require('passport');
+const pg = require('pg');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const bodyParser = require("body-parser");
 const knex = require('knex')({
@@ -30,6 +32,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 let fbid = "";
+let fb_pic = "";
 let acc_token = "";
 
 ///////////FACEBOOK AUTHENTICATION//////////////////////////////
@@ -40,8 +43,12 @@ passport.use(new FacebookStrategy({
     callbackURL: "http://localhost:8080/auth/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
+    graph.setAccessToken(accessToken);
     acc_token = accessToken;
     fbid = profile.id;
+    graph.get("me/?fields=picture.width(480).height(480)", function(err, res) {
+      fb_pic = (res.picture.data.url);
+    });
     knex.select().table('users').where({facebook_id: fbid})
     .then(function(user) {
       if(user.length < 1){
@@ -86,7 +93,7 @@ app.get('/api/matches', (req, res) => {
 });
 
 app.get('/api/filters', (req, res) => {
-  res.send('HELLO MOTO!');
+  res.send(fb_pic);
 });
 
 app.get('*', (req, res) => {
@@ -94,14 +101,15 @@ app.get('*', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-  console.log(fbid);
   let facebook_id = fbid;
+  let facebook_picture_url = fb_pic;
   let first_name = req.body.first_name;
   let last_name = req.body.last_name;
-  let age = req.body.age;
+  let age = Number(req.body.age);
   let gender = req.body.gender;
   let description = req.body.description;
-  knex('users').insert({facebook_id: facebook, first_name: first_name, last_name: last_name, age: age, gender: gender, description: description});
+  knex('users').insert({facebook_id: facebook_id, first_name: first_name, last_name: last_name, age: age, gender: gender, description: description, facebook_picture_url: facebook_picture_url});
+  req.session = {"id": fbid};
   res.redirect('/filters');
 });
 

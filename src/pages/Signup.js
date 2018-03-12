@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 navigator.geolocation.getCurrentPosition(showPosition);
 
@@ -66,9 +66,9 @@ Please help us find your ideal matches by filling out your info!
   <label>
     Gender:
       <select name='gender' required>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Other">Other</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
       </select>
   </label>
   <label>

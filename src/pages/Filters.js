@@ -4,14 +4,14 @@ import axios from 'axios';
 class Filters extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {test: "hi"};
+    this.state = {fb_pic: "hi"};
   }
 
   componentDidMount(){
     axios.get('/api/filters')
     .then(response => {
       console.log("response.data ", response.data);
-      this.setState({ test: response.data });
+      this.setState({ fb_pic: response.data });
     })
     .catch(function (error) {
       console.log(error);
@@ -21,6 +21,7 @@ class Filters extends React.Component {
   render() {
     return (
       <div> 
+        <img src={this.state.fb_pic} />
         Awesome, nice to meet you!
         Now, would you let us know what you're looking for?
         <form method="post" action="/filters">
