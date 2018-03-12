@@ -15,9 +15,8 @@ class Matches extends React.Component{
       users:[]
     }
   }
+
   componentDidMount(e){
-     console.log("hi")
-    // var that = this;
       axios.get('/api/matches')
       .then(response => {
         console.log(response.data)
@@ -28,49 +27,69 @@ class Matches extends React.Component{
       })
     }
 
+  removeFromMatchesArray(e){
+  console.log("remove from Matches clicked")
+    event.preventDefault();
+      axios.get('/api/matches')
+      .then(response => {
+        console.log("remove response", response)
+        var matches = response.data
+        matches = matches.reverse.shift()
+        console.log(matches)
+        this.setState({
+            hasData: true,
+            users: matches
+        });
+      })
+  }
+
+
 
   render() {
 
-    var content = 'data here';
+    var usercard = 'data here';
     if (this.state.hasData) {
-      console.log("hey there")
-        content =
-          <div>
-             <h1> {this.state.users[1].age}</h1>
-          </div>
-
-        console.log("content", content)
-    }
-
-  return (
-    <div>
+      var matchesArray = this.state.users
+       for (let user of  matchesArray ){
+        console.log("user", user)
+        usercard =
+       <div>
     <Container fluid>
     <Row>
 
     <Col xs="6" sm="3">
-    <Button className="reject-user">✘</Button>
+    <Button onClick={removeFromMatchesArray} className="reject-user">✘</Button>
     </Col>
+
 
     <Col xs="12" sm="6">
         <Card>
             <CardBody className="card-body">
             <CardImg top src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180" /><p/>
-            <CardTitle>Alex Kim</CardTitle>
-            <div className="anything">{content}</div>
-            <p>30 | Female</p>
+            <CardTitle>{user.first_name}  {user.last_name} </CardTitle>
+            <p> {user.age}  | {user.gender} </p>
             <p> A quick description about myself</p>
           </CardBody>
           <CardFooter>Something goes here</CardFooter>
         </Card>
         </Col>
 
+
     <Col xs="6" sm="3">
-    <Button className="like-user">✔</Button>
+    <Button  className="like-user">✔</Button>
     </Col>
 
         </Row>
         </Container>
     </div>
+
+        }
+     }
+
+  return (
+
+         {usercard}
+
     );
   }
 }
