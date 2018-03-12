@@ -4,7 +4,43 @@ import { Card, CardImg, CardText, CardBody,
 import axios from 'axios';
 
 
-const Matches = (props) => {
+class Matches extends React.Component{
+  constructor(){
+    super();
+
+    // only adding functions not defined by super
+
+    this.state = {
+      hasData: false,
+      users:[]
+    }
+  }
+  componentDidMount(e){
+     console.log("hi")
+    // var that = this;
+      axios.get('/api/matches')
+      .then(response => {
+        console.log(response.data)
+        this.setState({
+            hasData: true,
+            users: response.data
+        });
+      })
+    }
+
+
+  render() {
+
+    var content = 'data here';
+    if (this.state.hasData) {
+      console.log("hey there")
+        content =
+          <div>
+             <h1> {this.state.users[1].age}</h1>
+          </div>
+
+        console.log("content", content)
+    }
 
   return (
     <div>
@@ -20,9 +56,9 @@ const Matches = (props) => {
             <CardBody className="card-body">
             <CardImg top src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180" /><p/>
             <CardTitle>Alex Kim</CardTitle>
+            <div className="anything">{content}</div>
             <p>30 | Female</p>
             <p> A quick description about myself</p>
-
           </CardBody>
           <CardFooter>Something goes here</CardFooter>
         </Card>
@@ -35,8 +71,11 @@ const Matches = (props) => {
         </Row>
         </Container>
     </div>
-  );
-};
+    );
+  }
+}
 
 
-export default Matches
+export default Matches;
+
+
