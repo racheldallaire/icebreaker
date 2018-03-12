@@ -27,21 +27,21 @@ class Matches extends React.Component{
       })
     }
 
-  removeFromMatchesArray(e){
-  console.log("remove from Matches clicked")
-    event.preventDefault();
-      axios.get('/api/matches')
-      .then(response => {
-        console.log("remove response", response)
-        var matches = response.data
-        matches = matches.reverse.shift()
-        console.log(matches)
-        this.setState({
-            hasData: true,
-            users: matches
-        });
-      })
-  }
+// removeFromMatchesArray(e){
+//   console.log("remove from Matches clicked")
+//     event.preventDefault();
+//       axios.get('/api/matches')
+//       .then(response => {
+//         console.log("remove response", response)
+//         var matches = response.data
+//         matches = matches.reverse.shift()
+//         console.log(matches)
+//         this.setState({
+//             hasData: true,
+//             users: matches
+//         });
+//       })
+//   }
 
 
 
@@ -53,12 +53,12 @@ class Matches extends React.Component{
        for (let user of  matchesArray ){
         console.log("user", user)
         usercard =
-       <div>
+      <div>
     <Container fluid>
     <Row>
 
     <Col xs="6" sm="3">
-    <Button onClick={removeFromMatchesArray} className="reject-user">✘</Button>
+    <Button  className="reject-user">✘</Button>
     </Col>
 
 
@@ -73,22 +73,22 @@ class Matches extends React.Component{
           <CardFooter>Something goes here</CardFooter>
         </Card>
         </Col>
-
-
-    <Col xs="6" sm="3">
+        <Col xs="6" sm="3">
     <Button  className="like-user">✔</Button>
     </Col>
 
         </Row>
         </Container>
     </div>
-
         }
      }
 
   return (
+      <div>
+        {usercard}
+      </div>
 
-         {usercard}
+
 
     );
   }
