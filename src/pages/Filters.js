@@ -143,15 +143,15 @@ class Filters extends React.Component {
           <legend>Looking For</legend>
           <FormGroup check>
           <Label check>
-            <Input type="checkbox" required />{' '}
+            <Input type="checkbox" />{' '}
             Men
           </Label>
           <Label check>
-            <Input type="checkbox" required />{' '}
+            <Input type="checkbox" />{' '}
             Women
           </Label>
           <Label check>
-            <Input type="checkbox" required />{' '}
+            <Input type="checkbox" />{' '}
             Other
           </Label>
         </FormGroup>
