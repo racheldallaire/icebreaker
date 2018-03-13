@@ -53,7 +53,7 @@ class Potentials extends React.Component{
 
   render() {
 
-    var usercard = 'You have no more Matches';
+    var usercard = 'Matches not transmitted';
     if (this.state.hasData) {
       var user= this.state.potentials[0]
        // for (let user of  matchesArray){
@@ -85,6 +85,8 @@ class Potentials extends React.Component{
         </Row>
         </Container>
     </div>
+     } else {
+     usercard = 'You have no more Matches';
      }
 
   return (
