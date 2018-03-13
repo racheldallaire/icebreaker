@@ -84,14 +84,18 @@ app.get('/auth/facebook/callback',
 
 ///////////ROUTES//////////////////////////////
 app.get('/api/potentials', (req, res) => {
-  knex.select('*').from('users').havingNotExists(function() {
-  this.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2')
-    .then((result) => {
-      console.log(result)
+  const cookieid = req.session["id"]
+  console.log("potentials get")
+  knex('users').whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
+  .then((result) => {
+      console.log("knex result", result)
       res.send(result)
         })
+  .catch((err) => {
+          console.log("error", err)
+
+        })
     })
-});
 
 app.get('/api/matches', (req, res) => {
   knex.select("*")
