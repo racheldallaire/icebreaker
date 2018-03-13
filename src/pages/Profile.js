@@ -1,8 +1,56 @@
 import React from 'react'
+import axios from 'axios';
 import { Button, Card, CardImg, CardText, CardHeader, CardFooter, CardBody, CardTitle, CardSubtitle, Col, Container, Form, FormGroup, Label, Input, InputGroup, InputGroupText, InputGroupAddon, FormText, Row  } from 'reactstrap';
 
 
 export default class Profile extends React.Component {
+    constructor(props) {
+    super(props);
+    this.state = {
+        first_name: "",
+        last_name: "",
+        age: "", 
+        gender: "",
+        description: "",
+        fb_pic: "hi"};
+    }
+
+    componentDidMount(e){
+      axios.get('/api/profile')
+      .then(response => {
+
+        console.log(response.data[0].facebook_picture_url)
+        this.setState({ 
+            first_name: response.data[0].first_name,
+            last_name: response.data[0].last_name,
+            age: response.data[0].age, 
+            gender: response.data[0].gender,
+            description: response.data[0].description,
+            fb_pic: response.data[0].facebook_picture_url });
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
+
+      // axios.get('/api/edit_filter')
+      // .then(response => {
+
+      //   console.log(response.data[0].facebook_picture_url)
+      //   this.setState({ 
+      //       first_name: response.data[0].first_name,
+      //       last_name: response.data[0].last_name,
+      //       age: response.data[0].age, 
+      //       gender: response.data[0].gender,
+      //       description: response.data[0].description,
+      //       fb_pic: response.data[0].facebook_picture_url });
+      // })
+      // .catch(function (error) {
+      // console.log(error);
+      // });
+    }
+    
+        
+
 
   render() {
   return (
@@ -14,12 +62,12 @@ export default class Profile extends React.Component {
         <Col md={{ size: 5, offset: 1 }}>
             <Card>
               <CardBody className="card-body">
-              <CardImg top src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180" alt="Card image cap" /><p/>
-                <CardTitle>First Name Last Name</CardTitle>
-                <p>Age | Gender</p>
+              <CardImg top src={this.state.fb_pic} alt="Image Not Found" /><p/>
+                <CardTitle>{this.state.first_name} {this.state.last_name}</CardTitle>
+                <p>{this.state.age} | {this.state.gender}</p>
                 <Button className="cool-button" href="/signup">Edit </Button>
               </CardBody>
-              <CardFooter className="after-button">Bio goes here</CardFooter>
+              <CardFooter className="after-button">{this.state.description}</CardFooter>
             </Card>
         </Col>
 
