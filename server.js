@@ -126,9 +126,25 @@ app.get('/api/profile', (req, res) => {
         });
 });
 
+app.get('/api/filters', (req, res) => {
+  res.send(fb_pic);
+});
+
+app.get('/api/loggedIn', (req, res) => {
+  if(req.session.id)
+    res.send("true");
+});
+
+app.get('/api/logout', (req, res) => {
+  cookie_id = 0;
+  req.session = null;
+  res.redirect('/logout');
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));
-  req.session = {"id": cookie_id};
+  if(cookie_id > 0)
+    req.session = {"id": cookie_id};
   console.log(req.session.id);
 });
 
@@ -169,9 +185,9 @@ app.post('/filters', (req, res) => {
   let min_age = Number(req.body.min_age);
   let max_age = Number(req.body.max_age);
   let radius = Number(req.body.distance);
-  let female = (req.body.female) ? true : false;
-  let male = (req.body.male) ? true : false;
-  let other = (req.body.other) ? true : false;
+  let female = (req.body.female) ? "female" : null;
+  let male = (req.body.male) ? "male" : null;
+  let other = (req.body.other) ? "other" : null;
 
   knex('filters').insert({userid: userid, min_age: min_age, max_age: max_age, radius: radius, female: female, male: male, other: other})
     .then(function (woo) {

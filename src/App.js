@@ -23,6 +23,7 @@ import {
 import Head from './pages/Head'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
+import Logout from './pages/Logout'
 import Signup from './pages/Signup'
 import Matches from './pages/Matches'
 import Potentials from './pages/Potentials'
@@ -38,9 +39,23 @@ export default class App extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
+      isLoggedIn: false,
       isOpen: false,
       potentials:[]
     };
+  }
+
+  componentDidMount(){
+    axios.get('/api/loggedIn')
+    .then(response => {
+      if(response.data = "true")
+        this.setState({ isLoggedIn: true });
+      else
+        this.setState({ isLoggedIn: false });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   toggle() {
@@ -50,6 +65,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    let isLoggedIn = this.state.isLoggedIn;
 
     return (
       <Router>
@@ -59,21 +75,31 @@ export default class App extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink><Link to="/">Home</Link></NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink><Link to="/profile">Profile</Link></NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink><Link to="/Matches">Matches</Link></NavLink>
-              </NavItem>
-               <NavItem>
-                <NavLink><Link to="/Potentials">Potentials</Link></NavLink>
-              </NavItem>
-                 <NavItem>
-                <NavLink><Link to="/Chats">Chats</Link></NavLink>
-              </NavItem>
+              {!isLoggedIn &&
+                <NavItem>
+                  <NavLink><Link to="/">Home</Link></NavLink>
+                </NavItem>
+              }
+              {isLoggedIn &&
+                <NavItem>
+                  <NavLink><Link to="/profile">Profile</Link></NavLink>
+                </NavItem>
+              }
+              {isLoggedIn &&
+                <NavItem>
+                  <NavLink><Link to="/Matches">Matches</Link></NavLink>
+                </NavItem>
+              }
+              {isLoggedIn &&
+                <NavItem>
+                  <NavLink><Link to="/Chats">Chats</Link></NavLink>
+                </NavItem>
+              }
+              {isLoggedIn &&
+                <NavItem>
+                  <NavLink><Link to="/logout">Logout</Link></NavLink>
+                </NavItem>
+              }
             </Nav>
           </Collapse>
         </Navbar>
@@ -84,6 +110,7 @@ export default class App extends React.Component {
       <Route path="/filters" component={Filters}/>
       <Route path="/potentials" component={Potentials}/>
       <Route path="/chats" component={Chats}/>
+      <Route path="/logout" component={Logout}/>
 
       </div>
       </Router>
