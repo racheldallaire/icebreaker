@@ -85,6 +85,8 @@ class Potentials extends React.Component{
         </Row>
         </Container>
     </div>
+     } else {
+      usercard = 'no more matches';
      }
 
   return (

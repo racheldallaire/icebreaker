@@ -25,6 +25,15 @@ const knex = require('knex')({
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+
+let fbid = "";
+let fb_pic = "";
+let acc_token = "";
+let cookie_id = 0;
+
+///////////FACEBOOK AUTHENTICATION//////////////////////////////
+
+
 passport.use(new FacebookStrategy({
     clientID: "575115656176298",
     clientSecret: "4d3a4ba21f529ae6b035cc38f95fbeb6",
@@ -69,14 +78,21 @@ app.get('/auth/facebook/callback',
                                       failureRedirect: '/signup' }));
 
 app.get('/api/potentials', (req, res) => {
-  knex.select('*').from('users').havingNotExists(function() {
-  this.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2')
-    .then((result) => {
-      console.log(result)
+  // const cookieid = req.session["id"]
+  // console.log("cookieid", req.session["id"] )
+  console.log("potentials get")
+  knex('users').whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
+  .whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid1'))
+  // .whereNot({id: req.session["id"]})
+  .then((result) => {
+      console.log("knex result", result)
       res.send(result)
         })
-    })
-});
+  .catch((err) => {
+          console.log("error", err)
+
+        })
+      })
 
 app.get('/api/matches', (req, res) => {
   knex.select("*")
@@ -93,12 +109,42 @@ app.get('*', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
+
   console.log(req.body);
+
+  let facebook_id = fbid;
+  let facebook_picture_url = fb_pic;
+  let first_name = req.body.first_name;
+  let last_name = req.body.last_name;
+  let age = Number(req.body.age);
+  let gender = req.body.gender;
+  let description = req.body.description;
+  let location = "45.490998036, -73.56833106";
+  console.log(req.body);
+  knex('users').insert({facebook_id: facebook_id, first_name: first_name, last_name: last_name, age: age, gender: gender, description: description, facebook_picture_url: facebook_picture_url, location: location})
+    .returning('id')
+    .then(function (id) {
+        cookie_id = id;
+       });
+
   res.redirect('/filters');
 });
 
 app.post('/filters', (req, res) => {
-  console.log(req.body);
+  let userid = Number(cookie_id);
+  let min_age = Number(req.body.min_age);
+  let max_age = Number(req.body.max_age);
+  let radius = Number(req.body.distance);
+  let female = (req.body.female) ? true : false;
+  let male = (req.body.male) ? true : false;
+  let other = (req.body.other) ? true : false;
+
+  knex('filters').insert({userid: userid, min_age: min_age, max_age: max_age, radius: radius, female: female, male: male, other: other})
+    .then(function (woo) {
+        console.log("WOO!");
+       });
+
+  req.session = {"id": cookie_id};
   res.redirect('/matches');
 });
 
