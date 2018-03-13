@@ -5,9 +5,9 @@ exports.up = function(knex, Promise) {
       table.integer('userid').unsigned().notNullable().references('id').inTable('users').onDelete('CASCADE').index();
       table.integer('min_age');
       table.integer('max_age');
-      table.boolean('female');
-      table.boolean('male');
-      table.boolean('other');
+      table.string('female');
+      table.string('male');
+      table.string('other');
       table.integer('radius')
     })
   ]);

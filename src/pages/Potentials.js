@@ -53,7 +53,7 @@ class Potentials extends React.Component{
 
   render() {
 
-    var usercard = 'data here';
+    var usercard = 'You are out of Matches';
     if (this.state.hasData) {
       var user= this.state.potentials[0]
        // for (let user of  matchesArray){

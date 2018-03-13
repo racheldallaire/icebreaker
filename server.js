@@ -47,6 +47,7 @@ passport.use(new FacebookStrategy({
         done(null, console.log("need to register"));
         //Needs to save fbid as cookie, redirect to complete registration page on which it will then save to db and redirect to dashboard
       } else {
+        cookie_id = user[0].id;
         done(null, user = user);
         //done(null, console.log(accessToken, profile.id));
         //Needs to set cookies and redirect to dashboard
@@ -78,10 +79,35 @@ app.get('/auth/facebook/callback',
                                       failureRedirect: '/signup' }));
 
 app.get('/api/potentials', (req, res) => {
+  const cookieid = 14
+  console.log("potentials get for id ", cookieid)
+   knex('users')
+   .whereNotExists(knex.select('*').from('userlikes').where('userid1',  Number(cookie_id)))
+   .whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
+   .whereExists(knex.select('*').from('filters').whereRaw('users.gender = filters.male'))
+  // knex.select('*').from('users').join('filters', {'filters.userid': cookieid}).where(("users.gender", "male") AND ("filters.male", true)).orWhere("users.gender", "female")
+  // knex.select('*').from('users').join('filters', {'filters.userid': cookieid})
+  // knex.select('*').from('users').join('filters', function() {
+  // this.on(function() {
+  //   this.on('filters.userid', '=', cookieid) })
+  //   this.andOn(('users.gender = male') = ('filters.male' IS TRUE )
+  //    })
+  .then((result) => {
+      console.log("knex result", result)
+      res.send(result)
+        })
+  .catch((err) => {
+          console.log("error", err)
+        })
+      })
+
+
+app.get('/api/matches', (req, res) => {
   const cookieid = cookie_id
   console.log("potentials get for id ", cookieid)
-  knex('users').whereNotExists(knex.select('*').from('userlikes').where('userid1',  Number(cookie_id)))
-  .whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
+  knex('users').whereExists(knex.select('*').from('userlikes').where('userid1', 1))
+  // .whereExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
+  // .whereExists(knex.select('*').from('userlikes').where('liked', true))
   .then((result) => {
       console.log("knex result", result)
       res.send(result)
@@ -91,41 +117,44 @@ app.get('/api/potentials', (req, res) => {
 
         })
       })
-//.whereNot({id: cookie_id}).select("*")
-app.get('/api/matches', (req, res) => {
-  knex.select("*")
-        .from("users")
-        .then((result) => {
-          console.log(result)
-          res.send(result)
-        })
-});
 
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));
+  req.session = {"id": cookie_id};
+  console.log(req.session.id);
 });
 
 app.post('/signup', (req, res) => {
 
-  console.log(req.body);
-
-  let facebook_id = fbid;
-  let facebook_picture_url = fb_pic;
-  let first_name = req.body.first_name;
-  let last_name = req.body.last_name;
-  let age = Number(req.body.age);
-  let gender = req.body.gender;
-  let description = req.body.description;
-  let location = "45.490998036, -73.56833106";
-  console.log(req.body);
-  knex('users').insert({facebook_id: facebook_id, first_name: first_name, last_name: last_name, age: age, gender: gender, description: description, facebook_picture_url: facebook_picture_url, location: location})
-    .returning('id')
-    .then(function (id) {
-        cookie_id = id;
-       });
-
-  res.redirect('/filters');
+  if(req.session.id){
+    let first_name = req.body.first_name;
+    let last_name = req.body.last_name;
+    let age = Number(req.body.age);
+    let gender = req.body.gender;
+    let description = req.body.description;
+    knex('users').where("id", Number(req.session.id)).update({first_name: first_name, last_name: last_name, age: age, gender: gender, description: description})
+      .then(function (woo) {
+          console.log("Woo!");
+         });
+    res.redirect('/matches');
+  } else {
+    let facebook_id = fbid;
+    let facebook_picture_url = fb_pic;
+    let first_name = req.body.first_name;
+    let last_name = req.body.last_name;
+    let age = Number(req.body.age);
+    let gender = req.body.gender;
+    let description = req.body.description;
+    let location = "45.490998036, -73.56833106";
+    console.log(req.body);
+    knex('users').insert({facebook_id: facebook_id, first_name: first_name, last_name: last_name, age: age, gender: gender, description: description, facebook_picture_url: facebook_picture_url, location: location})
+      .returning('id')
+      .then(function (id) {
+          cookie_id = id;
+         });
+    res.redirect('/filters');
+  }
 });
 
 app.post('/filters', (req, res) => {
@@ -147,3 +176,4 @@ app.post('/filters', (req, res) => {
 });
 
 app.listen(8080, () => console.log('Server listening on 8080'));
+

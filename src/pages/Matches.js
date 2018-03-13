@@ -47,7 +47,7 @@ class Matches extends React.Component{
             hasData: true,
             users: data.splice(1)
         });
-      console.log(this.state.users)
+     // console.log(this.state.users)
     // axios.post('/api/matches', this.state.users)
   }
 
@@ -57,7 +57,7 @@ class Matches extends React.Component{
     if (this.state.hasData) {
       var user= this.state.users[0]
        // for (let user of  matchesArray){
-        console.log("user", user)
+      //  console.log("user", user)
         usercard =
       <div>
     <Container fluid>
