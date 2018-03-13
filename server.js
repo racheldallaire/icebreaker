@@ -68,6 +68,16 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { successRedirect: '/jammin!!!',
                                       failureRedirect: '/signup' }));
 
+app.get('/api/potentials', (req, res) => {
+  knex.select('*').from('users').havingNotExists(function() {
+  this.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2')
+    .then((result) => {
+      console.log(result)
+      res.send(result)
+        })
+    })
+});
+
 app.get('/api/matches', (req, res) => {
   knex.select("*")
         .from("users")
@@ -76,27 +86,7 @@ app.get('/api/matches', (req, res) => {
           res.send(result)
         })
 });
-// Delete "DISLIKED MATCH" from DATABASE
-// app.post('/api/matches', (req, res) => {
-//     knex('users').whereIn("id", req.body).del().then(function (count) {
-//   console.log(count);
-// })
-// });
 
-app.get('/api/potentials', (req, res) => {
-  knex.select("*")
-        .from("users")
-        .then((result) => {
-          console.log(result)
-          res.send(result)
-        })
-});
-// Delete "DISLIKED MATCH" from DATABASE
-// app.post('/api/matches', (req, res) => {
-//     knex('users').whereIn("id", req.body).del().then(function (count) {
-//   console.log(count);
-// })
-// });
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));
