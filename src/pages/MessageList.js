@@ -2,6 +2,24 @@ import React, {Component} from 'react';
 import Message from './Message.js';
 
 export default class MessageList extends Component {
+
+  //Cannot pass variables JQUERY//
+//   $('.chat[data-chat=person2]').addClass('active-chat');
+// $('.person[data-chat=person2]').addClass('active');
+
+// $('.left .person').mousedown(function(){
+//     if ($(this).hasClass('.active')) {
+//         return false;
+//     } else {
+//         var findChat = $(this).attr('data-chat');
+//         var personName = $(this).find('.name').text();
+//         $('.right .top .name').html(personName);
+//         $('.chat').removeClass('active-chat');
+//         $('.left .person').removeClass('active');
+//         $(this).addClass('active');
+//         $('.chat[data-chat = '+findChat+']').addClass('active-chat');
+//     }
+// });
   render () {
     const messages = this.props.messages.map((message) => {
             return <Message message={message} key={message.key} />
@@ -177,12 +195,6 @@ export default class MessageList extends Component {
                         <div className="bubble you">
                             howdoyoudoaspace
                         </div>
-                    </div>
-                    <div className="write">
-                        <a href="javascript:;" className="write-link attach"></a>
-                        <input type="text" />
-                        <a href="javascript:;" className="write-link smiley"></a>
-                        <a href="javascript:;" className="write-link send"></a>
                     </div>
                 </div>
             </div>

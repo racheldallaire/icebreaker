@@ -26,6 +26,8 @@ import Profile from './pages/Profile'
 import Signup from './pages/Signup'
 import Matches from './pages/Matches'
 import Chats from './pages/Chats'
+import ChatBar from './pages/ChatBar'
+import MessageList from './pages/MessageList'
 import axios from 'axios';
 import Filters from './pages/Filters'
 

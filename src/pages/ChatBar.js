@@ -25,8 +25,7 @@ export default class ChatBar extends Component {
 
 	    return (
 	        <footer className="chatbar">
-		  		<input className="chatbar-username" placeholder="Your name (Optional)" onChange={changedName} value={this.state.currentUser}/>
-                <input className="chatbar-message" placeholder="Type a message and hit ENTER" onChange={changedText} value={this.state.input} onKeyPress={onKeyPress} />
+                <input className="write" placeholder="Type a message and hit ENTER" onChange={changedText} value={this.state.input} onKeyPress={onKeyPress} />
                 
 	    	</footer>
 	    );
