@@ -2,8 +2,9 @@ import React from 'react';
 import { Button, Card, CardImg, CardText, CardHeader, CardFooter, CardBody, CardTitle, CardSubtitle, Col, Container, Form, FormGroup, Label, Input, InputGroup, InputGroupText, InputGroupAddon, FormText, Row  } from 'reactstrap';
 
 navigator.geolocation.getCurrentPosition(showPosition);
-
+let position = "";
 function showPosition(pos) {
+  position = pos;
   console.log(pos);
 }
 
@@ -22,24 +23,25 @@ const Signup = () =>
               <p>Help us find your new best friends by entering the following details 💕</p>
 
               <Form method="post" action="/signup">
+
               <FormGroup row>
                 <Label sm={2}>First Name</Label>
                 <Col sm={10}>
-                  <Input type="text" required />
+                  <Input type="text" name="first_name" required />
                 </Col>
               </FormGroup>
 
               <FormGroup row>
                 <Label sm={2}>Last Name</Label>
                 <Col sm={10}>
-                 <Input type="text" required />
+                 <Input type="text" name="last_name" required />
                 </Col>
               </FormGroup>
 
               <FormGroup row>
                 <Label sm={2}>Age</Label>
                 <Col sm={10}>
-                  <Input type="select" name="select" required>
+                  <Input type="select" name="age" required>
                     <option>18</option>
                     <option>19</option>
                     <option>20</option>
@@ -90,21 +92,21 @@ const Signup = () =>
               <FormGroup tag="fieldset">
                 <FormGroup check inline>
                 <Label check>
-                  <Input type="radio" name="radio1" />{' '}
+                  <Input type="radio" name="gender" value="female" />{' '}
                   Female
                 </Label>
                 </FormGroup>
 
                 <FormGroup check inline>
                 <Label check>
-                  <Input type="radio" name="radio1" />{' '}
+                  <Input type="radio" name="gender" value="male" />{' '}
                   Male
                 </Label>
                 </FormGroup>
 
                 <FormGroup check inline>
                 <Label check>
-                  <Input type="radio" name="radio1" />{' '}
+                  <Input type="radio" name="gender" value="other" />{' '}
                   Other
                 </Label>
                 </FormGroup>
@@ -113,7 +115,7 @@ const Signup = () =>
               <FormGroup row>
               <Label sm={2}>Description</Label>
               <Col sm={10}>
-              <Input type="textarea" name="text" placeholder="Tell us a little about you." required />
+              <Input type="textarea" name="description" placeholder="Tell us a little about you." required />
               </Col>
               </FormGroup>
 

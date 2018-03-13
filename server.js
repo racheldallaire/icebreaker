@@ -34,6 +34,7 @@ app.use(bodyParser.json());
 let fbid = "";
 let fb_pic = "";
 let acc_token = "";
+let cookie_id = 0;
 
 ///////////FACEBOOK AUTHENTICATION//////////////////////////////
 
@@ -109,13 +110,19 @@ app.post('/signup', (req, res) => {
   let age = Number(req.body.age);
   let gender = req.body.gender;
   let description = req.body.description;
-  knex('users').insert({facebook_id: facebook_id, first_name: first_name, last_name: last_name, age: age, gender: gender, description: description, facebook_picture_url: facebook_picture_url});
-  req.session = {"id": fbid};
+  let location = "45.490998036, -73.56833106";
+  console.log(req.body);
+  knex('users').insert({facebook_id: facebook_id, first_name: first_name, last_name: last_name, age: age, gender: gender, description: description, facebook_picture_url: facebook_picture_url, location: location})
+    .returning('id')
+    .then(function (id) { 
+        cookie_id = id;
+       });
   res.redirect('/filters');
 });
 
 app.post('/filters', (req, res) => {
   console.log(req.body);
+  req.session = {"id": cookie_id};
   res.redirect('/matches');
 });
 
