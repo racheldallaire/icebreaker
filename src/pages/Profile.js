@@ -35,7 +35,7 @@ export default class Profile extends React.Component {
         <FormGroup>
           <legend>Age Range</legend>
           <Label for="exampleSelect">From</Label>
-          <Input type="select" name="select" id="exampleSelect">
+          <Input type="select" name="min_age" id="exampleSelect">
             <option>18</option>
             <option>19</option>
             <option>20</option>
@@ -81,7 +81,7 @@ export default class Profile extends React.Component {
             <option>60+</option>
           </Input>
           <Label for="exampleSelect">To</Label>
-          <Input type="select" name="select" id="exampleSelect">
+          <Input type="select" name="max_age" id="exampleSelect">
             <option>18</option>
             <option>19</option>
             <option>20</option>
@@ -131,7 +131,7 @@ export default class Profile extends React.Component {
         <FormGroup>
         <legend>Distance</legend>
         <InputGroup>
-        <Input placeholder="No more than" />
+        <Input placeholder="No more than" name="distance"/>
         <InputGroupAddon addonType="append">km away</InputGroupAddon>
         </InputGroup>
         </FormGroup>
@@ -140,15 +140,15 @@ export default class Profile extends React.Component {
           <legend>Looking For</legend>
           <FormGroup check>
           <Label check>
-            <Input type="checkbox" />{' '}
+            <Input type="checkbox" name="male" />{' '}
             Men
           </Label>
           <Label check>
-            <Input type="checkbox" />{' '}
+            <Input type="checkbox" name="female" />{' '}
             Women
           </Label>
           <Label check>
-            <Input type="checkbox" />{' '}
+            <Input type="checkbox" name="other" />{' '}
             Other
           </Label>
         </FormGroup>

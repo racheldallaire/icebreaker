@@ -121,7 +121,22 @@ app.post('/signup', (req, res) => {
 });
 
 app.post('/filters', (req, res) => {
-  console.log(req.body);
+  let userid = cookie_id;
+  let min_age = Number(req.body.min_age);
+  let max_age = Number(req.body.max_age);
+  let radius = Number(req.body.distance);
+  let female = (req.body.female) ? true : false;
+  let male = (req.body.male) ? true : false;
+  let other = (req.body.other) ? true : false;
+
+  console.log(userid);
+  console.log(min_age);
+  console.log(max_age);
+  console.log(radius);
+  console.log(female);
+  console.log(male);
+  console.log(other);
+  
   req.session = {"id": cookie_id};
   res.redirect('/matches');
 });
