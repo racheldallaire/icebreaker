@@ -9,7 +9,7 @@ export default class Profile extends React.Component {
     this.state = {
         first_name: "",
         last_name: "",
-        age: "", 
+        age: "",
         gender: "",
         description: "",
         fb_pic: "hi"};
@@ -20,10 +20,10 @@ export default class Profile extends React.Component {
       .then(response => {
 
         console.log(response.data[0].facebook_picture_url)
-        this.setState({ 
+        this.setState({
             first_name: response.data[0].first_name,
             last_name: response.data[0].last_name,
-            age: response.data[0].age, 
+            age: response.data[0].age,
             gender: response.data[0].gender,
             description: response.data[0].description,
             fb_pic: response.data[0].facebook_picture_url });
@@ -36,10 +36,10 @@ export default class Profile extends React.Component {
       // .then(response => {
 
       //   console.log(response.data[0].facebook_picture_url)
-      //   this.setState({ 
+      //   this.setState({
       //       first_name: response.data[0].first_name,
       //       last_name: response.data[0].last_name,
-      //       age: response.data[0].age, 
+      //       age: response.data[0].age,
       //       gender: response.data[0].gender,
       //       description: response.data[0].description,
       //       fb_pic: response.data[0].facebook_picture_url });
@@ -48,8 +48,8 @@ export default class Profile extends React.Component {
       // console.log(error);
       // });
     }
-    
-        
+
+
 
 
   render() {

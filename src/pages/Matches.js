@@ -58,9 +58,9 @@ class Matches extends React.Component{
             <CardTitle>Alex Kim</CardTitle>
             <div className="anything">{content}</div>
             <p>30 | Female</p>
-            <p> A quick description about myself</p>
+
           </CardBody>
-          <CardFooter>Something goes here</CardFooter>
+          <CardFooter>A quick description about myself</CardFooter>
         </Card>
         </Col>
 
