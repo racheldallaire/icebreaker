@@ -55,6 +55,7 @@ passport.use(new FacebookStrategy({
       if(user.length < 1){
         done(null, console.log("need to register"));
       } else {
+        cookie_id = user[0].id;
         done(null, user = user);
       }
     });
@@ -100,6 +101,7 @@ app.get('/api/filters', (req, res) => {
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));
+  req.session = {"id": cookie_id};
   console.log(req.session.id);
 });
 
