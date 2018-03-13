@@ -121,7 +121,7 @@ app.post('/signup', (req, res) => {
 });
 
 app.post('/filters', (req, res) => {
-  let userid = cookie_id;
+  let userid = Number(cookie_id);
   let min_age = Number(req.body.min_age);
   let max_age = Number(req.body.max_age);
   let radius = Number(req.body.distance);
@@ -129,13 +129,10 @@ app.post('/filters', (req, res) => {
   let male = (req.body.male) ? true : false;
   let other = (req.body.other) ? true : false;
 
-  console.log(userid);
-  console.log(min_age);
-  console.log(max_age);
-  console.log(radius);
-  console.log(female);
-  console.log(male);
-  console.log(other);
+  knex('filters').insert({userid: userid, min_age: min_age, max_age: max_age, radius: radius, female: female, male: male, other: other})
+    .then(function (woo) { 
+        console.log("WOO!");
+       });
   
   req.session = {"id": cookie_id};
   res.redirect('/matches');
