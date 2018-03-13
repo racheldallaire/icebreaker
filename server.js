@@ -153,9 +153,9 @@ app.post('/filters', (req, res) => {
   let min_age = Number(req.body.min_age);
   let max_age = Number(req.body.max_age);
   let radius = Number(req.body.distance);
-  let female = (req.body.female) ? true : false;
-  let male = (req.body.male) ? true : false;
-  let other = (req.body.other) ? true : false;
+  let female = (req.body.female) ? "female" : null;
+  let male = (req.body.male) ? "male" : null;
+  let other = (req.body.other) ? "other" : null;
 
   knex('filters').insert({userid: userid, min_age: min_age, max_age: max_age, radius: radius, female: female, male: male, other: other})
     .then(function (woo) { 
