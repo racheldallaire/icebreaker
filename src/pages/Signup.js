@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button, Card, CardImg, CardText, CardHeader, CardFooter, CardBody, CardTitle, CardSubtitle, Col, Container, Form, FormGroup, Label, Input, InputGroup, InputGroupText, InputGroupAddon, FormText, Row  } from 'reactstrap';
 
 navigator.geolocation.getCurrentPosition(showPosition);
 
@@ -6,78 +7,124 @@ function showPosition(pos) {
   console.log(pos);
 }
 
-const Signup = () => 
-<div> 
-Hey you!
-Thanks for joining Icebreaker!
-Please help us find your ideal matches by filling out your info!
-<form method="post" action="/signup">
-  <label>
-    First Name:
-    <input type="text" name="first_name" required />
-  </label>
-  <label>
-    Last Name:
-    <input type="text" name="last_name" required />
-  </label>
-  <label>
-    Age:
-      <select name='age' required>
-        <option value="18">18</option>
-        <option value="19">19</option>
-        <option value="20">20</option>
-        <option value="21">21</option>
-        <option value="22">22</option>
-        <option value="23">23</option>
-        <option value="24">24</option>
-        <option value="25">25</option>
-        <option value="26">26</option>
-        <option value="27">27</option>
-        <option value="28">28</option>
-        <option value="29">29</option>
-        <option value="30">30</option>
-        <option value="31">31</option>
-        <option value="32">32</option>
-        <option value="33">33</option>
-        <option value="34">34</option>
-        <option value="35">35</option>
-        <option value="36">36</option>
-        <option value="37">37</option>
-        <option value="38">38</option>
-        <option value="39">39</option>
-        <option value="40">40</option>
-        <option value="41">41</option>
-        <option value="42">42</option>
-        <option value="43">43</option>
-        <option value="44">44</option>
-        <option value="45">45</option>
-        <option value="46">46</option>
-        <option value="47">47</option>
-        <option value="48">48</option>
-        <option value="49">49</option>
-        <option value="50">50</option>
-        <option value="51">51</option>
-        <option value="52">52</option>
-        <option value="53">53</option>
-        <option value="54">54</option>
-        <option value="55">55+</option>
-      </select>
-  </label>
-  <label>
-    Gender:
-      <select name='gender' required>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-        <option value="other">Other</option>
-      </select>
-  </label>
-  <label>
-    Description:
-    <textarea name="description" required />
-  </label>
-  <input type="submit" value="Submit" />
-  </form>
-</div>
+const Signup = () =>
+
+  <div>
+    <Container fluid>
+      <Row>
+        <Col sm={{ size: 8, offset: 2 }}>
+          <Card>
+            <CardBody className="card-body">
+              <h3>Details</h3>
+            </CardBody>
+
+            <CardFooter>
+              <p>Help us find your new best friends by entering the following details 💕</p>
+
+              <Form method="post" action="/signup">
+              <FormGroup row>
+                <Label sm={2}>First Name</Label>
+                <Col sm={10}>
+                  <Input type="text" required />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label sm={2}>Last Name</Label>
+                <Col sm={10}>
+                 <Input type="text" required />
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label sm={2}>Age</Label>
+                <Col sm={10}>
+                  <Input type="select" name="select" required>
+                    <option>18</option>
+                    <option>19</option>
+                    <option>20</option>
+                    <option>21</option>
+                    <option>22</option>
+                    <option>23</option>
+                    <option>24</option>
+                    <option>25</option>
+                    <option>26</option>
+                    <option>27</option>
+                    <option>28</option>
+                    <option>29</option>
+                    <option>30</option>
+                    <option>31</option>
+                    <option>32</option>
+                    <option>33</option>
+                    <option>34</option>
+                    <option>35</option>
+                    <option>36</option>
+                    <option>37</option>
+                    <option>38</option>
+                    <option>39</option>
+                    <option>40</option>
+                    <option>41</option>
+                    <option>42</option>
+                    <option>43</option>
+                    <option>44</option>
+                    <option>45</option>
+                    <option>46</option>
+                    <option>47</option>
+                    <option>48</option>
+                    <option>49</option>
+                    <option>50</option>
+                    <option>51</option>
+                    <option>52</option>
+                    <option>53</option>
+                    <option>54</option>
+                    <option>55</option>
+                    <option>56</option>
+                    <option>57</option>
+                    <option>58</option>
+                    <option>59</option>
+                    <option>60+</option>
+                  </Input>
+                </Col>
+              </FormGroup>
+
+              <FormGroup tag="fieldset">
+                <FormGroup check inline>
+                <Label check>
+                  <Input type="radio" name="radio1" />{' '}
+                  Female
+                </Label>
+                </FormGroup>
+
+                <FormGroup check inline>
+                <Label check>
+                  <Input type="radio" name="radio1" />{' '}
+                  Male
+                </Label>
+                </FormGroup>
+
+                <FormGroup check inline>
+                <Label check>
+                  <Input type="radio" name="radio1" />{' '}
+                  Other
+                </Label>
+                </FormGroup>
+              </FormGroup>
+
+              <FormGroup row>
+              <Label sm={2}>Description</Label>
+              <Col sm={10}>
+              <Input type="textarea" name="text" placeholder="Tell us a little about you." required />
+              </Col>
+              </FormGroup>
+
+              <p/><Button className="cool-button2">Submit</Button>
+              </Form>
+            </CardFooter>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
+  </div>
 
 
 export default Signup
