@@ -131,8 +131,9 @@ app.get('/api/filters', (req, res) => {
 });
 
 app.get('/api/loggedIn', (req, res) => {
-  if(req.session.id)
+  if(req.session.id){
     res.send("true");
+  }
 });
 
 app.get('/api/logout', (req, res) => {
@@ -145,7 +146,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));
   if(cookie_id > 0)
     req.session = {"id": cookie_id};
-  console.log(req.session.id);
 });
 
 app.post('/signup', (req, res) => {
