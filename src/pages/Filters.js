@@ -38,7 +38,7 @@ class Filters extends React.Component {
         <FormGroup>
           <legend>Age Range</legend>
           <Label>From</Label>
-          <Input type="select" name="select" required>
+          <Input type="select" name="min_age" required>
             <option>18</option>
             <option>19</option>
             <option>20</option>
@@ -84,7 +84,7 @@ class Filters extends React.Component {
             <option>60+</option>
           </Input>
           <Label>To</Label>
-          <Input type="select" name="select" required>
+          <Input type="select" name="max_age" required>
             <option>18</option>
             <option>19</option>
             <option>20</option>
@@ -134,7 +134,7 @@ class Filters extends React.Component {
         <FormGroup>
         <legend>Distance</legend>
         <InputGroup>
-        <Input placeholder="No more than" required />
+        <Input placeholder="No more than" name="distance" required />
         <InputGroupAddon addonType="append">km away</InputGroupAddon>
         </InputGroup>
         </FormGroup>
@@ -143,15 +143,15 @@ class Filters extends React.Component {
           <legend>Looking For</legend>
           <FormGroup check>
           <Label check>
-            <Input type="checkbox" required />{' '}
+            <Input type="checkbox" name="male" />{' '}
             Men
           </Label>
           <Label check>
-            <Input type="checkbox" required />{' '}
+            <Input type="checkbox" name="female" />{' '}
             Women
           </Label>
           <Label check>
-            <Input type="checkbox" required />{' '}
+            <Input type="checkbox" name="other" />{' '}
             Other
           </Label>
         </FormGroup>

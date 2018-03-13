@@ -34,6 +34,7 @@ app.use(bodyParser.json());
 let fbid = "";
 let fb_pic = "";
 let acc_token = "";
+let cookie_id = 0;
 
 ///////////FACEBOOK AUTHENTICATION//////////////////////////////
 
@@ -109,13 +110,31 @@ app.post('/signup', (req, res) => {
   let age = Number(req.body.age);
   let gender = req.body.gender;
   let description = req.body.description;
-  knex('users').insert({facebook_id: facebook_id, first_name: first_name, last_name: last_name, age: age, gender: gender, description: description, facebook_picture_url: facebook_picture_url});
-  req.session = {"id": fbid};
+  let location = "45.490998036, -73.56833106";
+  console.log(req.body);
+  knex('users').insert({facebook_id: facebook_id, first_name: first_name, last_name: last_name, age: age, gender: gender, description: description, facebook_picture_url: facebook_picture_url, location: location})
+    .returning('id')
+    .then(function (id) { 
+        cookie_id = id;
+       });
   res.redirect('/filters');
 });
 
 app.post('/filters', (req, res) => {
-  console.log(req.body);
+  let userid = Number(cookie_id);
+  let min_age = Number(req.body.min_age);
+  let max_age = Number(req.body.max_age);
+  let radius = Number(req.body.distance);
+  let female = (req.body.female) ? true : false;
+  let male = (req.body.male) ? true : false;
+  let other = (req.body.other) ? true : false;
+
+  knex('filters').insert({userid: userid, min_age: min_age, max_age: max_age, radius: radius, female: female, male: male, other: other})
+    .then(function (woo) { 
+        console.log("WOO!");
+       });
+  
+  req.session = {"id": cookie_id};
   res.redirect('/matches');
 });
 
