@@ -34,6 +34,7 @@ app.use(bodyParser.json());
 let fbid = "";
 let fb_pic = "";
 let acc_token = "";
+let cookie_id = 0;
 
 ///////////FACEBOOK AUTHENTICATION//////////////////////////////
 
@@ -113,14 +114,15 @@ app.post('/signup', (req, res) => {
   console.log(req.body);
   knex('users').insert({facebook_id: facebook_id, first_name: first_name, last_name: last_name, age: age, gender: gender, description: description, facebook_picture_url: facebook_picture_url, location: location})
     .returning('id')
-    .then( function (id) { 
-        req.session = {"id": id};
+    .then(function (id) { 
+        cookie_id = id;
        });
   res.redirect('/filters');
 });
 
 app.post('/filters', (req, res) => {
-  console.log(req.session.id);
+  console.log(req.body);
+  req.session = {"id": cookie_id};
   res.redirect('/matches');
 });
 
