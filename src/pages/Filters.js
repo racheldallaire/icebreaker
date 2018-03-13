@@ -81,7 +81,7 @@ class Filters extends React.Component {
             <option>57</option>
             <option>58</option>
             <option>59</option>
-            <option>60+</option>
+            <option>60</option>
           </Input>
           <Label>To</Label>
           <Input type="select" name="max_age" required>
@@ -127,7 +127,7 @@ class Filters extends React.Component {
             <option>57</option>
             <option>58</option>
             <option>59</option>
-            <option>60+</option>
+            <option>60</option>
           </Input>
         </FormGroup>
 
