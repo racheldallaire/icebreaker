@@ -17,7 +17,7 @@ export default class Profile extends React.Component {
               <CardImg top src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180" alt="Card image cap" /><p/>
                 <CardTitle>First Name Last Name</CardTitle>
                 <p>Age | Gender</p>
-                <Button className="cool-button">Edit </Button>
+                <Button className="cool-button" href="/signup">Edit </Button>
               </CardBody>
               <CardFooter className="after-button">Bio goes here</CardFooter>
             </Card>
