@@ -100,24 +100,38 @@ app.get('/api/filters', (req, res) => {
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));
+  console.log(req.session.id);
 });
 
 app.post('/signup', (req, res) => {
-  let facebook_id = fbid;
-  let facebook_picture_url = fb_pic;
-  let first_name = req.body.first_name;
-  let last_name = req.body.last_name;
-  let age = Number(req.body.age);
-  let gender = req.body.gender;
-  let description = req.body.description;
-  let location = "45.490998036, -73.56833106";
-  console.log(req.body);
-  knex('users').insert({facebook_id: facebook_id, first_name: first_name, last_name: last_name, age: age, gender: gender, description: description, facebook_picture_url: facebook_picture_url, location: location})
-    .returning('id')
-    .then(function (id) { 
-        cookie_id = id;
-       });
-  res.redirect('/filters');
+  if(req.session.id){
+    let first_name = req.body.first_name;
+    let last_name = req.body.last_name;
+    let age = Number(req.body.age);
+    let gender = req.body.gender;
+    let description = req.body.description;
+    knex('users').where("id", Number(req.session.id)).update({first_name: first_name, last_name: last_name, age: age, gender: gender, description: description})
+      .then(function (woo) { 
+          console.log("Woo!");
+         });
+    res.redirect('/matches');
+  } else {
+    let facebook_id = fbid;
+    let facebook_picture_url = fb_pic;
+    let first_name = req.body.first_name;
+    let last_name = req.body.last_name;
+    let age = Number(req.body.age);
+    let gender = req.body.gender;
+    let description = req.body.description;
+    let location = "45.490998036, -73.56833106";
+    console.log(req.body);
+    knex('users').insert({facebook_id: facebook_id, first_name: first_name, last_name: last_name, age: age, gender: gender, description: description, facebook_picture_url: facebook_picture_url, location: location})
+      .returning('id')
+      .then(function (id) { 
+          cookie_id = id;
+         });
+    res.redirect('/filters');
+  }
 });
 
 app.post('/filters', (req, res) => {
@@ -139,3 +153,4 @@ app.post('/filters', (req, res) => {
 });
 
 app.listen(8080, () => console.log('Server listening on 8080'));
+
