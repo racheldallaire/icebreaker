@@ -131,7 +131,7 @@ app.get('/api/filters', (req, res) => {
 });
 
 app.get('/api/loggedIn', (req, res) => {
-  if(req.session.id){
+  if(req.session){
     res.send("true");
   }
 });
@@ -150,7 +150,7 @@ app.get('*', (req, res) => {
 
 app.post('/signup', (req, res) => {
 
-  if(req.session.id){
+  if(req.session){
     let first_name = req.body.first_name;
     let last_name = req.body.last_name;
     let age = Number(req.body.age);
