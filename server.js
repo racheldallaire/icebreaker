@@ -82,11 +82,12 @@ app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { successRedirect: '/matches',
                                       failureRedirect: '/signup' }));
 
+
 ///////////ROUTES//////////////////////////////
 app.get('/api/potentials', (req, res) => {
   const cookieid = req.session["id"]
   console.log("potentials get")
-  knex('users').whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
+  knex('users').whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2') AND (knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid1')))
   .then((result) => {
       console.log("knex result", result)
       res.send(result)
