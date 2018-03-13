@@ -99,6 +99,16 @@ app.get('/api/filters', (req, res) => {
   res.send(fb_pic);
 });
 
+app.get('/api/profile', (req, res) => {
+  knex.select("*")
+        .from("users")
+        .where("id", Number(req.session.id))
+        .then((result) => {
+          console.log(result);
+          res.send(result);
+        });
+});
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));
   req.session = {"id": cookie_id};
