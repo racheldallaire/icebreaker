@@ -85,7 +85,8 @@ class Potentials extends React.Component{
         </Row>
         </Container>
     </div>
-     } else {
+     } else if
+      (this.state.potentials.length < 0){
       usercard = 'no more matches';
      }
 

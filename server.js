@@ -78,12 +78,10 @@ app.get('/auth/facebook/callback',
                                       failureRedirect: '/signup' }));
 
 app.get('/api/potentials', (req, res) => {
-  // const cookieid = req.session["id"]
-  // console.log("cookieid", req.session["id"] )
-  console.log("potentials get")
-  knex('users').whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
-  .whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid1'))
-  // .whereNot({id: req.session["id"]})
+  const cookieid = cookie_id
+  console.log("potentials get for id ", cookieid)
+  knex('users').whereNotExists(knex.select('*').from('userlikes').where('userid1',  Number(cookie_id)))
+  .whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
   .then((result) => {
       console.log("knex result", result)
       res.send(result)
@@ -93,7 +91,7 @@ app.get('/api/potentials', (req, res) => {
 
         })
       })
-
+//.whereNot({id: cookie_id}).select("*")
 app.get('/api/matches', (req, res) => {
   knex.select("*")
         .from("users")
