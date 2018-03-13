@@ -85,13 +85,8 @@ app.get('/api/potentials', (req, res) => {
    .whereNotExists(knex.select('*').from('userlikes').where('userid1',  Number(cookie_id)))
    .whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
    .whereExists(knex.select('*').from('filters').whereRaw('users.gender = filters.male'))
-  // knex.select('*').from('users').join('filters', {'filters.userid': cookieid}).where(("users.gender", "male") AND ("filters.male", true)).orWhere("users.gender", "female")
-  // knex.select('*').from('users').join('filters', {'filters.userid': cookieid})
-  // knex.select('*').from('users').join('filters', function() {
-  // this.on(function() {
-  //   this.on('filters.userid', '=', cookieid) })
-  //   this.andOn(('users.gender = male') = ('filters.male' IS TRUE )
-  //    })
+   .orWhereExists(knex.select('*').from('filters').whereRaw('users.gender = filters.female'))
+   // .whereBetween(knex.select('*').from('filters').whereRaw('users.age', ['filters.min_age', 'filters.max_age']))
   .then((result) => {
       console.log("knex result", result)
       res.send(result)
