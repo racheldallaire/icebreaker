@@ -24,30 +24,30 @@ class Potentials extends React.Component{
         this.setState({
             hasData: true,
             potentials: response.data
+
         });
+        console.log("response.data", response.data)
       })
     }
 
   removeFromMatchesArray(e){
     console.log("remove from Potentials clicked")
     var data = []
-     data = this.state.potentials
+      data = this.state.potentials
         this.setState({
             hasData: true,
             potentials: data.splice(1)
         });
-      console.log("this.state.potentials[0]", this.state.potentials[0])
-        console.log("target userid", this.state.potentials[0].id)
-      axios.post('/api/matches', {
+    axios.post('/api/matchesrejected', {
         user2: this.state.potentials[0].id,
-  })
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-    // axios.post('/api/matches', this.state.potentials)
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
   }
 
   addToUserLikes(e){
@@ -57,8 +57,16 @@ class Potentials extends React.Component{
             hasData: true,
             potentials: data.splice(1)
         });
-      console.log(this.state.potentials)
-    // axios.post('/api/matches', this.state.potentials)
+        axios.post('/api/matchesliked', {
+        user2: this.state.potentials[0].id,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
   }
 
   render() {

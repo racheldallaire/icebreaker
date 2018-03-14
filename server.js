@@ -88,23 +88,27 @@ app.get('/auth/facebook/callback',
 
 ///////////ROUTES//////////////////////////////
 app.get('/api/potentials', (req, res) => {
-  const cookieid = req.session["id"]
+  const cookieid = req.session.id
   console.log("potentials get for id ", cookieid)
-   knex('users')
-   .whereNotExists(knex.select('*').from('userlikes').where('userid1',  Number(cookieid)))
-   .whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
-   .whereExists(knex.select('*').from('filters').whereRaw('users.gender = filters.male'))
-   .orWhereExists(knex.select('*').from('filters').whereRaw('users.gender = filters.female'))
-   .orWhereExists(knex.select('*').from('filters').whereRaw('users.gender = filters.other'))
-   .whereExists(knex.select('*').from('filters').whereRaw('users.age >= filters.min_age'))
-   .whereExists(knex.select('*').from('filters').whereRaw('users.age <= filters.max_age'))
-  .then((result) => {
-      console.log("knex result", result)
-      res.send(result)
-        })
-  .catch((err) => {
-          console.log("error", err)
-        })
+
+    knex('users')
+     .select('*')
+     .whereNot('users.id', cookieid )
+     .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid1 = ?', [cookieid]))
+     .whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
+     .whereExists(knex.select('*').from('filters').whereRaw('users.gender = filters.male' ).orWhereRaw('users.gender = filters.female'))
+     .whereExists(knex.select('*').from('filters').whereRaw('users.age >= filters.min_age'))
+     .whereExists(knex.select('*').from('filters').whereRaw('users.age <= filters.max_age'))
+     .then((result) => {
+        console.log("knex result", result)
+        res.send(result)
+          })
+    .catch((err) => {
+            console.log("error", err)
+          })
+
+
+
       })
 
 
@@ -125,59 +129,57 @@ app.get('/api/matches', (req, res) => {
         })
       })
 
-app.post('/api/matches', (req, res) => {
+app.post('/api/matchesrejected', (req, res) => {
   let userid1 = Number(cookie_id);
   let userid2 = Number(req.body.user2);
 
-
     knex('userlikes')
-    .select('userlikes.id')
-    .where('userid2', Number(userid1))
-    .where('userid1', Number(userid2))
-    // .whereExists(knex('userslikes').where('userid2', userid1))
-    // .whereExists(knex('userlikes').where('userid1', userid2))
-    .update('liked', false)
-    .then((result) => {
-      console.log(userid1, " has rejected ", userid2, " updating userlikes table ", result)
+      // .select('userlikes.id')
+      .where('userid2', Number(userid1))
+      .where('userid1', Number(userid2))
+      .update('liked', false)
+      .then((result) => {
+        console.log(userid1, " has rejected ", userid2, " updating userlikes table ", result)
     })
+       .catch((err) => {
+          console.log("error", err)
+
+        })
 
     knex('userlikes').whereNot(function() {
-    this.where('userid2', Number(userid1)).orWhereNot('userid1', Number(userid2))
-    }).insert({userid1: Number(userid1), userid2: Number(userid2),liked: false})
-    .then(function (woo) {
+      this.where('userid2', Number(userid1)).where('userid1', Number(userid2))
+      }).insert({userid1: Number(userid1), userid2: Number(userid2),liked: false})
+      .then(function (woo) {
         console.log(userid1, " has rejected ", userid2, " making userlikes table ", woo);
-       });
+       })
+       .catch((err) => {
+          console.log("error", err)
+
+        })
 
 });
 
-// knex.raw(`SELECT CASE WHEN a = 1
-//   THEN 1
-//   ELSE 0
-//   END as test123
-// `).then(result =>
+app.post('/api/matchesliked', (req, res) => {
+  let userid1 = Number(cookie_id);
+  let userid2 = Number(req.body.user2);
 
-//       knex.schema.hasTable('userlikes').where('userlikes.userid1', userid1).andWhere('userlikes.userid2', userid2)){
-//        knex('userlikes').where("userid1", Number(userid1))
-//        .andwhere("userid2", Number(userid2))
-//        .update({liked: false})
-//       .then(function (woo) {
-//           console.log(userid1, " has rejected ", userid2 );
-//          });
-//     } else if (knex.connection('icebreaker').hasTable('userlikes').where('userlikes.userid1', userid1).andWhere('userlikes.userid2', userid2)){
-//        knex('userlikes').where("userid2", Number(userid1))
-//        .andwhere("userid1", Number(userid2))
-//        .update({liked: false})
-//        .then(function (woo) {
-//           console.log(userid2, " has rejected ", userid1 );
-//          });
-//     } else {
-//     knex('userlikes').insert({userid1: userid1, userid2: userid2, liked: null})
-//       .returning('id')
-//       .then(function (id) {
-//             console.log(userid1, " has rejected ", userid2, " makeing userlikes table ",id)
-//         });
-//     }
-// });
+    knex('userlikes')
+      .select('userlikes.id')
+      .where('userid2', Number(userid1))
+      .where('userid1', Number(userid2))
+      .whereNot('liked', false)
+      .update('liked', true)
+      .then((result) => {
+      console.log(userid1, " has liked ", userid2, " updating userlikes table ", result)
+    })
+
+    knex('userlikes').whereNot(function() {
+      this.where('userid2', Number(userid1)).orWhereNot('userid1', Number(userid2))
+      }).insert({userid1: Number(userid1), userid2: Number(userid2),liked: true})
+      .then(function (woo) {
+        console.log(userid1, " has liked ", userid2, " making userlikes table ", woo);
+      });
+});
 
 app.get('/api/profile', (req, res) => {
   knex.select("*")
