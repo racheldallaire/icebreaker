@@ -55,7 +55,6 @@ export default class Profile extends React.Component {
       });
     }
 
-
     // handles the checkbox to show the gender preferences
     handleInputChange(event) {
     const target = event.target;

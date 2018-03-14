@@ -93,6 +93,11 @@ export default class App extends React.Component {
               }
               {isLoggedIn &&
                 <NavItem>
+                  <NavLink><Link to="/Potentials">Potentials</Link></NavLink>
+                </NavItem>
+              }
+              {isLoggedIn &&
+                <NavItem>
                   <NavLink><Link to="/Chats">Chats</Link></NavLink>
                 </NavItem>
               }
