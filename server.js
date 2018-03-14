@@ -94,11 +94,11 @@ app.get('/api/potentials', (req, res) => {
     knex('users')
      .select('*')
      .whereNot('users.id', cookieid )
-     .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid1 = ?', [cookieid]))
-     .whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
-     .whereExists(knex.select('*').from('filters').whereRaw('users.gender = filters.male' ).orWhereRaw('users.gender = filters.female'))
+     .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid1 = ?', [cookieid]).andWhereRaw('users.id = userlikes.userid2'))
+     // .whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
+     .whereExists(knex.select('*').from('filters').whereRaw('users.gender = filters.female' ))
      .whereExists(knex.select('*').from('filters').whereRaw('users.age >= filters.min_age'))
-     .whereExists(knex.select('*').from('filters').whereRaw('users.age <= filters.max_age'))
+     .whereExists(knex.select('*').from('filters').whereRaw('users.age < filters.max_age'))
      .then((result) => {
         console.log("knex result", result)
         res.send(result)
@@ -107,7 +107,7 @@ app.get('/api/potentials', (req, res) => {
             console.log("error", err)
           })
 
-
+//.orWhereRaw('users.gender = filters.female').orWhereRaw('users.gender = filters.other')
 
       })
 

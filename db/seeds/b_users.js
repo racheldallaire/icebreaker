@@ -11,17 +11,17 @@ exports.seed = function(knex, Promise) {
         knex('users').insert({first_name: "Jimbo", last_name: "Binsd", age: 55, gender: "male", location: "38.9108325, -75.52766989999998"}),
         knex('users').insert({first_name: "Billy", last_name: "Orack", age: 46, gender: "male", location: "53.2734, -7.778320310000026"}),
         knex('users').insert({first_name: "Abie", last_name: "asDibs", age: 18, gender: "female", location: "45.4963839, -73.57059649999997"}),
-        knex('users').insert({first_name: "asJill", last_name: "weFens", age: 18, gender: "female", location: "13.193887, -59.54319799999996"}),
-        knex('users').insert({first_name: "asJimbo", last_name: "Bweinsd", age: 55, gender: "male", location: "38.9108325, -75.52766989999998"}),
-        knex('users').insert({first_name: "caJazz", last_name: "Diwebs", age: 18, gender: "female", location: "45.4963839, -73.57059649999997"}),
-        knex('users').insert({first_name: "caJill", last_name: "eeFens", age: 18, gender: "female", location: "13.193887, -59.54319799999996"}),
-        knex('users').insert({first_name: "caJimbo", last_name: "Biwensd", age: 55, gender: "male", location: "38.9108325, -75.52766989999998"}),
-        knex('users').insert({first_name: "deJazz", last_name: "Dwewibs", age: 18, gender: "female", location: "45.4963839, -73.57059649999997"}),
-        knex('users').insert({first_name: "deJill", last_name: "weFens", age: 18, gender: "female", location: "13.193887, -59.54319799999996"}),
-        knex('users').insert({first_name: "deJimbo", last_name: "weBinsd", age: 55, gender: "male", location: "38.9108325, -75.52766989999998"}),
-        knex('users').insert({first_name: "weJazz", last_name: "Dirbs", age: 18, gender: "female", location: "45.4963839, -73.57059649999997"}),
-        knex('users').insert({first_name: "weJill", last_name: "Fefassdns", age: 18, gender: "female", location: "13.193887, -59.54319799999996"}),
-        knex('users').insert({first_name: "weJimbo", last_name: "Bdfdsinsd", age: 55, gender: "male", location: "38.9108325, -75.52766989999998"})
+        knex('users').insert({first_name: "Azazel", last_name: "weFens", age: 18, gender: "female", location: "13.193887, -59.54319799999996"}),
+        knex('users').insert({first_name: "Matt", last_name: "Damon", age: 55, gender: "male", location: "38.9108325, -75.52766989999998"}),
+        knex('users').insert({first_name: "Helen", last_name: "Mirren", age: 28, gender: "female", location: "45.4963839, -73.57059649999997"}),
+        knex('users').insert({first_name: "Nathalie", last_name: "Portman", age: 18, gender: "female", location: "13.193887, -59.54319799999996"}),
+        knex('users').insert({first_name: "Lorne", last_name: "Michaels", age: 55, gender: "male", location: "38.9108325, -75.52766989999998"}),
+        knex('users').insert({first_name: "Lisa", last_name: "Loeb", age: 38, gender: "female", location: "45.4963839, -73.57059649999997"}),
+        knex('users').insert({first_name: "Buffy", last_name: "Summers", age: 48, gender: "female", location: "13.193887, -59.54319799999996"}),
+        knex('users').insert({first_name: "Xander", last_name: "Harris", age: 55, gender: "male", location: "38.9108325, -75.52766989999998"}),
+        knex('users').insert({first_name: "Seth", last_name: "Green", age: 58, gender: "female", location: "45.4963839, -73.57059649999997"}),
+        knex('users').insert({first_name: "Briana", last_name: "Trent", age: 32, gender: "female", location: "13.193887, -59.54319799999996"}),
+        knex('users').insert({first_name: "Hugh", last_name: "Jackman", age: 55, gender: "male", location: "38.9108325, -75.52766989999998"})
       ]);
     });
 };
