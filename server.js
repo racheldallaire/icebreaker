@@ -88,53 +88,40 @@ app.get('/auth/facebook/callback',
 
 ///////////ROUTES//////////////////////////////
 app.get('/api/potentials', (req, res) => {
-  const cookieid = req.session.id
+  const cookieid = 1 //req.session.id
   console.log("potentials get for id ", cookieid)
+    Promise.all([
 
     knex('users')
-     .select('*')
-     .whereNot('users.id', cookieid )
-     .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid1 = ?', [cookieid]).andWhereRaw('users.id = userlikes.userid2'))
-     .whereExists(knex.select('*').from('filters').whereRaw('users.gender = filters.female').orWhereRaw('users.gender = filters.male').orWhereRaw('users.gender = filters.other'))
-     .whereExists(knex.select('*').from('filters').whereRaw('users.age >= filters.min_age').andWhereRaw('users.age <= filters.max_age'))
+     .select('filters.min_age','filters.max_age', 'filters.female','filters.male')
+     .innerJoin('filters', 'users.id', 'filters.userid')
+     .where('users.id',cookieid ),
+
+    knex('users')
+    .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid1 = ?', [cookieid]).andWhereRaw('users.id = userlikes.userid2'))
+      ])
+
      .then((result) => {
-        console.log("filter result", result)
-        res.send(result)
-          })
+        const[filterCriteria, users] = result
+        const [min_age, max_age, female, male] = Object.values(filterCriteria[0])
+          res.send(users.filter(user => {
+           if((user.age >= min_age) && (user.age <= max_age) && ( (user.gender = female) || (user.gender = male) ||  (user.gender = female) && (user.gender = male) ) ) {
+            return user
+          }
+        }))
+      })
     .catch((err) => {
             console.log("error", err)
           })
-
-// SELECT * FROM  users
-//   WHERE NOT EXISTS (
-//     SELECT * FROM filters WHERE NOT EXISTS (
-//       SELECT * FROM users.gender
-//        WHERE users.gender = filters.female
-//        OR users.gender = filters.male));
-
-// SELECT DISTINCT store_type FROM stores s1
-//   WHERE NOT EXISTS (
-//     SELECT * FROM cities WHERE NOT EXISTS (
-//       SELECT * FROM cities_stores
-//        WHERE cities_stores.city = cities.city
-//        AND cities_stores.store_type = stores.store_type));
-
-
-//.orWhereRaw('users.gender = filters.female').orWhereRaw('users.gender = filters.other')
-// knex.select('*').from('users').whereNull('last_name').unionAll(function() {
-//   this.select('*').from('users').whereNull('first_name');
-// })     .whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
-
       })
-
 
 app.get('/api/matches', (req, res) => {
   const cookieid = cookie_id
-  console.log("potentials get for id ", cookieid)
+  console.log("matchesfor id ", cookieid)
   knex('users')
-  .whereExists(knex.select('*').from('userlikes').where('userid1', cookie_id))
-  // .whereExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
-  // .whereExists(knex.select('*').from('userlikes').where('liked', true))
+  .whereExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid1 = ?', [cookieid]).orWhereRaw('userlikes.userid1 = ?', [cookieid]))
+  .whereExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid1').andWhereRaw('users.id = userlikes.userid2'))
+  .whereExists(knex.select('*').from('userlikes').where('liked', true))
   .then((result) => {
       console.log("knex result", result)
       res.send(result)
@@ -150,7 +137,6 @@ app.post('/api/matchesrejected', (req, res) => {
   let userid2 = Number(req.body.user2);
 
     knex('userlikes')
-      // .select('userlikes.id')
       .where('userid2', Number(userid1))
       .where('userid1', Number(userid2))
       .update('liked', false)
@@ -183,15 +169,15 @@ app.post('/api/matchesliked', (req, res) => {
       .select('userlikes.id')
       .where('userid2', Number(userid1))
       .where('userid1', Number(userid2))
-      .whereNot('liked', false)
+      .whereNot('liked', null)
       .update('liked', true)
       .then((result) => {
       console.log(userid1, " has liked ", userid2, " updating userlikes table ", result)
     })
 
     knex('userlikes').whereNot(function() {
-      this.where('userid2', Number(userid1)).orWhereNot('userid1', Number(userid2))
-      }).insert({userid1: Number(userid1), userid2: Number(userid2),liked: true})
+      this.where('userid2', Number(userid1)).andWhereNot('userid1', Number(userid2))
+      }).insert({userid1: Number(userid1), userid2: Number(userid2),liked: null})
       .then(function (woo) {
         console.log(userid1, " has liked ", userid2, " making userlikes table ", woo);
       });
