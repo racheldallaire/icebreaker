@@ -138,6 +138,16 @@ app.get('/api/filters', (req, res) => {
   res.send(fb_pic);
 });
 
+app.get('/api/chat_user', (req, res) => {
+  knex.select("first_name")
+        .from("users")
+        .where("id", Number(req.session.id))
+        .then((result) => {
+          console.log(result);
+          res.send(result);
+        });
+});
+
 app.get('/api/loggedIn', (req, res) => {
   if(req.session.id)
     res.send("true");
