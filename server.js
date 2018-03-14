@@ -88,7 +88,7 @@ app.get('/auth/facebook/callback',
 
 ///////////ROUTES//////////////////////////////
 app.get('/api/potentials', (req, res) => {
-  const cookieid = 1 //req.session.id
+  const cookieid = req.session.id
   console.log("potentials get for id ", cookieid)
     Promise.all([
 
@@ -115,25 +115,8 @@ app.get('/api/potentials', (req, res) => {
           })
       })
 
-app.get('/api/matches', (req, res) => {
-  const cookieid = cookie_id
-  console.log("matchesfor id ", cookieid)
-  knex('users')
-  .whereExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid1 = ?', [cookieid]).orWhereRaw('userlikes.userid1 = ?', [cookieid]))
-  .whereExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid1').andWhereRaw('users.id = userlikes.userid2'))
-  .whereExists(knex.select('*').from('userlikes').where('liked', true))
-  .then((result) => {
-      console.log("knex result", result)
-      res.send(result)
-        })
-  .catch((err) => {
-          console.log("error", err)
-
-        })
-      })
-
 app.post('/api/matchesrejected', (req, res) => {
-  let userid1 = Number(cookie_id);
+  let userid1 = 1//Number(cookie_id);
   let userid2 = Number(req.body.user2);
 
     knex('userlikes')
@@ -156,13 +139,11 @@ app.post('/api/matchesrejected', (req, res) => {
        })
        .catch((err) => {
           console.log("error", err)
-
         })
-
 });
 
 app.post('/api/matchesliked', (req, res) => {
-  let userid1 = Number(cookie_id);
+  let userid1 = 1//Number(cookie_id);
   let userid2 = Number(req.body.user2);
 
     knex('userlikes')
@@ -181,6 +162,47 @@ app.post('/api/matchesliked', (req, res) => {
       .then(function (woo) {
         console.log(userid1, " has liked ", userid2, " making userlikes table ", woo);
       });
+});
+
+app.get('/api/matches', (req, res) => {
+  const cookieid = 1 //req.session.id
+  console.log("matches for id ", cookieid)
+
+
+  knex.from('users').join('userlikes','users.id','userlikes.userid1')
+  .where('userlikes.liked', true)
+  .where('users.id', cookieid).orWhere('users.id',  cookieid)
+  //.whereExists(knex.select('*').from('userlikes').whereRaw('userlikes.liked = ?', true))
+  // .whereExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid1').orWhereRaw('users.id = userlikes.userid2'))
+  // .whereExists(knex.select('*').from('userlikes').where('liked', true)) .whereRaw('userlikes.userid1 = ?', [cookieid]).orWhereRaw('userlikes.userid1 = ?', [cookieid])
+    // .innerJoin('userlikes', function() {
+    // this.on('userlikes.userid1', '=', cookieid).orOn('userlikes.userid2', '=', cookieid)
+    // })
+  .then((result) => {
+      console.log("knex result", result)
+      res.send(result)
+        })
+  .catch((err) => {
+          console.log("error", err)
+
+        })
+      });
+
+app.post('/api/friendremoved', (req, res) => {
+  let userid1 = 1//Number(cookie_id);
+  let userid2 = Number(req.body.user2);
+
+    knex('userlikes')
+      .where('userid2', Number(userid1))
+      .where('userid1', Number(userid2))
+      .update('liked', false)
+      .then((result) => {
+        console.log(userid1, " has rejected ", userid2, " updating userlikes table ", result)
+    })
+       .catch((err) => {
+          console.log("error", err)
+
+        })
 });
 
 app.get('/api/profile', (req, res) => {
