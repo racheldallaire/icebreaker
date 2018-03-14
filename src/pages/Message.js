@@ -7,7 +7,7 @@ export default class Message extends Component {
     <div>
       {type === 'postMessage' && <div className="message">
       <span className="message-username" style={color}>{currentUser}</span>
-      <div className="bubble-me">{content}</div>
+      <div className="bubble me">{content}</div>
       </div>}
     {type === 'postNotification' && <div className="message system">{content}
     </div>}

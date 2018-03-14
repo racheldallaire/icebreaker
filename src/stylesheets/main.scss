@@ -194,7 +194,7 @@ label {
   }
   input {
     float: left;
-    width: 188px;
+    width: 100%;
     height: 42px;
     padding: 0 15px;
     border: 1px solid #e6e6e6;
@@ -228,7 +228,7 @@ label {
     .person {
       position: relative;
       width: 100%;
-      padding: 12px 10% 16px;
+      padding: 12px 17% 16px;
       cursor: pointer;
       background-color: #fff;
       &:after {
@@ -433,7 +433,7 @@ label {
       transform: rotate(29deg) skew(-35deg);
     }
   }
-  .bubble-you {
+  .bubble.you {
     float: left;
     color: #fff;
     background-color: #00b0ff;
@@ -446,7 +446,7 @@ label {
       background-color: #00b0ff;
     }
   }
-  .bubble-me {
+  .bubble.me {
     float: right;
     color: #1a1a1a;
     background-color: #eceff1;
@@ -484,6 +484,12 @@ label {
         right: 0;
       }
     }
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .left {
+    display: none;
   }
 }
 

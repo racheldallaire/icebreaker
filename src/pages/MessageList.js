@@ -18,7 +18,6 @@ export default class MessageList extends Component {
 
             <div className="top">
                 <input type="text" />
-                <a href="javascript:;" className="search"></a>
             </div>
 
             <ul className="people">
@@ -35,7 +34,7 @@ you blind bitch</span>
                     <img src="https://s30.postimg.org/kwi7e42rh/img6.jpg" alt="" />
                     <span className="name">Drake</span>
                     <span className="time">2:09 PM</span>
-                    <span className="preview">howdoyoudoaspace</span>
+                    <span className="preview">She broke my heart bro like I just can't believe this keeps happening to me</span>
                 </li>
             </ul>
         </div>
