@@ -149,6 +149,35 @@ app.get('/api/logout', (req, res) => {
   res.redirect('/logout');
 });
 
+app.get('/api/edit_filters', (req, res) => {
+  knex.select("*")
+        .from("filters")
+        .where("userid", Number(req.session.id))
+        .then((result) => {
+          console.log(result);
+          res.send(result);
+        });
+});
+
+app.post('/api/edit_filters', (req, res) => {
+  console.log(req.body);
+    // let userid = Number(cookie_id);
+    let min_age = Number(req.body.min_age);
+    let max_age = Number(req.body.max_age);
+    let radius = Number(req.body.distance);
+    let female = (req.body.female) ? true : false;
+    let male = (req.body.male) ? true : false;
+    let other = (req.body.other) ? true : false;
+    knex('filters')
+      .where("userid", Number(req.session.id))
+      .update({min_age: min_age, max_age: max_age, female: female, male: male, other: other, radius: radius})
+      .then(function (woo) { 
+          console.log("Woo!");
+         });
+    res.redirect('/profile');
+});
+
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));
   if(cookie_id > 0)
