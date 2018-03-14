@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import MessageList from './MessageList.js';
 import ChatBar from './ChatBar.js';
 import ChatWindow from './ChatWindow.js';
-import $ from 'jquery';
 
 class Chats extends Component {
 // Set initial state so the user is initially anonymous
