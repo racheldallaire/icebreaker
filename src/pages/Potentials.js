@@ -71,7 +71,9 @@ class Potentials extends React.Component{
 
   render() {
 
+
     var usercard = 'Not able to find Potential Matches';
+
     if (this.state.hasData) {
       var user= this.state.potentials[0]
        // for (let user of  matchesArray){
@@ -89,12 +91,11 @@ class Potentials extends React.Component{
     <Col xs="12" sm="6">
         <Card>
             <CardBody className="card-body">
-            <CardImg top src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180" /><p/>
+            <CardImg top src={user.facebook_picture_url} /><p/>
             <CardTitle>{user.first_name}  {user.last_name} </CardTitle>
             <p> {user.age}  | {user.gender} </p>
-            <p> A quick description about myself</p>
           </CardBody>
-          <CardFooter>Something goes here</CardFooter>
+          <CardFooter>{user.description}</CardFooter>
         </Card>
         </Col>
         <Col xs="6" sm="3">
@@ -103,6 +104,7 @@ class Potentials extends React.Component{
         </Row>
         </Container>
     </div>
+
      } else if
       (this.state.potentials.length < 0){
       usercard = 'Sorry, You are out of Potential Matches';

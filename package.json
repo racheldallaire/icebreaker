@@ -42,6 +42,7 @@
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.1.1",
-    "reactstrap": "^5.0.0-beta.2"
+    "reactstrap": "^5.0.0-beta.2",
+    "ws": "^5.0.0"
   }
 }

@@ -9,50 +9,65 @@ export default class Profile extends React.Component {
     this.state = {
         first_name: "",
         last_name: "",
-        age: "", 
+        age: "",
         gender: "",
         description: "",
-        fb_pic: "hi"};
+        fb_pic: "",
+        min_age: 18,
+        max_age: 19,
+        radius: 2,
+        female: false,
+        male: false,
+        other: false
+        };
     }
 
     componentDidMount(e){
       axios.get('/api/profile')
       .then(response => {
-
-        console.log(response.data[0].facebook_picture_url)
-        this.setState({ 
+        this.setState({
             first_name: response.data[0].first_name,
             last_name: response.data[0].last_name,
-            age: response.data[0].age, 
+            age: response.data[0].age,
             gender: response.data[0].gender,
             description: response.data[0].description,
-            fb_pic: response.data[0].facebook_picture_url });
+            fb_pic: response.data[0].facebook_picture_url
+        });
       })
       .catch(function (error) {
       console.log(error);
       });
 
-      // axios.get('/api/edit_filter')
-      // .then(response => {
-
-      //   console.log(response.data[0].facebook_picture_url)
-      //   this.setState({ 
-      //       first_name: response.data[0].first_name,
-      //       last_name: response.data[0].last_name,
-      //       age: response.data[0].age, 
-      //       gender: response.data[0].gender,
-      //       description: response.data[0].description,
-      //       fb_pic: response.data[0].facebook_picture_url });
-      // })
-      // .catch(function (error) {
-      // console.log(error);
-      // });
+      axios.get('/api/edit_filters')
+      .then(response => {
+        console.log(response.data)
+        this.setState({
+            min_age: response.data[0].min_age,
+            max_age: response.data[0].max_age,
+            radius: response.data[0].radius,
+            female: response.data[0].female,
+            male: response.data[0].male,
+            other: response.data[0].other
+        });
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
     }
-    
-        
 
+    // handles the checkbox to show the gender preferences
+    handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+      this.setState({
+        [name]: value
+      });
+    }
 
   render() {
+
   return (
     <div>
 
@@ -78,132 +93,136 @@ export default class Profile extends React.Component {
             </CardBody>
 
             <CardFooter>
-             <Form>
+             <Form method="post" action="/api/edit_filters">
+                <FormGroup>
+                  <legend>Age Range</legend>
+                  <Label for="exampleSelect">From</Label>
+                  <Input type="select" name="min_age" id="exampleSelect">
+                    <option selected>{this.state.min_age}</option>
+                    <option>18</option>
+                    <option>19</option>
+                    <option>20</option>
+                    <option>21</option>
+                    <option>22</option>
+                    <option>23</option>
+                    <option>24</option>
+                    <option>25</option>
+                    <option>26</option>
+                    <option>27</option>
+                    <option>28</option>
+                    <option>29</option>
+                    <option>30</option>
+                    <option>31</option>
+                    <option>32</option>
+                    <option>33</option>
+                    <option>34</option>
+                    <option>35</option>
+                    <option>36</option>
+                    <option>37</option>
+                    <option>38</option>
+                    <option>39</option>
+                    <option>40</option>
+                    <option>41</option>
+                    <option>42</option>
+                    <option>43</option>
+                    <option>44</option>
+                    <option>45</option>
+                    <option>46</option>
+                    <option>47</option>
+                    <option>48</option>
+                    <option>49</option>
+                    <option>50</option>
+                    <option>51</option>
+                    <option>52</option>
+                    <option>53</option>
+                    <option>54</option>
+                    <option>55</option>
+                    <option>56</option>
+                    <option>57</option>
+                    <option>58</option>
+                    <option>59</option>
+                    <option>60+</option>
+                  </Input>
+                  <Label for="exampleSelect">To</Label>
+                  <Input type="select" name="max_age" id="exampleSelect">
+                    <option selected>{this.state.max_age}</option>
+                    <option>18</option>
+                    <option>19</option>
+                    <option>20</option>
+                    <option>21</option>
+                    <option>22</option>
+                    <option>23</option>
+                    <option>24</option>
+                    <option>25</option>
+                    <option>26</option>
+                    <option>27</option>
+                    <option>28</option>
+                    <option>29</option>
+                    <option>30</option>
+                    <option>31</option>
+                    <option>32</option>
+                    <option>33</option>
+                    <option>34</option>
+                    <option>35</option>
+                    <option>36</option>
+                    <option>37</option>
+                    <option>38</option>
+                    <option>39</option>
+                    <option>40</option>
+                    <option>41</option>
+                    <option>42</option>
+                    <option>43</option>
+                    <option>44</option>
+                    <option>45</option>
+                    <option>46</option>
+                    <option>47</option>
+                    <option>48</option>
+                    <option>49</option>
+                    <option>50</option>
+                    <option>51</option>
+                    <option>52</option>
+                    <option>53</option>
+                    <option>54</option>
+                    <option>55</option>
+                    <option>56</option>
+                    <option>57</option>
+                    <option>58</option>
+                    <option>59</option>
+                    <option>60+</option>
+                  </Input>
+                </FormGroup>
 
-        <FormGroup>
-          <legend>Age Range</legend>
-          <Label for="exampleSelect">From</Label>
-          <Input type="select" name="min_age" id="exampleSelect">
-            <option>18</option>
-            <option>19</option>
-            <option>20</option>
-            <option>21</option>
-            <option>22</option>
-            <option>23</option>
-            <option>24</option>
-            <option>25</option>
-            <option>26</option>
-            <option>27</option>
-            <option>28</option>
-            <option>29</option>
-            <option>30</option>
-            <option>31</option>
-            <option>32</option>
-            <option>33</option>
-            <option>34</option>
-            <option>35</option>
-            <option>36</option>
-            <option>37</option>
-            <option>38</option>
-            <option>39</option>
-            <option>40</option>
-            <option>41</option>
-            <option>42</option>
-            <option>43</option>
-            <option>44</option>
-            <option>45</option>
-            <option>46</option>
-            <option>47</option>
-            <option>48</option>
-            <option>49</option>
-            <option>50</option>
-            <option>51</option>
-            <option>52</option>
-            <option>53</option>
-            <option>54</option>
-            <option>55</option>
-            <option>56</option>
-            <option>57</option>
-            <option>58</option>
-            <option>59</option>
-            <option>60+</option>
-          </Input>
-          <Label for="exampleSelect">To</Label>
-          <Input type="select" name="max_age" id="exampleSelect">
-            <option>18</option>
-            <option>19</option>
-            <option>20</option>
-            <option>21</option>
-            <option>22</option>
-            <option>23</option>
-            <option>24</option>
-            <option>25</option>
-            <option>26</option>
-            <option>27</option>
-            <option>28</option>
-            <option>29</option>
-            <option>30</option>
-            <option>31</option>
-            <option>32</option>
-            <option>33</option>
-            <option>34</option>
-            <option>35</option>
-            <option>36</option>
-            <option>37</option>
-            <option>38</option>
-            <option>39</option>
-            <option>40</option>
-            <option>41</option>
-            <option>42</option>
-            <option>43</option>
-            <option>44</option>
-            <option>45</option>
-            <option>46</option>
-            <option>47</option>
-            <option>48</option>
-            <option>49</option>
-            <option>50</option>
-            <option>51</option>
-            <option>52</option>
-            <option>53</option>
-            <option>54</option>
-            <option>55</option>
-            <option>56</option>
-            <option>57</option>
-            <option>58</option>
-            <option>59</option>
-            <option>60+</option>
-          </Input>
-        </FormGroup>
+                <FormGroup>
+                <legend>Distance</legend>
+                <InputGroup>
+                <Input placeholder="No more than" name="distance"/>
+                <InputGroupAddon addonType="append">km away</InputGroupAddon>
+                </InputGroup>
+                </FormGroup>
 
-        <FormGroup>
-        <legend>Distance</legend>
-        <InputGroup>
-        <Input placeholder="No more than" name="distance"/>
-        <InputGroupAddon addonType="append">km away</InputGroupAddon>
-        </InputGroup>
-        </FormGroup>
+                <FormGroup tag="fieldset">
+                  <legend>Looking For</legend>
+                  <FormGroup check>
 
-        <FormGroup tag="fieldset">
-          <legend>Looking For</legend>
-          <FormGroup check>
-          <Label check>
-            <Input type="checkbox" name="male" />{' '}
-            Men
-          </Label>
-          <Label check>
-            <Input type="checkbox" name="female" />{' '}
-            Women
-          </Label>
-          <Label check>
-            <Input type="checkbox" name="other" />{' '}
-            Other
-          </Label>
-        </FormGroup>
-        </FormGroup>
+                  <label>
+                      <input name="male" type="checkbox" checked={this.state.male} onChange={this.handleInputChange} />{' '}
+                      Men
+                    </label>
 
-        <p/><Button className="cool-button2">Submit</Button>
-      </Form>
+                    <label>
+                      <input name="female" type="checkbox" checked={this.state.female} onChange={this.handleInputChange} />{' '}
+                      Women
+                    </label>
+
+                    <label>
+                      <input name="other" type="checkbox" checked={this.state.other} onChange={this.handleInputChange} />{' '}
+                      Other
+                    </label>
+                  </FormGroup>
+                </FormGroup>
+
+                <p/><Button className="cool-button2">Submit</Button>
+              </Form>
 
             </CardFooter>
           </Card>

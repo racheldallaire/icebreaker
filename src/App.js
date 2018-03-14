@@ -33,6 +33,7 @@ import MessageList from './pages/MessageList'
 import axios from 'axios';
 import Filters from './pages/Filters'
 
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -75,11 +76,6 @@ export default class App extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              {!isLoggedIn &&
-                <NavItem>
-                  <NavLink><Link to="/">Home</Link></NavLink>
-                </NavItem>
-              }
               {isLoggedIn &&
                 <NavItem>
                   <NavLink><Link to="/profile">Profile</Link></NavLink>
@@ -88,6 +84,11 @@ export default class App extends React.Component {
               {isLoggedIn &&
                 <NavItem>
                   <NavLink><Link to="/Matches">Matches</Link></NavLink>
+                </NavItem>
+              }
+              {isLoggedIn &&
+                <NavItem>
+                  <NavLink><Link to="/Potentials">Potentials</Link></NavLink>
                 </NavItem>
               }
               {isLoggedIn &&

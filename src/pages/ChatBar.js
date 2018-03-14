@@ -1,33 +1,34 @@
 import React, {Component} from 'react';
 
 export default class ChatBar extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {input: '', currentUser: props.defaultValue};
-	}
+  constructor(props) {
+    super(props);
+    this.state= {input: '', currentUser: props.defaultValue};
+  }
 
-	render() {
+  render() {
+    const changedText = (evt) => {
+      this.setState({input: evt.target.value, currentUser: this.state.currentUser});
+    };
 
-		const changedText = ev => {
-			this.setState({input: ev.target.value, currentUser: this.state.currentUser});
-		}
+    const changedUser = (evt) => {
+      this.setState({inputValue: this.state.inputValue, currentUser: evt.target.value});
+    };
 
-		const onKeyPress = ev => {
-		    if (ev.key === "Enter") {
-		      this.props.handleMessage(this.state);
-		      this.setState({input: '', currentUser: this.state.currentUser});
-		    }
-		 }
+    const sendMessage = (evt) => {
+      if(evt.key === 'Enter') {
+        this.props.brandNewMessage(this.state);
+        this.setState({input: '', currentUser: this.state.currentUser});
+      }
+    };
 
-	 	const changedName = ev => {
-	 		this.setState({inputValue: this.state.inputValue, currentUser: ev.target.value});
-	 	};
-
-	    return (
-	        <footer className="chatbar">
-                <input className="write" placeholder="Type a message and hit ENTER" onChange={changedText} value={this.state.input} onKeyPress={onKeyPress} />
-                
-	    	</footer>
+    return (
+	    	<div className="right">
+	        <div className="write">
+                <input type="text" onChange={changedText} value={this.state.input} onKeyPress={sendMessage} required/>
+                <a href="javascript:;" className="write-link send"></a>
+            </div>
+          </div>
 	    );
 	}
 }

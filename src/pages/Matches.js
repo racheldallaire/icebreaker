@@ -50,6 +50,7 @@ class Matches extends React.Component{
 
     var userContainer = 'You are have no Matches';
     if (this.state.hasData) {
+
       for (let user of this.state.matchedUsers) {
         userContainer =
             <div>
@@ -82,6 +83,7 @@ class Matches extends React.Component{
      } else if
       (this.state.matchedUsers.length < 0){
       usercard = 'Sorry, You have no friends.';
+
      }
 
   return (

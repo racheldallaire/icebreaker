@@ -1,64 +1,45 @@
 import React, {Component} from 'react';
-import ChatBar from './ChatBar.js';
 import MessageList from './MessageList.js';
+import ChatBar from './ChatBar.js';
+import ChatWindow from './ChatWindow.js';
 
 class Chats extends Component {
-
-  //Initial state where props with initial users and message.
+// Set initial state so the user is initially anonymous
   constructor(props) {
     super(props);
-    this.socket = new WebSocket('ws://localhost:3001');
+    this.socket = new WebSocket('ws:localhost:3001');
+    this.brandNewMessage = this.brandNewMessage.bind(this);
     this.state = {
-      currentUser: {name: "Anonymous"}, 
+      currentUser: {name: 'Anonymous'},
       messages: [],
+      fromMe: true
     };
   }
 
-  // Called after the component was rendered and it was attached to the DOM. 
-  // componentDidMount() {
+  brandNewMessage(message) {
+    const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input, fromMe: true};
+    this.socket.send(JSON.stringify(newMessage));
+  }
 
-  //   this.socket.onopen = function(e) {
-  //     console.log('Connected to WebSocket server');
-  //   };
+  // Called after the component was rendered and it was attached to the DOM.
+  componentDidMount() {
+    this.socket.onopen = (event) => {
+      console.log('Connected to server')
+     }
+    this.socket.onmessage = (event) => {
+    const newMess = JSON.parse(event.data)
+    const messages = this.state.messages.concat(newMess);
+    this.setState({messages: messages});
+    }
+  }
 
-  //   // handles receiving a message from the websocket server
-  //   this.socket.onmessage = function(e) {
-      
-  //     const newMessage = JSON.parse(e.data);
-  //     const messages = this.state.messages.concat(newMessage);
-      
-  //     //Changes counter displayed to users.
-  //     if ( messages[0].type === 'connectedUsers' ) {
-  //       this.setState({ userCount : messages[0].count })
-  //     } else {
-  //       this.setState({messages: messages});
-  //     }
-  //   }.bind(this)
-  // }
-
-  //helper to handle any text input in the ChatBar or when user changes their name.
-  // handleMessage = content => {
-  //     const newMessage = {type: 'postMessage', username: content.currentUser, content: content.input};
-
-  //     if ( !content.currentUser ) {
-  //       currentUser: this.state.currentUser.name
-
-  //     } else if ( content.currentUser !== this.state.currentUser.name ) {
-  //       const newNotification = {type: 'postNotification', content: `${this.state.currentUser.name} has changed their name to ${content.currentUser}.`}
-  //       this.setState( {currentUser: { name: content.currentUser }} )
-  //       this.socket.send( JSON.stringify(newNotification) )
-  //     } else {
-  //       this.setState( {currentUser: { name: content.currentUser }} )
-  //     }
-  //     this.socket.send(JSON.stringify(newMessage));
-  // }
-  
   // Called any time the props or state changes. The JSX elements returned in this method will be rendered to the DOM.
   render() {
     return (
       <div>
-        <MessageList messages = {this.state.messages} />
-        <ChatBar defaultValue = {this.state.currentUser.name} handleMessage={this.handleMessage} />
+      <ChatWindow messages = {this.state.messages} />
+      <MessageList messages = {this.state.messages} />
+      <ChatBar defaultValue={this.state.currentUser.name} brandNewMessage={this.brandNewMessage}/>
       </div>
     );
   }
