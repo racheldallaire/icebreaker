@@ -138,6 +138,7 @@ app.get('/api/filters', (req, res) => {
   res.send(fb_pic);
 });
 
+
 app.get('/api/loggedIn', (req, res) => {
   if(req.session.id)
     res.send("true");
@@ -147,6 +148,42 @@ app.get('/api/logout', (req, res) => {
   cookie_id = 0;
   req.session = null;
   res.redirect('/logout');
+});
+
+app.get('/api/profile', (req, res) => {
+  knex.select("*")
+        .from("users")
+        .where("id", Number(req.session.id))
+        .then((result) => {
+          res.send(result);
+        });
+});
+
+app.get('/api/edit_filters', (req, res) => {
+  knex.select("*")
+        .from("filters")
+        .where("userid", Number(req.session.id))
+        .then((result) => {
+          console.log(result);
+          res.send(result);
+        });
+
+
+app.post('/api/edit_filters', (req, res) => {
+  console.log(req.body);
+    let min_age = Number(req.body.min_age);
+    let max_age = Number(req.body.max_age);
+    let radius = Number(req.body.distance);
+    let female = (req.body.female) ? true : false;
+    let male = (req.body.male) ? true : false;
+    let other = (req.body.other) ? true : false;
+    knex('filters')
+      .where("userid", Number(req.session.id))
+      .update({min_age: min_age, max_age: max_age, female: female, male: male, other: other, radius: radius})
+      .then(function (woo) { 
+          console.log("Woo!");
+         });
+    res.redirect('/profile');
 });
 
 app.get('*', (req, res) => {
