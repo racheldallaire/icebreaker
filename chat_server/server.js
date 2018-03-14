@@ -2,7 +2,6 @@ const express = require('express');
 const SocketServer = require('ws').Server;
 const uuidv4 = require('uuid/v4');
 const WebSocket = require('ws');
-const randomColor = require('random-color');
 
 // Set the port to 3001
 const PORT = 3001;
@@ -30,14 +29,10 @@ wss.broadcast = function broadcast(data) {
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('A client connected');
-  let random = randomColor();
-  let hex = random.hexString();
-  let userColor = {color : hex}
 
 ws.on('message', function incoming(message) {
     let msg = JSON.parse(message);
     msg.key = uuidv4();
-    msg.color = userColor;
 
     if(msg.type === 'postMessage') {
       msg.type === 'incomingMessage'

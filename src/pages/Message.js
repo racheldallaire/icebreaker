@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 export default class Message extends Component {
 	render() {
-	  const {content, currentUser, type, color}=this.props.message
+	  const {content, currentUser, type}=this.props.message
 	  const fromMe = this.props.fromMe ? 'me' : 'you';
 
 	  return (
