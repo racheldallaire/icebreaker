@@ -72,11 +72,11 @@ class Potentials extends React.Component{
     <Col xs="12" sm="6">
         <Card>
             <CardBody className="card-body">
-            <CardImg top src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180" /><p/>
+            <CardImg top src={user.facebook_picture_url} /><p/>
             <CardTitle>{user.first_name}  {user.last_name} </CardTitle>
             <p> {user.age}  | {user.gender} </p>
           </CardBody>
-          <CardFooter>A quick description about myself</CardFooter>
+          <CardFooter>{user.description}</CardFooter>
         </Card>
         </Col>
         <Col xs="6" sm="3">
