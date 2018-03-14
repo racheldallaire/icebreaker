@@ -84,14 +84,14 @@ app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', '
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { successRedirect: '/matches',
                                       failureRedirect: '/signup' }));
-///////////ROUTES//////////////////////////////
+
 
 ///////////ROUTES//////////////////////////////
 app.get('/api/potentials', (req, res) => {
-  const cookieid = cookie_id
+  const cookieid = req.session["id"]
   console.log("potentials get for id ", cookieid)
    knex('users')
-   .whereNotExists(knex.select('*').from('userlikes').where('userid1',  Number(cookie_id)))
+   .whereNotExists(knex.select('*').from('userlikes').where('userid1',  Number(cookieid)))
    .whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
    .whereExists(knex.select('*').from('filters').whereRaw('users.gender = filters.male'))
    .orWhereExists(knex.select('*').from('filters').whereRaw('users.gender = filters.female'))
@@ -126,7 +126,7 @@ app.get('/api/matches', (req, res) => {
       })
 
 app.post('/api/matches', (req, res) => {
-  let userid1 = 2// Number(cookie_id);
+  let userid1 = Number(cookie_id);
   let userid2 = Number(req.body.user2);
 
 
@@ -219,7 +219,7 @@ app.post('/signup', (req, res) => {
     let gender = req.body.gender;
     let description = req.body.description;
     knex('users').where("id", Number(req.session.id)).update({first_name: first_name, last_name: last_name, age: age, gender: gender, description: description})
-      .then(function (woo) { 
+      .then(function (woo) {
           console.log("Woo!");
          });
     res.redirect('/profile');
@@ -235,7 +235,7 @@ app.post('/signup', (req, res) => {
     console.log(req.body);
     knex('users').insert({facebook_id: facebook_id, first_name: first_name, last_name: last_name, age: age, gender: gender, description: description, facebook_picture_url: facebook_picture_url, location: location})
       .returning('id')
-      .then(function (id) { 
+      .then(function (id) {
           cookie_id = id;
          });
     res.redirect('/filters');
@@ -252,10 +252,10 @@ app.post('/filters', (req, res) => {
   let other = (req.body.other) ? "other" : null;
 
   knex('filters').insert({userid: userid, min_age: min_age, max_age: max_age, radius: radius, female: female, male: male, other: other})
-    .then(function (woo) { 
+    .then(function (woo) {
         console.log("WOO!");
        });
-  
+
   req.session = {"id": cookie_id};
   res.redirect('/potentials');
 });
