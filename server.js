@@ -95,19 +95,36 @@ app.get('/api/potentials', (req, res) => {
      .select('*')
      .whereNot('users.id', cookieid )
      .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid1 = ?', [cookieid]).andWhereRaw('users.id = userlikes.userid2'))
-     // .whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
-     .whereExists(knex.select('*').from('filters').whereRaw('users.gender = filters.female' ))
+     .whereExists(knex.select('*').from('filters').whereRaw('users.gender = filters.female').orWhereRaw('users.gender = filters.male').orWhereRaw('users.gender = filters.other'))
      .whereExists(knex.select('*').from('filters').whereRaw('users.age >= filters.min_age'))
      .whereExists(knex.select('*').from('filters').whereRaw('users.age < filters.max_age'))
      .then((result) => {
-        console.log("knex result", result)
+        console.log("filter result", result)
         res.send(result)
           })
     .catch((err) => {
             console.log("error", err)
           })
 
+// SELECT * FROM  users
+//   WHERE NOT EXISTS (
+//     SELECT * FROM filters WHERE NOT EXISTS (
+//       SELECT * FROM users.gender
+//        WHERE users.gender = filters.female
+//        OR users.gender = filters.male));
+
+// SELECT DISTINCT store_type FROM stores s1
+//   WHERE NOT EXISTS (
+//     SELECT * FROM cities WHERE NOT EXISTS (
+//       SELECT * FROM cities_stores
+//        WHERE cities_stores.city = cities.city
+//        AND cities_stores.store_type = stores.store_type));
+
+
 //.orWhereRaw('users.gender = filters.female').orWhereRaw('users.gender = filters.other')
+// knex.select('*').from('users').whereNull('last_name').unionAll(function() {
+//   this.select('*').from('users').whereNull('first_name');
+// })     .whereNotExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid2'))
 
       })
 
