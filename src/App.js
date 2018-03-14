@@ -76,7 +76,7 @@ export default class App extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              {!isLoggedIn &&
+              {isLoggedIn &&
                 <NavItem>
                   <NavLink><Link to="/">Home</Link></NavLink>
                 </NavItem>
