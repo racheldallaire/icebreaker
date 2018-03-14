@@ -78,11 +78,6 @@ export default class App extends React.Component {
             <Nav className="ml-auto" navbar>
               {isLoggedIn &&
                 <NavItem>
-                  <NavLink><Link to="/">Home</Link></NavLink>
-                </NavItem>
-              }
-              {isLoggedIn &&
-                <NavItem>
                   <NavLink><Link to="/profile">Profile</Link></NavLink>
                 </NavItem>
               }
