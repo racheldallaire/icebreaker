@@ -4,7 +4,7 @@ const path = require('path');
 const webpack = require('webpack');
 const graph = require('fbgraph');
 const app = express();
-const morgan = require('morgan')
+const morgan = require('morgan');
 const databaseRoutes  = express.Router();
 const webpackMiddleware = require("webpack-dev-middleware");
 const webpackConfig = require('./webpack.config.js');
@@ -88,8 +88,8 @@ app.get('/auth/facebook/callback',
 
 ///////////ROUTES//////////////////////////////
 app.get('/api/potentials', (req, res) => {
-  const cookieid = 1//req.session.id
-  console.log("potentials get for id ", cookieid)
+  const cookieid = req.session.id;
+  console.log("potentials get for id ", cookieid);
     Promise.all([
 
     knex('users')
@@ -102,21 +102,21 @@ app.get('/api/potentials', (req, res) => {
       ])
 
      .then((result) => {
-        const[filterCriteria, users] = result
-        const [min_age, max_age, female, male] = Object.values(filterCriteria[0])
+        const[filterCriteria, users] = result;
+        const [min_age, max_age, female, male] = Object.values(filterCriteria[0]);
           res.send(users.filter(user => {
            if((user.age >= min_age) && (user.age <= max_age) && ( (user.gender = female) || (user.gender = male) ||  (user.gender = female) && (user.gender = male) ) ) {
-            return user
+            return user;
           }
-        }))
+        }));
       })
     .catch((err) => {
-            console.log("error", err)
-          })
-      })
+            console.log("error", err);
+          });
+      });
 
 app.post('/api/matchesrejected', (req, res) => {
-  let userid1 = 1//Number(cookie_id);
+  let userid1 = Number(req.session.id);
   let userid2 = Number(req.body.user2);
 
     knex('userlikes')
@@ -124,26 +124,26 @@ app.post('/api/matchesrejected', (req, res) => {
       .where('userid1', Number(userid2))
       .update('liked', false)
       .then((result) => {
-        console.log(userid1, " has rejected ", userid2, " updating userlikes table ", result)
+        console.log(userid1, " has rejected ", userid2, " updating userlikes table ", result);
     })
        .catch((err) => {
-          console.log("error", err)
+          console.log("error", err);
 
-        })
+        });
 
     knex('userlikes').whereNot(function() {
-      this.where('userid2', Number(userid1)).where('userid1', Number(userid2))
+      this.where('userid2', Number(userid1)).where('userid1', Number(userid2));
       }).insert({userid1: Number(userid1), userid2: Number(userid2),liked: false})
       .then(function (woo) {
         console.log(userid1, " has rejected ", userid2, " making userlikes table ", woo);
        })
        .catch((err) => {
-          console.log("error", err)
-        })
+          console.log("error", err);
+        });
 });
 
 app.post('/api/matchesliked', (req, res) => {
-  let userid1 = 1//Number(cookie_id);
+  let userid1 = Number(req.session.id);
   let userid2 = Number(req.body.user2);
 
     knex('userlikes')
@@ -153,11 +153,11 @@ app.post('/api/matchesliked', (req, res) => {
       .whereNot('liked', null)
       .update('liked', true)
       .then((result) => {
-      console.log(userid1, " has liked ", userid2, " updating userlikes table ", result)
-    })
+      console.log(userid1, " has liked ", userid2, " updating userlikes table ", result);
+    });
 
     knex('userlikes').whereNot(function() {
-      this.where('userid2', Number(userid1)).andWhereNot('userid1', Number(userid2))
+      this.where('userid2', Number(userid1)).andWhereNot('userid1', Number(userid2));
       }).insert({userid1: Number(userid1), userid2: Number(userid2),liked: null})
       .then(function (woo) {
         console.log(userid1, " has liked ", userid2, " making userlikes table ", woo);
@@ -165,8 +165,8 @@ app.post('/api/matchesliked', (req, res) => {
 });
 
 app.get('/api/matches', (req, res) => {
-  const cookieid = 1 //req.session.id
-  console.log("matches for id ", cookieid)
+  const cookieid = req.session.id;
+  console.log("matches for id ", cookieid);
 
 
   knex.from('users').join('userlikes','users.id','userlikes.userid1')
@@ -179,17 +179,17 @@ app.get('/api/matches', (req, res) => {
     // this.on('userlikes.userid1', '=', cookieid).orOn('userlikes.userid2', '=', cookieid)
     // })
   .then((result) => {
-      console.log("knex result", result)
-      res.send(result)
+      console.log("knex result", result);
+      res.send(result);
         })
   .catch((err) => {
-          console.log("error", err)
+          console.log("error", err);
 
-        })
+        });
       });
 
 app.post('/api/friendremoved', (req, res) => {
-  let userid1 = 1//Number(cookie_id);
+  let userid1 = Number(cookie_id);
   let userid2 = Number(req.body.user2);
 
     knex('userlikes')
@@ -197,12 +197,12 @@ app.post('/api/friendremoved', (req, res) => {
       .where('userid1', Number(userid2))
       .update('liked', false)
       .then((result) => {
-        console.log(userid1, " has rejected ", userid2, " updating userlikes table ", result)
+        console.log(userid1, " has rejected ", userid2, " updating userlikes table ", result);
     })
        .catch((err) => {
-          console.log("error", err)
+          console.log("error", err);
 
-        })
+        });
 });
 
 app.get('/api/profile', (req, res) => {
