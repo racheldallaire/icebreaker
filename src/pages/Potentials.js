@@ -18,7 +18,7 @@ class Potentials extends React.Component{
      this.addToUserLikes = this.addToUserLikes.bind(this);
   }
 
-  componentDidMount(e){
+  componentDidMount(e, props){
       axios.get('/api/potentials')
       .then(response => {
         this.setState({
@@ -36,7 +36,17 @@ class Potentials extends React.Component{
             hasData: true,
             potentials: data.splice(1)
         });
-      console.log(this.state.potentials)
+      console.log("this.state.potentials[0]", this.state.potentials[0])
+        console.log("target userid", this.state.potentials[0].id)
+      axios.post('/api/matches', {
+        user2: this.state.potentials[0].id,
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
     // axios.post('/api/matches', this.state.potentials)
   }
 
@@ -64,7 +74,7 @@ class Potentials extends React.Component{
     <Row>
 
     <Col xs="6" sm="3">
-    <Button onClick={this.removeFromMatchesArray} className="reject-user">✘</Button>
+    <Button onClick={this.removeFromMatchesArray}  value={user.id } className="reject-user">✘</Button>
     </Col>
 
 
@@ -80,14 +90,14 @@ class Potentials extends React.Component{
         </Card>
         </Col>
         <Col xs="6" sm="3">
-    <Button onClick={this.addToUserLikes}  className="like-user">✔</Button>
+    <Button onClick={this.addToUserLikes}  value={user.id }  className="like-user">✔</Button>
     </Col>
         </Row>
         </Container>
     </div>
      } else if
       (this.state.potentials.length < 0){
-      usercard = 'no more matches';
+      usercard = 'Sorry, You are out of Matches';
      }
 
   return (
