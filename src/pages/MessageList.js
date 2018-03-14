@@ -8,42 +8,30 @@ export default class MessageList extends Component {
     super(props);
     this.state = {
         liked: false
-        };
-    }
+    };
+  }
 
   componentDidMount(e){
       axios.get('/api/message_list')
       .then(response => {
-            console.log(response.data)
         this.setState({
-            // first_name: response.data[0].first_name,
-            // last_name: response.data[0].last_name,
-            // age: response.data[0].age,
-            // gender: response.data[0].gender,
-            // description: response.data[0].description,
-            // fb_pic: response.data[0].facebook_picture_url
+            hasData: true,
+            matchedUsers: response.data
         });
+        console.log("MESSAGE LIST MATCHED USERS response.data", response.data)
       })
-      .catch(function (error) {
-      console.log(error);
-      });
-    }
+    
+  }
 
-   render () {
+
+  render () {
     const messages = this.props.messages.map((message) => {
             return <Message message={message} type={message.fromMe} key={message.key} />
-          });
-
-          <div className="right">
-          <div className="write">
-                <input type="text" onChange={changedText} value={this.state.input} onKeyPress={sendMessage} required/>
-                <a href="javascript:;" className="write-link send"></a>
-            </div>
-          </div>
+    });
 
     return (
 
-    <Col sm="5">
+      <Col sm="5">
         <div className="left">
 
             <div className="top">
@@ -56,8 +44,7 @@ export default class MessageList extends Component {
                     <img src="https://s16.postimg.org/ete1l89z5/img5.jpg" alt="" />
                     <span className="name">Michael Jordan</span>
                     <span className="time">2:09 PM</span>
-                    <span className="preview">Wasup for the third time like is
-you blind bitch</span>
+                    <span className="preview">Wasup for the third time like is you blind bitch</span>
                 </li>
 
                 <li className="person" data-chat="person6">
@@ -68,11 +55,7 @@ you blind bitch</span>
                 </li>
             </ul>
         </div>
-
-    </Col>
-
+      </Col>
     )
   }
 }
-
-
