@@ -1,13 +1,46 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 import Message from './Message.js';
 import { Button, Col, Container, Row  } from 'reactstrap';
 
 export default class MessageList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+        liked: false
+        };
+    }
+
+  componentDidMount(e){
+      axios.get('/api/message_list')
+      .then(response => {
+            console.log(response.data)
+        this.setState({
+            // first_name: response.data[0].first_name,
+            // last_name: response.data[0].last_name,
+            // age: response.data[0].age,
+            // gender: response.data[0].gender,
+            // description: response.data[0].description,
+            // fb_pic: response.data[0].facebook_picture_url
+        });
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
+    }
 
    render () {
     const messages = this.props.messages.map((message) => {
             return <Message message={message} type={message.fromMe} key={message.key} />
           });
+
+          <div className="right">
+          <div className="write">
+                <input type="text" onChange={changedText} value={this.state.input} onKeyPress={sendMessage} required/>
+                <a href="javascript:;" className="write-link send"></a>
+            </div>
+          </div>
+
     return (
 
     <Col sm="5">
