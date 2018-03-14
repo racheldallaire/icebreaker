@@ -8,14 +8,14 @@ class Chats extends Component {
   constructor(props) {
     super(props);
     this.socket = new WebSocket('ws:localhost:3001');
-    this.sendMessage = this.sendMessage.bind(this);
+    this.brandNewMessage = this.brandNewMessage.bind(this);
     this.state = {
       currentUser: {name: 'Anonymous'},
       messages: [],
     };
   }
 
-  sendMessage(message) {
+  brandNewMessage(message) {
     const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input};
     this.socket.send(JSON.stringify(newMessage));
   }
@@ -23,11 +23,11 @@ class Chats extends Component {
   // Called after the component was rendered and it was attached to the DOM.
   componentDidMount() {
     this.socket.onopen = (event) => {
-      console.log('Connected to chat server')
+      console.log('Connected to server')
      }
     this.socket.onmessage = (event) => {
-    const newMessage = JSON.parse(event.data)
-    const messages = this.state.messages.concat(newMessage);
+    const newMess = JSON.parse(event.data)
+    const messages = this.state.messages.concat(newMess);
     this.setState({messages: messages});
     }
   }
@@ -38,7 +38,7 @@ class Chats extends Component {
       <div>
       <ChatWindow messages = {this.state.messages} />
       <MessageList messages = {this.state.messages} />
-      <ChatBar defaultValue={this.state.currentUser.name} sendMessage={this.sendMessage}/>
+      <ChatBar defaultValue={this.state.currentUser.name} brandNewMessage={this.brandNewMessage}/>
       </div>
     );
   }
