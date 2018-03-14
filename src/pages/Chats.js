@@ -12,11 +12,12 @@ class Chats extends Component {
     this.state = {
       currentUser: {name: 'Anonymous'},
       messages: [],
+      fromMe: true
     };
   }
 
   brandNewMessage(message) {
-    const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input};
+    const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input, fromMe: true};
     this.socket.send(JSON.stringify(newMessage));
   }
 
