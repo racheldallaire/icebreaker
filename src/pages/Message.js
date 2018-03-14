@@ -9,8 +9,8 @@ export default class Message extends Component {
 
       <div className="bubble me">{content}</div>
       </div>}
-    {type === 'postNotification' && <div className="message system">{content}
-    </div>}
+
+
     </div>
     );
 	}

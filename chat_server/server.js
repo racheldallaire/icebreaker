@@ -30,8 +30,6 @@ wss.broadcast = function broadcast(data) {
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('A client connected');
-  const onlineUsers = wss.clients.size;
-  wss.broadcast({type: 'incomingUsers', online: onlineUsers, key: uuidv4()});
   let random = randomColor();
   let hex = random.hexString();
   let userColor = {color : hex}
@@ -43,8 +41,6 @@ ws.on('message', function incoming(message) {
 
     if(msg.type === 'postMessage') {
       msg.type === 'incomingMessage'
-    } else if (msg.type === 'postNotification') {
-      msg.type === 'incomingNotification'
     }
   wss.broadcast(msg);
 });
@@ -52,6 +48,6 @@ ws.on('message', function incoming(message) {
 // Set up a callback for when a client closes the socket.
   ws.on('close', () => {
     console.log('A client disconnected');
-    wss.broadcast({type: 'incomingUsers', online: onlineUsers, key: uuidv4()});
     })
+
   });
