@@ -88,7 +88,7 @@ app.get('/auth/facebook/callback',
 
 ///////////ROUTES//////////////////////////////
 app.get('/api/potentials', (req, res) => {
-  const cookieid = req.session.id
+  const cookieid = 1//req.session.id
   console.log("potentials get for id ", cookieid)
     Promise.all([
 
