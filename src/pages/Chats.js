@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import MessageList from './MessageList.js';
 import ChatBar from './ChatBar.js';
 import ChatWindow from './ChatWindow.js';
+import axios from 'axios';
 
 class Chats extends Component {
 // Set initial state so the user is initially anonymous
@@ -31,6 +32,14 @@ class Chats extends Component {
     const messages = this.state.messages.concat(newMess);
     this.setState({messages: messages});
     }
+    axios.get('/api/chat_user')
+    .then(response => {
+      console.log("chat_user ", response.data[0].first_name);
+      this.setState({ currentUser: {user: response.data[0].first_name} });
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   // Called any time the props or state changes. The JSX elements returned in this method will be rendered to the DOM.
