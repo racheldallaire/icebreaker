@@ -53,6 +53,7 @@ class Potentials extends React.Component{
 
   render() {
 
+
     var usercard = 'You are out of Matches';
     if (this.state.hasData) {
       var user= this.state.potentials[0]
@@ -74,9 +75,8 @@ class Potentials extends React.Component{
             <CardImg top src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180" /><p/>
             <CardTitle>{user.first_name}  {user.last_name} </CardTitle>
             <p> {user.age}  | {user.gender} </p>
-            <p> A quick description about myself</p>
           </CardBody>
-          <CardFooter>Something goes here</CardFooter>
+          <CardFooter>A quick description about myself</CardFooter>
         </Card>
         </Col>
         <Col xs="6" sm="3">
@@ -85,8 +85,8 @@ class Potentials extends React.Component{
         </Row>
         </Container>
     </div>
-     } else if
-      (this.state.potentials.length < 0){
+
+     } else if (this.state.potentials.length < 0) {
       usercard = 'no more matches';
      }
 

@@ -74,9 +74,8 @@ class Matches extends React.Component{
             <CardImg top src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180" /><p/>
             <CardTitle>{user.first_name}  {user.last_name} </CardTitle>
             <p> {user.age}  | {user.gender} </p>
-            <p> A quick description about myself</p>
           </CardBody>
-          <CardFooter>Something goes here</CardFooter>
+          <CardFooter>A quick description about myself</CardFooter>
         </Card>
         </Col>
         <Col xs="6" sm="3">

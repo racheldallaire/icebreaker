@@ -9,7 +9,7 @@ export default class Profile extends React.Component {
     this.state = {
         first_name: "",
         last_name: "",
-        age: "", 
+        age: "",
         gender: "",
         description: "",
         fb_pic: "",
@@ -25,13 +25,13 @@ export default class Profile extends React.Component {
     componentDidMount(e){
       axios.get('/api/profile')
       .then(response => {
-        this.setState({ 
+        this.setState({
             first_name: response.data[0].first_name,
             last_name: response.data[0].last_name,
-            age: response.data[0].age, 
+            age: response.data[0].age,
             gender: response.data[0].gender,
             description: response.data[0].description,
-            fb_pic: response.data[0].facebook_picture_url 
+            fb_pic: response.data[0].facebook_picture_url
         });
       })
       .catch(function (error) {
@@ -41,19 +41,20 @@ export default class Profile extends React.Component {
       axios.get('/api/edit_filters')
       .then(response => {
         console.log(response.data)
-        this.setState({ 
+        this.setState({
             min_age: response.data[0].min_age,
             max_age: response.data[0].max_age,
             radius: response.data[0].radius,
             female: response.data[0].female,
             male: response.data[0].male,
-            other: response.data[0].other 
+            other: response.data[0].other
         });
       })
       .catch(function (error) {
       console.log(error);
       });
     }
+
 
     // handles the checkbox to show the gender preferences
     handleInputChange(event) {
