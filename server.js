@@ -173,12 +173,7 @@ app.get('/api/matches', (req, res) => {
   .whereNot('users.id', cookieid)
   .where('userlikes.liked', true)
   .where('userlikes.userid1', cookieid).orWhere('userlikes.userid2',  cookieid)
-  //.whereExists(knex.select('*').from('userlikes').whereRaw('userlikes.liked = ?', true))
-  // .whereExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid1').orWhereRaw('users.id = userlikes.userid2'))
-  // .whereExists(knex.select('*').from('userlikes').where('liked', true)) .whereRaw('userlikes.userid1 = ?', [cookieid]).orWhereRaw('userlikes.userid1 = ?', [cookieid])
-    // .innerJoin('userlikes', function() {
-    // this.on('userlikes.userid1', '=', cookieid).orOn('userlikes.userid2', '=', cookieid)
-    // })
+
   .then((result) => {
       console.log("knex result", result)
       res.send(result)
