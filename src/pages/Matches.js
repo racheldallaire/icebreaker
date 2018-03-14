@@ -12,7 +12,7 @@ class Matches extends React.Component{
       hasData: false,
       matchedUsers :[]
     }
-     // this.removeFromFriendsArray = this.removeFromFriendsArray.bind(this);
+     this.removeFromFriendsArray = this.removeFromFriendsArray.bind(this);
   }
 
   componentDidMount(e, props){

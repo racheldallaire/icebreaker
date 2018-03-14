@@ -170,8 +170,9 @@ app.get('/api/matches', (req, res) => {
 
 
   knex.from('users').join('userlikes','users.id','userlikes.userid1')
+  .whereNot('users.id', cookieid)
   .where('userlikes.liked', true)
-  .where('users.id', cookieid).orWhere('users.id',  cookieid)
+  .where('userlikes.userid1', cookieid).orWhere('userlikes.userid2',  cookieid)
   //.whereExists(knex.select('*').from('userlikes').whereRaw('userlikes.liked = ?', true))
   // .whereExists(knex.select('*').from('userlikes').whereRaw('users.id = userlikes.userid1').orWhereRaw('users.id = userlikes.userid2'))
   // .whereExists(knex.select('*').from('userlikes').where('liked', true)) .whereRaw('userlikes.userid1 = ?', [cookieid]).orWhereRaw('userlikes.userid1 = ?', [cookieid])
@@ -184,7 +185,6 @@ app.get('/api/matches', (req, res) => {
         })
   .catch((err) => {
           console.log("error", err)
-
         })
       });
 
