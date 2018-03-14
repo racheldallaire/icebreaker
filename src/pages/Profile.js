@@ -16,9 +16,9 @@ export default class Profile extends React.Component {
         min_age: 18,
         max_age: 19,
         radius: 2,
-        female: false,
-        male: false,
-        other: false
+        female: null,
+        male: null,
+        other: null
         };
     }
 

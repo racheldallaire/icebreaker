@@ -18,26 +18,36 @@ class Potentials extends React.Component{
      this.addToUserLikes = this.addToUserLikes.bind(this);
   }
 
-  componentDidMount(e){
+  componentDidMount(e, props){
       axios.get('/api/potentials')
       .then(response => {
         this.setState({
             hasData: true,
             potentials: response.data
+
         });
+        console.log("response.data", response.data)
       })
     }
 
   removeFromMatchesArray(e){
     console.log("remove from Potentials clicked")
     var data = []
-     data = this.state.potentials
+      data = this.state.potentials
         this.setState({
             hasData: true,
             potentials: data.splice(1)
         });
-      console.log(this.state.potentials)
-    // axios.post('/api/matches', this.state.potentials)
+    axios.post('/api/matchesrejected', {
+        user2: this.state.potentials[0].id,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
   }
 
   addToUserLikes(e){
@@ -47,14 +57,23 @@ class Potentials extends React.Component{
             hasData: true,
             potentials: data.splice(1)
         });
-      console.log(this.state.potentials)
-    // axios.post('/api/matches', this.state.potentials)
+        axios.post('/api/matchesliked', {
+        user2: this.state.potentials[0].id,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
   }
 
   render() {
 
 
-    var usercard = 'You are out of Matches';
+    var usercard = 'Not able to find Potential Matches';
+
     if (this.state.hasData) {
       var user= this.state.potentials[0]
        // for (let user of  matchesArray){
@@ -65,7 +84,7 @@ class Potentials extends React.Component{
     <Row>
 
     <Col xs="6" sm="3">
-    <Button onClick={this.removeFromMatchesArray} className="reject-user">✘</Button>
+    <Button onClick={this.removeFromMatchesArray}  value={user.id } className="reject-user">✘</Button>
     </Col>
 
 
@@ -80,14 +99,15 @@ class Potentials extends React.Component{
         </Card>
         </Col>
         <Col xs="6" sm="3">
-    <Button onClick={this.addToUserLikes}  className="like-user">✔</Button>
+    <Button onClick={this.addToUserLikes}  value={user.id }  className="like-user">✔</Button>
     </Col>
         </Row>
         </Container>
     </div>
 
-     } else if (this.state.potentials.length < 0) {
-      usercard = 'no more matches';
+     } else if
+      (this.state.potentials.length < 0){
+      usercard = 'Sorry, You are out of Potential Matches';
      }
 
   return (
