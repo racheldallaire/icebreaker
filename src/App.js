@@ -112,7 +112,7 @@ export default class App extends React.Component {
       <Route path="/potentials" component={Potentials}/>
       <Route path="/chats" component={Chats}/>
       <Route path="/logout" component={Logout}/>
-
+      <Route path="/matches" component={Matches}/>
       </div>
       </Router>
     );
