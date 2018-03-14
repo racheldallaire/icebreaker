@@ -210,7 +210,7 @@ app.post('/signup', (req, res) => {
     knex('users').insert({facebook_id: facebook_id, first_name: first_name, last_name: last_name, age: age, gender: gender, description: description, facebook_picture_url: facebook_picture_url, location: location})
       .returning('id')
       .then(function (id) {
-          cookie_id = id;
+          cookie_id = id[0];
          });
     res.redirect('/filters');
   }
