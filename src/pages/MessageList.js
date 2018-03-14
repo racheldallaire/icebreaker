@@ -10,9 +10,6 @@ export default class MessageList extends Component {
           });
     return (
 
-    <div>
-    <Container fluid>
-    <Row>
     <Col sm="5">
         <div className="left">
 
@@ -34,69 +31,13 @@ you blind bitch</span>
                     <img src="https://s30.postimg.org/kwi7e42rh/img6.jpg" alt="" />
                     <span className="name">Drake</span>
                     <span className="time">2:09 PM</span>
-                    <span className="preview">She broke my heart bro like I just can't believe this keeps happening to me</span>
+                    <span className="preview">She broke my heart tho bro like I just can't believe this keeps happening to me</span>
                 </li>
             </ul>
         </div>
 
     </Col>
 
-    <Col sm='7'>
-        <div className="right">
-            <div className="top">
-            <span className="name">Name of User you're chatting with</span>
-            </div>
-
-            <div className="chat" data-chat="person5">
-                <div className="conversation-start">
-                    <span>Today, 6:28 AM</span>
-                </div>
-                <div className="bubble you">
-                    Wasup
-                </div>
-                <div className="bubble you">
-                    Wasup
-                </div>
-                <div className="bubble you">
-                    Wasup for the third time like is <br />you blind bitch
-                </div>
-            </div>
-
-            <div className="chat" data-chat="person6">
-                <div className="conversation-start">
-                    <span>Monday, 1:27 PM</span>
-                </div>
-                <div className="bubble you">
-                    So, how's your new phone?
-                </div>
-                <div className="bubble you">
-                    You finally have a smartphone :D
-                </div>
-                <div className="bubble me">
-                    Drake?
-                </div>
-                <div className="bubble me">
-                    Why aren't you answering?
-                </div>
-                <div className="bubble you">
-                    howdoyoudoaspace
-                </div>
-            </div>
-
-            <div className="active-chat">
-                <div className="conversation-start">
-                    <p/><span>Today, 6:28 AM</span>
-                </div>
-
-                    {messages}
-
-            </div>
-
-        </div>
-    </Col>
-    </Row>
-    </Container>
-    </div>
     )
   }
 }
