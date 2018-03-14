@@ -12,17 +12,12 @@ class Chats extends Component {
     this.state = {
       currentUser: {name: 'Anonymous'},
       messages: [],
-      userCount: 0
+      fromMe: true
     };
   }
 
   brandNewMessage(message) {
-    const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input};
-    if (message.currentUser !== this.state.currentUser.name) {
-      this.setState({currentUser : { name: message.currentUser} })
-      const newNotification = {type: 'postNotification', content: `${this.state.currentUser.name} has changed their name to ${message.currentUser}.`}
-      this.socket.send(JSON.stringify(newNotification))
-    }
+    const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input, fromMe: true};
     this.socket.send(JSON.stringify(newMessage));
   }
 
@@ -34,11 +29,7 @@ class Chats extends Component {
     this.socket.onmessage = (event) => {
     const newMess = JSON.parse(event.data)
     const messages = this.state.messages.concat(newMess);
-          if (messages[0].type === 'incomingUsers') {
-        this.setState({userCount : messages[0].online})
-      } else {
     this.setState({messages: messages});
-      }
     }
   }
 
