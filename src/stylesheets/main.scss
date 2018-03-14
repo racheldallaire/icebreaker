@@ -282,10 +282,10 @@ label {
     width: 100%;
     height: 47px;
     padding: 15px 29px;
-    background-color: #eceff1;
+    background-color: white;
     span {
       font-size: 15px;
-      color: #999;
+      color: white;
       .chatimg {
         padding-top: 0;
         margin-top: -18px;
@@ -316,6 +316,7 @@ label {
     -ms-flex-direction: column;
     flex-direction: column;
     &.active-chat {
+      padding-top: 20px;
       display: block;
       display: -webkit-box;
       display: -ms-flexbox;
