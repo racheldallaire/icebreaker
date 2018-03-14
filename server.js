@@ -167,7 +167,7 @@ app.post('/signup', (req, res) => {
       .then(function (woo) { 
           console.log("Woo!");
          });
-    res.redirect('/matches');
+    res.redirect('/profile');
   } else {
     let facebook_id = fbid;
     let facebook_picture_url = fb_pic;
@@ -202,7 +202,7 @@ app.post('/filters', (req, res) => {
        });
   
   req.session = {"id": cookie_id};
-  res.redirect('/matches');
+  res.redirect('/potentials');
 });
 
 app.listen(8080, () => console.log('Server listening on 8080'));
