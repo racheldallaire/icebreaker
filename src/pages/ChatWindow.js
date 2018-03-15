@@ -1,8 +1,34 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 import Message from './Message.js';
 import { Button, Col, Container, Row  } from 'reactstrap';
 
 export default class ChatWindow extends Component {
+    constructor(props) {
+    super(props);
+    this.state = {
+        content: ""
+        };
+    }
+
+
+    // componentDidMount(e){
+    //   axios.get('/api/chat_window')
+    //   .then(response => {
+    //         console.log(response.data)
+    //     this.setState({
+    //         // first_name: response.data[0].first_name,
+    //         // last_name: response.data[0].last_name,
+    //         // age: response.data[0].age,
+    //         // gender: response.data[0].gender,
+    //         // description: response.data[0].description,
+    //         // fb_pic: response.data[0].facebook_picture_url
+    //     });
+    //   })
+    //   .catch(function (error) {
+    //   console.log(error);
+    //   });
+    // }
 
   componentDidUpdate() {
     // There is a new message in the state, scroll to bottom of list
@@ -27,6 +53,7 @@ export default class ChatWindow extends Component {
             </div>
 
             <div className="active-chat">
+
                 <div className="conversation-start">
                     <p/><span>Today, 6:28 AM</span>
                 </div>
