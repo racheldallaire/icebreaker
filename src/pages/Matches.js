@@ -8,11 +8,14 @@ class Matches extends React.Component{
   constructor(){
     super();
 
+    // only adding functions not defined by super
+
     this.state = {
       hasData: false,
-      matchedUsers :[]
+      potentials :[]
     }
-     this.removeFromFriendsArray = this.removeFromFriendsArray.bind(this);
+     this.removeFromMatchesArray = this.removeFromMatchesArray.bind(this);
+
   }
 
   componentDidMount(e, props){
@@ -20,24 +23,23 @@ class Matches extends React.Component{
       .then(response => {
         this.setState({
             hasData: true,
-            matchedUsers: response.data
+            potentials: response.data
 
         });
-        console.log("matches response.data", response.data)
+        console.log("response.data", response.data)
       })
     }
 
-  removeFromFriendsArray(e){
-    console.log("remove from matchedUsers clicked")
+  removeFromMatchesArray(e){
+    console.log("remove from Potentials clicked")
     var data = []
-      data = this.state.matchedUsers
+      data = this.state.potentials
         this.setState({
             hasData: true,
-            matchedUsers: data.splice(1)
+            potentials: data.splice(1)
         });
-        console.log(" removeFromFriendsArray data", data)
     axios.post('/api/friendremoved', {
-        user2: this.state.matchedUsers[0].id,
+        user2: this.state.potentials[0].id,
       })
       .then(function (response) {
         console.log(response);
@@ -45,55 +47,60 @@ class Matches extends React.Component{
       .catch(function (error) {
         console.log(error);
       });
+
   }
+
 
   render() {
 
-    var userContainer = 'You are have no Matches';
+
+    var usercard = 'Not able to find Potential Matches';
+
     if (this.state.hasData) {
+      var user= this.state.potentials[0]
+       // for (let user of  matchesArray){
+        console.log("user", user)
+        usercard =
+      <div>
+    <Container fluid>
+    <Row>
 
-      for (let user of this.state.matchedUsers) {
-        userContainer =
-            <div>
-                <Container fluid>
-                <Row>
+    <Col xs="6" sm="3">
+    <Button onClick={this.removeFromMatchesArray}  value={user.id } className="reject-user">✘</Button>
+    </Col>
 
-                <Col xs="6" sm="3">
-                <Button onClick={this.removeFromFriendsArray}  value={user.id } className="remove-friend">✘</Button>
-                </Col>
 
-                <Col xs="12" sm="6">
-                    <Card>
-                        <CardBody className="card-body">
-                        <CardImg top src="https://placeholdit.imgix.net/~text?txtsize=33&txt=180%C3%97180&w=180&h=180" /><p/>
-                        <CardTitle>{user.first_name}  {user.last_name} </CardTitle>
-                        <p> {user.age}  | {user.gender} </p>
-                        <p> A quick description about myself</p>
-                      </CardBody>
-                      <CardFooter>Something goes here</CardFooter>
-                    </Card>
-                    </Col>
-                    <Col xs="6" sm="3">
+    <Col xs="12" sm="6">
+        <Card>
+            <CardBody className="card-body">
+            <CardImg top src={user.facebook_picture_url} /><p/>
+            <CardTitle>{user.first_name}  {user.last_name} </CardTitle>
+            <p> {user.age}  | {user.gender} </p>
+          </CardBody>
+          <CardFooter>{user.description}</CardFooter>
+        </Card>
+        </Col>
+        <Col xs="6" sm="3">
 
-                </Col>
-                </Row>
-              </Container>
-          </div>
-          }
+    </Col>
+        </Row>
+        </Container>
+    </div>
 
      } else if
-      (this.state.matchedUsers.length < 0){
-      usercard = 'Sorry, You have no friends.';
-
+      (this.state.potentials.length < 0){
+      usercard = 'Sorry, You are out of Potential Matches';
      }
 
   return (
+
       <div>
-        {userContainer}
+        {usercard}
       </div>
     );
   }
 }
+
 
 export default Matches;
 
