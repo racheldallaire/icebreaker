@@ -8,7 +8,8 @@ export default class ChatWindow extends Component {
     super(props);
     this.state = {
         content: ""
-        };
+        }
+     this.removeFromFriendsArray = this.removeFromFriendsArray.bind(this);
     }
 
 
@@ -35,7 +36,25 @@ export default class ChatWindow extends Component {
     const objDiv = document.getElementById('current-chat');
     objDiv.scrollTop = objDiv.scrollHeight;
   }
+  removeFromFriendsArray(e){
+    console.log("remove from Friends clicked")
+    var data = []
+      data = this.state. matches
+        this.setState({
+            hasData: true,
+            matches: data.splice(1)
+        });
+    axios.post('/api/friendremoved', {
+        user2: this.state.matches[0].id,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
+  }
    render () {
     const messages = this.props.messages.map((message) => {
             return <Message message={message} key={message.key} />
@@ -51,7 +70,9 @@ export default class ChatWindow extends Component {
             <span className="name">Michael Jordan</span>
             </span>
             </div>
-
+                    <Col xs="6" sm="3">
+                    <Button onClick={this.removeFromFriendsArray}  className="reject-user">✘</Button>
+                    </Col>
             <div className="active-chat">
 
                 <div className="conversation-start">
