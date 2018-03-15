@@ -71,7 +71,7 @@ export default class ChatWindow extends Component {
             <img src="https://s16.postimg.org/ete1l89z5/img5.jpg" className="chatimg" />
             <span className="name">Michael Jordan</span>
             <span className="removeUser">
-            <Button alt="Remove Friend" onClick={this.removeFromFriendsArray}  className="reject-user"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
+            <Button alt="Remove Friend" onClick={this.removeFromFriendsArray}  className="unfriend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
             </span>
             </div>
 
