@@ -120,8 +120,8 @@ app.post('/api/matchesrejected', (req, res) => {
   let userid2 = Number(req.body.user2);
 
     knex('userlikes')
-      .where('userid2', Number(userid1))
-      .where('userid1', Number(userid2))
+      .where({'userid2': Number(userid1)}, {'userid1': Number(userid2)})
+      .orWhere({'userid1': Number(userid1)}, {'userid2': Number(userid2)})
       .update('liked', false)
       .then((result) => {
         console.log(userid1, " has rejected ", userid2, " updating userlikes table ", result)
@@ -186,6 +186,7 @@ app.get('/api/matches', (req, res) => {
     var user_ids = []
     for(let user of users){
       user_ids.push(Object.values(user)[0])
+      console.log(user_ids)
     }
     knex.from('users').select('*').whereIn('users.id', user_ids )
     .then((result) => {
@@ -285,7 +286,7 @@ app.get('/api/message_list', (req, res) => {
   })
   .catch((err) => {
           console.log("error", err)
-  })    
+  })
 });
 
 
