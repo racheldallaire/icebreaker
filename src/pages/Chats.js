@@ -40,6 +40,18 @@ class Chats extends Component {
     .catch(function (error) {
       console.log(error);
     });
+
+    // axios.get('/api/message_list')
+    // .then(response => {
+    //     this.setState({
+    //         hasData: true,
+    //         matchedUsers: response.data
+    //     });
+    // console.log("MESSAGE LIST MATCHED USERS response.data", response.data)
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
   }
 
   // Called any time the props or state changes. The JSX elements returned in this method will be rendered to the DOM.

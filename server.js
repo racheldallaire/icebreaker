@@ -268,6 +268,37 @@ app.post('/api/edit_filters', (req, res) => {
     res.redirect('/profile');
 });
 
+app.get('/api/message_list', (req, res) => {
+  const cookieid = 1 //req.session.id
+  console.log("COOKIE IS", cookieid)
+
+  knex.from('users').join('userlikes','users.id','userlikes.userid1')
+  .whereNot('users.id', cookieid)
+  .where('userlikes.liked', true)
+  .where('userlikes.userid1', cookieid).orWhere('userlikes.userid2',  cookieid)
+  .then((result) => {
+      console.log("KNEX RESULT", result)
+      res.send(result)
+  })
+  .catch((err) => {
+          console.log("error", err)
+  })    
+});
+
+
+// app.get('/api/chat_window', (req, res) => {
+//   knex.select("content")
+//         .from("messages")
+//         // .join('messages', 'userlikesid.id', 'messages.userlikesid')
+//         .where("userid", Number(cookie_id))
+//         // .orWhere("userid2", messages.userid)
+//         .then((result) => {
+//           console.log("CHAT WINDOW CONSOLE")
+//           console.log(result);
+//           res.send(result);
+//         });
+// });
+
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));
@@ -326,5 +357,6 @@ app.post('/filters', (req, res) => {
   req.session = {"id": cookie_id};
   res.redirect('/potentials');
 });
+
 
 app.listen(8080, () => console.log('Server listening on 8080'));
