@@ -70,13 +70,14 @@ class Potentials extends React.Component{
 
 
       e.preventDefault();
-        Alert.warning('<h1>Test message 1</h1>', {
+        Alert.success('Wooh that\'s a match!', {
             position: 'top-right',
+            effect: 'jelly',
             onShow: function () {
                 console.log('aye!')
             },
             beep: false,
-            timeout: 'none',
+            timeout: 2000,
             offset: 100
         });
 
