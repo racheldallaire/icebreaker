@@ -17,8 +17,7 @@ export default class MessageList extends Component {
         this.setState({
             matches: response.data
         });
-        console.log("MESSAGE LIST MATCHED 1", response.data)
-        console.log("MESSAGE LIST MATCHED 1", matches)
+
       })
       .catch(function (error) {
         console.log(error);
@@ -32,7 +31,7 @@ export default class MessageList extends Component {
                     <span className="name">{matches.first_name} {matches.last_name}</span>
                   </li>
     });
-    
+
       return (
 
         <Col sm="5">
@@ -43,12 +42,12 @@ export default class MessageList extends Component {
               </div>
 
               <ul className="people">
-        
+
                   {matchedChat}
 
               </ul>
           </div>
         </Col>
       )
-  };  
+  };
 }
