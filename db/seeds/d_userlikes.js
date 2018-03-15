@@ -11,7 +11,11 @@ exports.seed = function(knex, Promise) {
         knex('userlikes').insert({userid1: 9, userid2: 1, liked: true}),
         knex('userlikes').insert({userid1: 7, userid2: 1, liked: true}),
         knex('userlikes').insert({userid1: 8, userid2: 1,liked: true}),
-        knex('userlikes').insert({userid1: 3, userid2: 6, liked: null})
+        knex('userlikes').insert({userid1: 3, userid2: 6, liked: null}),
+        knex('userlikes').insert({userid1: 3, userid2: 1, liked: null}),
+        knex('userlikes').insert({userid1: 4, userid2: 1, liked: null}),
+        knex('userlikes').insert({userid1: 8, userid2: 1, liked: null}),
+        knex('userlikes').insert({userid1: 10, userid2: 1, liked: null})
       ]);
     });
 };

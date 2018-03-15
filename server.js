@@ -4,7 +4,7 @@ const path = require('path');
 const webpack = require('webpack');
 const graph = require('fbgraph');
 const app = express();
-const morgan = require('morgan')
+const morgan = require('morgan');
 const databaseRoutes  = express.Router();
 const webpackMiddleware = require("webpack-dev-middleware");
 const webpackConfig = require('./webpack.config.js');
@@ -215,12 +215,12 @@ console.log("userid2", userid2)
 
       ])
       .then((result) => {
-        console.log(userid1, " has removed from friends", userid2, " updating userlikes table ", result)
+        console.log(userid1, " has removed from friends", userid2, " updating userlikes table ", result);
     })
        .catch((err) => {
-          console.log("error", err)
+          console.log("error", err);
 
-        })
+        });
 });
 
 app.get('/api/profile', (req, res) => {
@@ -229,6 +229,19 @@ app.get('/api/profile', (req, res) => {
         .where("id", Number(req.session.id))
         .then((result) => {
           console.log(result);
+          res.send(result);
+        });
+});
+
+app.get('/api/alreadyLiked', (req, res) => {
+  knex.select("userid1")
+        .from("userlikes")
+        .where({
+          userid2: 1,
+          liked:  null
+        })
+        .then((result) => {
+          console.log("ALREADT LIKED:!! ", result);
           res.send(result);
         });
 });

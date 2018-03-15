@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, CardFooter, Button, Container, Row, Col } from 'reactstrap';
 import axios from 'axios';
@@ -13,8 +13,9 @@ class Potentials extends React.Component{
 
     this.state = {
       hasData: false,
-      potentials :[]
-    }
+      potentials : [],
+      alreadyLiked : []
+    };
      this.removeFromMatchesArray = this.removeFromMatchesArray.bind(this);
      this.addToUserLikes = this.addToUserLikes.bind(this);
   }
@@ -27,14 +28,23 @@ class Potentials extends React.Component{
             potentials: response.data
 
         });
-        console.log("response.data", response.data)
-      })
+        console.log("response.data", response.data);
+      });
+
+      axios.get('/api/alreadyLiked')
+      .then(response => {
+        this.setState({
+            alreadyLiked: response.data
+
+        });
+        console.log("AlreaDy Liked: ", response.data);
+      });
     }
 
   removeFromMatchesArray(e){
-    console.log("remove from Potentials clicked")
-    var data = []
-      data = this.state.potentials
+    console.log("remove from Potentials clicked");
+    var data = [];
+      data = this.state.potentials;
         this.setState({
             hasData: true,
             potentials: data.splice(1)
@@ -52,8 +62,8 @@ class Potentials extends React.Component{
   }
 
   addToUserLikes(e){
-    var data = []
-     data = this.state.potentials
+    var data = [];
+     data = this.state.potentials;
         this.setState({
             hasData: true,
             potentials: data.splice(1)
@@ -68,18 +78,19 @@ class Potentials extends React.Component{
         console.log(error);
       });
 
-
+      if(this.state.alreadyLiked.indexOf(this.state.potentials[0]) >= 0){
       e.preventDefault();
         Alert.success('Wooh that\'s a match!', {
             position: 'top-right',
             effect: 'jelly',
             onShow: function () {
-                console.log('aye!')
+                console.log('aye!');
             },
             beep: false,
             timeout: 2000,
             offset: 100
         });
+      }
 
   }
 
@@ -89,9 +100,9 @@ class Potentials extends React.Component{
     var usercard = 'Not able to find Potential Matches';
 
     if (this.state.hasData) {
-      var user= this.state.potentials[0]
+      var user= this.state.potentials[0];
        // for (let user of  matchesArray){
-        console.log("user", user)
+        console.log("user", user);
         usercard =
       <div>
     <Container fluid>
