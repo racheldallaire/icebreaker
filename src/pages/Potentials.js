@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, CardFooter, Button, Container, Row, Col } from 'reactstrap';
 import axios from 'axios';
+import Alert from 'react-s-alert';
 
 
 class Potentials extends React.Component{
@@ -67,6 +68,18 @@ class Potentials extends React.Component{
         console.log(error);
       });
 
+
+      e.preventDefault();
+        Alert.warning('<h1>Test message 1</h1>', {
+            position: 'top-right',
+            onShow: function () {
+                console.log('aye!')
+            },
+            beep: false,
+            timeout: 'none',
+            offset: 100
+        });
+
   }
 
   render() {
@@ -99,7 +112,7 @@ class Potentials extends React.Component{
         </Card>
         </Col>
         <Col xs="6" sm="3">
-    <Button onClick={this.addToUserLikes}  value={user.id }  className="like-user">✔</Button>
+    <Button onClick={this.addToUserLikes} value={user.id }  className="like-user">✔</Button>
     </Col>
         </Row>
         </Container>
