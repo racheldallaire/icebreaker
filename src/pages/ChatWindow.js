@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import Message from './Message.js';
 import { Button, Col, Container, Row  } from 'reactstrap';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import { faUserTimes } from '@fortawesome/fontawesome-free-solid'
 
 export default class ChatWindow extends Component {
     constructor(props) {
@@ -49,7 +51,7 @@ export default class ChatWindow extends Component {
             <span>
             <img src="https://s16.postimg.org/ete1l89z5/img5.jpg" className="chatimg" />
             <span className="name">Michael Jordan</span>
-            <span className="removeUser"><i className="fas fa-user-times"/></span>
+            <span className="removeUser"><FontAwesomeIcon icon={faUserTimes} /></span>
             </span>
             </div>
 
