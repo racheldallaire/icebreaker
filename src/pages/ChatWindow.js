@@ -51,7 +51,7 @@ export default class ChatWindow extends Component {
             <span>
             <img src="https://s16.postimg.org/ete1l89z5/img5.jpg" className="chatimg" />
             <span className="name">Michael Jordan</span>
-            <span className="removeUser"><FontAwesomeIcon icon={faUserTimes} /></span>
+            <span className="removeUser"><Button alt="Remove Friend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
             </span>
             </div>
 
