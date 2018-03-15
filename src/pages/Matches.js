@@ -35,6 +35,7 @@ class Matches extends React.Component{
             hasData: true,
             matchedUsers: data.splice(1)
         });
+        console.log(" removeFromFriendsArray data", data)
     axios.post('/api/friendremoved', {
         user2: this.state.matchedUsers[0].id,
       })
