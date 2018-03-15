@@ -2,6 +2,9 @@ import React from 'react'
 import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, CardFooter, Button, Container, Row, Col } from 'reactstrap';
 import axios from 'axios';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/fontawesome-free-solid';
+import { faHeart } from '@fortawesome/fontawesome-free-solid';
 
 
 class Potentials extends React.Component{
@@ -83,12 +86,7 @@ class Potentials extends React.Component{
     <Container fluid>
     <Row>
 
-    <Col xs="6" sm="3">
-    <Button onClick={this.removeFromMatchesArray}  value={user.id } className="reject-user">✘</Button>
-    </Col>
-
-
-    <Col xs="12" sm="6">
+    <Col sm={{ size: 6, offset: 3 }}>
         <Card>
             <CardBody className="card-body">
             <CardImg top src={user.facebook_picture_url} /><p/>
@@ -97,10 +95,12 @@ class Potentials extends React.Component{
           </CardBody>
           <CardFooter>{user.description}</CardFooter>
         </Card>
+
+        <Button onClick={this.removeFromMatchesArray}  value={user.id } className="reject-user"><FontAwesomeIcon icon={faTimes} /></Button>
+
+        <Button onClick={this.addToUserLikes}  value={user.id }  className="like-user"><FontAwesomeIcon icon={faHeart} /></Button>
         </Col>
-        <Col xs="6" sm="3">
-    <Button onClick={this.addToUserLikes}  value={user.id }  className="like-user">✔</Button>
-    </Col>
+
         </Row>
         </Container>
     </div>

@@ -130,7 +130,10 @@ label {
   background: linear-gradient(#56ab2f, #a8e063);
   border: none;
   display: block;
-  margin: 220 auto;
+  height: 60px;
+  width: 60px;
+  margin-top: -50px;
+  margin-left: 110%;
 }
 
 .reject-user {
@@ -138,7 +141,22 @@ label {
   background: linear-gradient(#cb2d3e, #ef473a);
   border: none;
   display: block;
-  margin: 220 auto;
+  height: 60px;
+  width: 60px;
+  margin-top: -250px;
+  margin-left: -115px;
+}
+
+@media only screen and (max-width: 930px) {
+  .reject-user {
+    margin-top: 25px;
+    margin-left: 23%;
+  }
+
+  .like-user {
+    margin-top: -58px;
+    margin-left: 60%;
+  }
 }
 
 /*Chats*/
