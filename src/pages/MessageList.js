@@ -9,7 +9,7 @@ export default class MessageList extends Component {
     this.state = {
       matches: []
     }
-
+ this.startsNewChat = this.startsNewChat.bind(this);
   }
 
   componentDidMount(e){
@@ -26,9 +26,24 @@ export default class MessageList extends Component {
       });
   }
 
+   startsNewChat(e){
+    console.log("start new chat with", this.state.matches[0].first_name, this.state.matches[0].last_name, ".")
+
+    axios.post('/api/chat_window', {
+        user2: this.state.matches[0].id,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
+
   render () {
     const matchedChat = this.state.matches.map((matches) => {
-            return <li className="person">
+            return <li value={matches.id } className="person">
                     <img src={matches.facebook_picture_url} alt="" />
                     <span className="name">{matches.first_name} {matches.last_name}</span>
 
@@ -54,5 +69,5 @@ export default class MessageList extends Component {
           </div>
         </Col>
       )
-  };
+  }
 }

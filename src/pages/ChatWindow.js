@@ -2,50 +2,41 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import Message from './Message.js';
 import { Button, Col, Container, Row  } from 'reactstrap';
+import MessageList from './MessageList.js';
 
 export default class ChatWindow extends Component {
     constructor(props) {
     super(props);
     this.state = {
-        content: ""
+        content: "",
+        chatting_with: []
         }
-     this.removeFromFriendsArray = this.removeFromFriendsArray.bind(this);
+     this.removeFromFriendArray = this.removeFromFriendArray.bind(this);
     }
 
-
-    // componentDidMount(e){
-    //   axios.get('/api/chat_window')
-    //   .then(response => {
-    //         console.log(response.data)
-    //     this.setState({
-    //         // first_name: response.data[0].first_name,
-    //         // last_name: response.data[0].last_name,
-    //         // age: response.data[0].age,
-    //         // gender: response.data[0].gender,
-    //         // description: response.data[0].description,
-    //         // fb_pic: response.data[0].facebook_picture_url
-    //     });
-    //   })
-    //   .catch(function (error) {
-    //   console.log(error);
-    //   });
-    // }
-
-  componentDidUpdate() {
-    // There is a new message in the state, scroll to bottom of list
-    const objDiv = document.getElementById('current-chat');
-    objDiv.scrollTop = objDiv.scrollHeight;
-  }
-  removeFromFriendsArray(e){
-    console.log("remove from Friends clicked")
-    var data = []
-      data = this.state. matches
+  componentDidMount(e, props){
+      axios.get('/api/chat_window')
+       console.log("chat_window", response.data  )
+      .then(response => {
         this.setState({
             hasData: true,
-            matches: data.splice(1)
+            chatting_with: response.data
+
+        });
+        console.log("response.data", response.data)
+      })
+    }
+
+  removeFromFriendArray(e){
+    console.log("remove from Potentials clicked")
+    var data = []
+      data = this.state.potentials
+        this.setState({
+            hasData: true,
+            chatting_with: data.splice(1)
         });
     axios.post('/api/friendremoved', {
-        user2: this.state.matches[0].id,
+        user2: this.state.chatting_with[0].id,
       })
       .then(function (response) {
         console.log(response);
@@ -55,7 +46,32 @@ export default class ChatWindow extends Component {
       });
 
   }
+
+  componentDidUpdate() {
+    // There is a new message in the state, scroll to bottom of list
+    const objDiv = document.getElementById('current-chat');
+    objDiv.scrollTop = objDiv.scrollHeight;
+  }
+
    render () {
+
+
+    var chatting_with = 'You are not chatting wth anyone yet';
+
+    if (this.state.hasData) {
+         var user= this.state.chatting_with[0]
+        chatting_with =
+               <div className="top">
+            <span>
+            <img src={user.facebook_picture_url}  className="chatimg" />
+            <span className="name">{user.first_name}  {user.last_name}</span>
+            </span>
+            </div>
+    }  else if
+      (this.state.matches.length < 0){
+      chatting_with = 'Sorry, You have no Matches to chat with';
+     }
+
     const messages = this.props.messages.map((message) => {
             return <Message message={message} key={message.key} />
           });
@@ -64,15 +80,9 @@ export default class ChatWindow extends Component {
 
     <Col sm={{ size: 7, offset: 5 }} style={{position: 'absolute', overflow: 'scroll', height: '80%'}} id="current-chat">
         <div className="right">
-            <div className="top">
-            <span>
-            <img src="https://s16.postimg.org/ete1l89z5/img5.jpg" className="chatimg" />
-            <span className="name">Michael Jordan</span>
-            </span>
-            </div>
-                    <Col xs="6" sm="3">
-                    <Button onClick={this.removeFromFriendsArray}  className="reject-user">✘</Button>
-                    </Col>
+
+             {chatting_with}
+
             <div className="active-chat">
 
                 <div className="conversation-start">

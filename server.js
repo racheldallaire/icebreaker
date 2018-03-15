@@ -312,6 +312,24 @@ app.get('/api/message_list', (req, res) => {
   })
 })
 
+app.get('/api/chat_window', (req, res) => {
+  const cookieid = 1 //req.session.id
+  let userid2 = Number(req.body.user2);
+  console.log("you are chatting with userID #", cookieid)
+
+    // knex.from('users')
+    //   .select('*')
+    //   .where('users.id', userid2)
+    //   .then((result) => {
+    //     console.log(result);
+    //     res.send(result);
+    //     })
+    //   .catch((err) => {
+    //    console.log("error", err)
+    //     })
+
+});
+
 
 // app.get('/api/chat_window', (req, res) => {
 //   knex.select("content")

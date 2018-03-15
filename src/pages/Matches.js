@@ -14,8 +14,7 @@ class Matches extends React.Component{
       hasData: false,
       potentials :[]
     }
-     this.removeFromMatchesArray = this.removeFromMatchesArray.bind(this);
-
+     this.removeFromFriendsArray = this.removeFromFriendsArray.bind(this);
   }
 
   componentDidMount(e, props){
@@ -30,7 +29,7 @@ class Matches extends React.Component{
       })
     }
 
-  removeFromMatchesArray(e){
+  removeFromFriendsArray(e){
     console.log("remove from Potentials clicked")
     var data = []
       data = this.state.potentials
