@@ -168,20 +168,38 @@ app.get('/api/matches', (req, res) => {
   const cookieid = 1 //req.session.id
   console.log("matches for id ", cookieid)
 
+  Promise.all([
+    knex.from('userlikes')
+      .select('userid1')
+      .where('userlikes.liked', true)
+      .where('userid2', cookieid),
 
-  knex.from('users').join('userlikes','users.id','userlikes.userid1')
-  .whereNot('users.id', cookieid)
-  .where('userlikes.liked', true)
-  .where('userlikes.userid1', cookieid).orWhere('userlikes.userid2',  cookieid)
+    knex.from('userlikes')
+      .select('userid2')
+      .where('userlikes.liked', true)
+      .where('userid1', cookieid),
+  ])
 
   .then((result) => {
-      console.log("knex result", result)
-      res.send(result)
-        })
-  .catch((err) => {
-          console.log("error", err)
-        })
-      });
+    const [users1, users2] = result
+    const users = users1.concat(users2)
+    var user_ids = []
+    for(let user of users){
+      user_ids.push(Object.values(user)[0])
+    }
+    knex.from('users').select('*').whereIn('users.id', user_ids )
+    .then((result) => {
+      res.send(
+        result
+      )
+      .catch((err) => {
+        console.log("error", err)
+      })
+    })
+
+  })
+})
+
 
 app.post('/api/friendremoved', (req, res) => {
   let userid1 = 1//Number(cookie_id);
