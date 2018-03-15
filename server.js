@@ -153,7 +153,7 @@ app.post('/api/matchesliked', (req, res) => {
       .whereNot('liked', null)
       .update('liked', true)
       .then((result) => {
-      console.log(userid1, " has liked ", userid2, " updating userlikes table ", result)
+      console.log(userid1, " has liked ", userid2, " updating userlikes table ")
     })
 
     knex('userlikes').whereNot(function() {
@@ -210,7 +210,7 @@ app.post('/api/friendremoved', (req, res) => {
       .where('userid1', Number(userid2))
       .update('liked', false)
       .then((result) => {
-        console.log(userid1, " has rejected ", userid2, " updating userlikes table ", result)
+        console.log(userid1, " has removed from friends", userid2, " updating userlikes table ")
     })
        .catch((err) => {
           console.log("error", err)

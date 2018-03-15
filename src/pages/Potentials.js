@@ -111,6 +111,7 @@ class Potentials extends React.Component{
      }
 
   return (
+
       <div>
         {usercard}
       </div>
