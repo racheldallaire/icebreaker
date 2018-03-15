@@ -167,26 +167,24 @@ app.post('/api/matchesliked', (req, res) => {
 app.get('/api/matches', (req, res) => {
   const cookieid = 1 //req.session.id
   console.log("matches for id ", cookieid)
-
   Promise.all([
     knex.from('userlikes')
       .select('userid1')
       .where('userlikes.liked', true)
       .where('userid2', cookieid),
-
     knex.from('userlikes')
       .select('userid2')
       .where('userlikes.liked', true)
       .where('userid1', cookieid),
   ])
-
   .then((result) => {
     const [users1, users2] = result
     const users = users1.concat(users2)
     var user_ids = []
+    console.log("users", users)
     for(let user of users){
       user_ids.push(Object.values(user)[0])
-      console.log(user_ids)
+      console.log("user_ids",user_ids )
     }
     knex.from('users').select('*').whereIn('users.id', user_ids )
     .then((result) => {
@@ -197,7 +195,6 @@ app.get('/api/matches', (req, res) => {
         console.log("error", err)
       })
     })
-
   })
 })
 
