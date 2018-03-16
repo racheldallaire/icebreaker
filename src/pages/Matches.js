@@ -65,7 +65,7 @@ class Matches extends React.Component{
     <Row>
 
     <Col xs="6" sm="3">
-    <Button onClick={this.removeFromMatchesArray}  value={user.id } className="reject-user">✘</Button>
+    <Button onClick={this.removeFromMatchesArray}  value={user.id } className="chatWith-user">✘</Button>
     </Col>
 
 

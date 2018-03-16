@@ -1,42 +1,45 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import Message from './Message.js';
+// import Message from './Message.js';
 import { Button, Col, Container, Row  } from 'reactstrap';
-import MessageList from './MessageList.js';
+
 
 export default class ChatWindow extends Component {
     constructor(props) {
     super(props);
     this.state = {
-        content: "",
-        chatting_with: []
+        content: ""
+
+
         }
      this.removeFromFriendArray = this.removeFromFriendArray.bind(this);
+     // this.chattingWithUser = this.chattingWithUser.bind(this);
     }
 
   componentDidMount(e, props){
-      axios.get('/api/chat_window')
-       console.log("chat_window", response.data  )
-      .then(response => {
-        this.setState({
-            hasData: true,
-            chatting_with: response.data
+      // axios.get('/api/chat_window')
 
-        });
-        console.log("response.data", response.data)
-      })
+      // .then(response => {
+      //   this.setState({
+      //       hasData: true,
+
+      //   });
+      //   console.log("response.data", response.data)
+
+      // })
+       console.log("HHHHHEEEEERRRRREEEEE",this.props.user2 )
     }
 
   removeFromFriendArray(e){
     console.log("remove from Potentials clicked")
     var data = []
-      data = this.state.potentials
+      data = this.props.user2
         this.setState({
-            hasData: true,
-            chatting_with: data.splice(1)
+
+            user2: data.splice(1)
         });
     axios.post('/api/friendremoved', {
-        user2: this.state.chatting_with[0].id,
+        user2: this.state.user2[0].id,
       })
       .then(function (response) {
         console.log(response);
@@ -55,22 +58,32 @@ export default class ChatWindow extends Component {
 
    render () {
 
+    var chattingWith = "You have no Matches to Chat with";
+    console.log("hasData HERE", this.props.hasData)
+     console.log("this.props.user2", this.props.user2Info)
+    if (this.props.hasData) {
+    var user= this.props.user2Info[0]
+    console.log("this.state.user2[0]", this.props.user2Info[0])
 
-    var chatting_with = 'You are not chatting wth anyone yet';
-
-    if (this.state.hasData) {
-         var user= this.state.chatting_with[0]
-        chatting_with =
-               <div className="top">
+        chattingWith =
+            <div className="top">
             <span>
             <img src={user.facebook_picture_url}  className="chatimg" />
             <span className="name">{user.first_name}  {user.last_name}</span>
             </span>
             </div>
-    }  else if
-      (this.state.matches.length < 0){
-      chatting_with = 'Sorry, You have no Matches to chat with';
+
+    }  else {
+      chattingWith =
+          <div className="top">
+            <span>
+            <img src="https://s16.postimg.org/ete1l89z5/img5.jpg" className="chatimg" />
+            <span className="name">Michael Jordan</span>
+            </span>
+            </div>
+
      }
+
 
     const messages = this.props.messages.map((message) => {
             return <Message message={message} key={message.key} />
@@ -81,7 +94,8 @@ export default class ChatWindow extends Component {
     <Col sm={{ size: 7, offset: 5 }} style={{position: 'absolute', overflow: 'scroll', height: '80%'}} id="current-chat">
         <div className="right">
 
-             {chatting_with}
+             {chattingWith}
+
 
             <div className="active-chat">
 

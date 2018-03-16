@@ -312,38 +312,23 @@ app.get('/api/message_list', (req, res) => {
   })
 })
 
-app.get('/api/chat_window', (req, res) => {
+app.get('/api/chat_window/:id', (req, res) => {
+  console.log("params", req.params)
   const cookieid = 1 //req.session.id
-  let userid2 = Number(req.body.user2);
-  console.log("you are chatting with userID #", cookieid)
+  let userid2 = Number(req.params.id);
+  console.log("GET you are chatting with userID #", userid2 )
 
-    // knex.from('users')
-    //   .select('*')
-    //   .where('users.id', userid2)
-    //   .then((result) => {
-    //     console.log(result);
-    //     res.send(result);
-    //     })
-    //   .catch((err) => {
-    //    console.log("error", err)
-    //     })
-
+    knex.from('users')
+      .select('*')
+      .where('users.id', userid2)
+      .then((result) => {
+        console.log("GET chat_window post Knex query result", result);
+        res.send(result);
+        })
+      .catch((err) => {
+       console.log("error", err)
+        })
 });
-
-
-// app.get('/api/chat_window', (req, res) => {
-//   knex.select("content")
-//         .from("messages")
-//         // .join('messages', 'userlikesid.id', 'messages.userlikesid')
-//         .where("userid", Number(cookie_id))
-//         // .orWhere("userid2", messages.userid)
-//         .then((result) => {
-//           console.log("CHAT WINDOW CONSOLE")
-//           console.log(result);
-//           res.send(result);
-//         });
-// });
-
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));

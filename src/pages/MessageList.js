@@ -6,44 +6,35 @@ import { Button, Col, Container, Row  } from 'reactstrap';
 export default class MessageList extends Component {
   constructor(props) {
     super(props);
+    console.log("Message list props", props)
     this.state = {
-      matches: []
+
     }
- this.startsNewChat = this.startsNewChat.bind(this);
+     // this.chattingWithUser = this.chattingWithUser.bind(this);
   }
 
   componentDidMount(e){
-    axios.get('/api/message_list')
-      .then(response => {
-        this.setState({
-            matches: response.data
-        });
-        console.log("MESSAGE LIST MATCHED 1", response.data)
-        console.log("MESSAGE LIST MATCHED 1", matches)
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // axios.get('/api/message_list')
+    //   .then(response => {
+    //     this.setState({
+    //         matches: response.data
+    //     });
+    //     console.log("MESSAGE LIST MATCHED 1", response.data)
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   }
 
-   startsNewChat(e){
-    console.log("start new chat with", this.state.matches[0].first_name, this.state.matches[0].last_name, ".")
-
-    axios.post('/api/chat_window', {
-        user2: this.state.matches[0].id,
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-  }
+  //   handleClick(e){
+  //     console.log("handleClick", e.target.value )
+  //   this.props.chattingWithUser(e.target.value)
+  // }
 
   render () {
-    const matchedChat = this.state.matches.map((matches) => {
-            return <li value={matches.id } className="person">
+    //onClick={this.props.chattingWithUser} changed={( event ) => this.props.changed( event, matches.id )
+    const matchedChat = this.props.matches.map((matches) => {
+            return <li key={matches.id}  onClick= {this.props.chattingWithUser}  value={matches.id}   className="person">
                     <img src={matches.facebook_picture_url} alt="" />
                     <span className="name">{matches.first_name} {matches.last_name}</span>
 

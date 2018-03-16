@@ -10,11 +10,17 @@ class Chats extends Component {
     super(props);
     this.socket = new WebSocket('ws:localhost:3001');
     this.brandNewMessage = this.brandNewMessage.bind(this);
+    this.chattingWithUser = this.chattingWithUser.bind(this);
     this.state = {
       currentUser: {name: 'Anonymous'},
+      matches:[],
       messages: [],
-      fromMe: true
+      fromMe: true,
+      user2: 0,
+      hasData: false,
+      user2Info: []
     };
+
   }
 
   brandNewMessage(message) {
@@ -22,8 +28,43 @@ class Chats extends Component {
     this.socket.send(JSON.stringify(newMessage));
   }
 
+chattingWithUser(e){
+    console.log("CHAT start new chat with", e)
+    this.setState({
+       user2: e.target.value
+    })
+    const that = this
+    axios.get(`/api/chat_window/${e.target.value}`, {
+
+      })
+      .then(function (response) {
+          that.setState({
+              hasData: true,
+              user2Info: response.data
+
+            })
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
+
   // Called after the component was rendered and it was attached to the DOM.
   componentDidMount() {
+
+     axios.get('/api/message_list')
+      .then(response => {
+        this.setState({
+            matches: response.data
+        });
+        console.log("MESSAGE LIST MATCHED 1", response.data)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
     this.socket.onopen = (event) => {
       console.log('Connected to server')
      }
@@ -32,34 +73,15 @@ class Chats extends Component {
     const messages = this.state.messages.concat(newMess);
     this.setState({messages: messages});
     }
-    axios.get('/api/chat_user')
-    .then(response => {
-      console.log("chat_user ", response.data[0].first_name);
-      this.setState({ currentUser: {user: response.data[0].first_name} });
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
-    // axios.get('/api/message_list')
-    // .then(response => {
-    //     this.setState({
-    //         hasData: true,
-    //         matchedUsers: response.data
-    //     });
-    // console.log("MESSAGE LIST MATCHED USERS response.data", response.data)
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
   }
 
   // Called any time the props or state changes. The JSX elements returned in this method will be rendered to the DOM.
   render() {
+
     return (
       <div>
-      <ChatWindow messages = {this.state.messages} />
-      <MessageList messages = {this.state.messages} />
+      <ChatWindow messages = {this.state.messages} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
+      <MessageList messages = {this.state.messages}  chattingWithUser={this.chattingWithUser} matches = {this.state.matches} />
       <ChatBar defaultValue={this.state.currentUser.name} brandNewMessage={this.brandNewMessage}/>
       </div>
     );
