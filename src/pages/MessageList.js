@@ -8,7 +8,8 @@ export default class MessageList extends Component {
     super(props);
     this.state = {
       matches: []
-    };
+    }
+
   }
 
   componentDidMount(e){
@@ -28,9 +29,10 @@ export default class MessageList extends Component {
             return <li className="person">
                     <img src={matches.facebook_picture_url} alt="" />
                     <span className="name">{matches.first_name} {matches.last_name}</span>
+
                   </li>
     });
-    
+
       return (
 
         <Col sm="5">
@@ -41,12 +43,13 @@ export default class MessageList extends Component {
               </div>
 
               <ul className="people">
-        
+
                   {matchedChat}
+
 
               </ul>
           </div>
         </Col>
       )
-  };  
+  };
 }

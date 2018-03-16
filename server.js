@@ -202,13 +202,20 @@ app.get('/api/matches', (req, res) => {
 app.post('/api/friendremoved', (req, res) => {
   let userid1 = 1//Number(cookie_id);
   let userid2 = Number(req.body.user2);
-
+console.log("userid2", userid2)
+    Promise.all([
     knex('userlikes')
-      .where({'userid2': Number(userid1)}, {'userid1': Number(userid2)})
-      .orWhere({'userid1': Number(userid1)}, {'userid2': Number(userid2)})
-      .update('liked', false)
+      .select('userlikes.id').where({'userid1': Number(userid1)})
+      .where({'userid2': Number(userid2)})
+      .update({'liked': false}),
+       knex('userlikes')
+      .select('userlikes.id').where({'userid2': Number(userid1)})
+      .where({'userid1': Number(userid2)})
+      .update({'liked': false})
+
+      ])
       .then((result) => {
-        console.log(userid1, " has removed from friends", userid2, " updating userlikes table ")
+        console.log(userid1, " has removed from friends", userid2, " updating userlikes table ", result)
     })
        .catch((err) => {
           console.log("error", err)
@@ -271,20 +278,39 @@ app.post('/api/edit_filters', (req, res) => {
 
 app.get('/api/message_list', (req, res) => {
   const cookieid = 1 //req.session.id
-  console.log("COOKIE IS", cookieid)
+  console.log("matches for id ", cookieid)
 
-  knex.from('users').join('userlikes','users.id','userlikes.userid1')
-  .whereNot('users.id', cookieid)
-  .where('userlikes.liked', true)
-  .where('userlikes.userid1', cookieid).orWhere('userlikes.userid2',  cookieid)
+  Promise.all([
+    knex.from('userlikes')
+      .select('userid1')
+      .where('userlikes.liked', true)
+      .where('userid2', cookieid),
+    knex.from('userlikes')
+      .select('userid2')
+      .where('userlikes.liked', true)
+      .where('userid1', cookieid),
+  ])
   .then((result) => {
-      console.log("KNEX RESULT", result)
-      res.send(result)
+    const [users1, users2] = result
+    const users = users1.concat(users2)
+    var user_ids = []
+    console.log("users", users)
+    for(let user of users){
+      user_ids.push(Object.values(user)[0])
+      console.log("user_ids",user_ids )
+    }
+    knex.from('users').select('*').whereIn('users.id', user_ids )
+    .then((result) => {
+      console.log("result", result)
+      res.send(
+        result
+      )
+      // .catch((err) => {
+      //   console.log("error", err)
+      // })
+    })
   })
-  .catch((err) => {
-          console.log("error", err)
-  })
-});
+})
 
 
 // app.get('/api/chat_window', (req, res) => {

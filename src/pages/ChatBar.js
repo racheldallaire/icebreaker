@@ -25,7 +25,7 @@ export default class ChatBar extends Component {
     return (
 	    	<div className="right">
 	        <div className="write">
-                <input type="text" onChange={changedText} value={this.state.input} onKeyPress={sendMessage} required/>
+                <input type="text" onChange={changedText} value={this.state.input} onKeyPress={sendMessage} />
                 <a href="javascript:;" className="write-link send"></a>
             </div>
           </div>
