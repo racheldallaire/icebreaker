@@ -17,7 +17,6 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
 
       }
 
-
       render () {
 
         const matchedChat = this.props.matches.map((matches) => {

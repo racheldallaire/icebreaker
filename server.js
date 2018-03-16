@@ -199,31 +199,6 @@ app.get('/api/matches', (req, res) => {
   })
 })
 
-
-app.post('/api/friendremoved', (req, res) => {
-  let userid1 = 1//Number(cookie_id);
-  let userid2 = Number(req.body.user2);
-console.log("userid2", userid2)
-    Promise.all([
-    knex('userlikes')
-      .select('userlikes.id').where({'userid1': Number(userid1)})
-      .where({'userid2': Number(userid2)})
-      .update({'liked': false}),
-       knex('userlikes')
-      .select('userlikes.id').where({'userid2': Number(userid1)})
-      .where({'userid1': Number(userid2)})
-      .update({'liked': false})
-
-      ])
-      .then((result) => {
-        console.log(userid1, " has removed from friends", userid2, " updating userlikes table ", result);
-    })
-       .catch((err) => {
-          console.log("error", err);
-
-        });
-});
-
 app.get('/api/profile', (req, res) => {
   knex.select("*")
         .from("users")
@@ -335,7 +310,6 @@ app.get('/api/message_list', (req, res) => {
 })
 
 app.get('/api/chat_window/:id', (req, res) => {
-  console.log("params", req.params)
   const cookieid = 1 //req.session.id
   let userid2 = Number(req.params.id);
   console.log("GET you are chatting with userID #", userid2 )
@@ -350,6 +324,31 @@ app.get('/api/chat_window/:id', (req, res) => {
       .catch((err) => {
        console.log("error", err)
         })
+});
+
+
+app.post('/api/friendremoved/:id', (req, res) => {
+  console.log("friendremoved req.params ", req.params)
+  let userid1 = 1//Number(cookie_id);
+  let userid2 = Number(req.params.id);
+    Promise.all([
+    knex('userlikes')
+      .select('userlikes.id').where({'userid1': Number(userid1)})
+      .where({'userid2': Number(userid2)})
+      .update({'liked': false}),
+       knex('userlikes')
+      .select('userlikes.id').where({'userid2': Number(userid1)})
+      .where({'userid1': Number(userid2)})
+      .update({'liked': false})
+
+      ])
+      .then((result) => {
+        console.log(userid1, " has removed from friends", userid2, " updating userlikes table ", result);
+    })
+       .catch((err) => {
+          console.log("error", err);
+
+        });
 });
 
 app.get('*', (req, res) => {
