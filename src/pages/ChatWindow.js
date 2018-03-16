@@ -9,29 +9,16 @@ export default class ChatWindow extends Component {
     super(props);
     this.state = {
         content: ""
-
-
         }
-     this.removeFromFriendArray = this.removeFromFriendArray.bind(this);
-     // this.chattingWithUser = this.chattingWithUser.bind(this);
+    this.removeFromFriendArray = this.removeFromFriendArray.bind(this);
     }
 
   componentDidMount(e, props){
-      // axios.get('/api/chat_window')
 
-      // .then(response => {
-      //   this.setState({
-      //       hasData: true,
-
-      //   });
-      //   console.log("response.data", response.data)
-
-      // })
-       console.log("HHHHHEEEEERRRRREEEEE",this.props.user2 )
     }
 
   removeFromFriendArray(e){
-    console.log("remove from Potentials clicked")
+    console.log("Remove from Friends clicked")
     var data = []
       data = this.props.user2
         this.setState({
@@ -42,7 +29,7 @@ export default class ChatWindow extends Component {
         user2: this.state.user2[0].id,
       })
       .then(function (response) {
-        console.log(response);
+        console.log("has been removed",  response);
       })
       .catch(function (error) {
         console.log(error);
@@ -59,11 +46,9 @@ export default class ChatWindow extends Component {
    render () {
 
     var chattingWith = "You have no Matches to Chat with";
-    console.log("hasData HERE", this.props.hasData)
-     console.log("this.props.user2", this.props.user2Info)
     if (this.props.hasData) {
     var user= this.props.user2Info[0]
-    console.log("this.state.user2[0]", this.props.user2Info[0])
+    console.log("Chatting with ", this.props.user2Info[0])
 
         chattingWith =
             <div className="top">

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import Message from './Message.js';
 import { Button, Col, Container, Row  } from 'reactstrap';
-
 export default class MessageList extends Component {
   constructor(props) {
     super(props);

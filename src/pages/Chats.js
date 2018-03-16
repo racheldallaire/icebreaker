@@ -20,7 +20,6 @@ class Chats extends Component {
       hasData: false,
       user2Info: []
     };
-
   }
 
   brandNewMessage(message) {
@@ -29,7 +28,6 @@ class Chats extends Component {
   }
 
 chattingWithUser(e){
-    console.log("CHAT start new chat with", e)
     this.setState({
        user2: e.target.value
     })
