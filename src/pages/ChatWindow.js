@@ -14,9 +14,29 @@ export default class ChatWindow extends Component {
         game: ""
         };
      this.removeFromFriendsArray = this.removeFromFriendsArray.bind(this);
+     this.getNewGame = this.getNewGame.bind(this);
     }
 
     componentDidMount(){
+      axios.get('/api/new_game')
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+            game: response.data
+            // first_name: response.data[0].first_name,
+            // last_name: response.data[0].last_name,
+            // age: response.data[0].age,
+            // gender: response.data[0].gender,
+            // description: response.data[0].description,
+            // fb_pic: response.data[0].facebook_picture_url
+        });
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
+    }
+
+    getNewGame(){
       axios.get('/api/new_game')
       .then(response => {
         console.log(response.data);
@@ -102,6 +122,7 @@ export default class ChatWindow extends Component {
                     <p/><span>Today, 6:28 AM</span>
                 </div>
                     <p> {this.state.game} </p>
+                    <button className="cool-button2" style={{marginBottom: '30px'}} onClick={this.getNewGame}> Get Another Mini-Game! </button> 
                     {messages}
 
             </div>
