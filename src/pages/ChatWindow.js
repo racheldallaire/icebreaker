@@ -83,15 +83,10 @@ export default class ChatWindow extends Component {
     }  else {
       chattingWith =
           <div className="top">
-<<<<<<< HEAD
             <div style={{color: '#999', textAlign: 'center'}}>Select a friend to start chatting!
             <p><i>No friends yet? <a href="/Potentials">Go make some!</a></i></p>
             </div>
-=======
-            <span>
-            <span className="name">CLICK a friend in your MATCH LIST to open a chat</span>
-            </span>
->>>>>>> feature/currentChatHookUp
+
             </div>
      }
 
@@ -114,10 +109,7 @@ export default class ChatWindow extends Component {
 
                     <p> {this.state.game} </p>
                     <button className="cool-button3" onClick={this.getNewGame}> Get Another Mini-Game! </button>
-<<<<<<< HEAD
 
-=======
->>>>>>> feature/currentChatHookUp
                     {messages}
 
             </div>
