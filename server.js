@@ -88,7 +88,7 @@ app.get('/auth/facebook/callback',
 
 ///////////ROUTES//////////////////////////////
 app.get('/api/potentials', (req, res) => {
-  const cookieid = 1//req.session.id
+  // const cookieid = 1//req.session.id
   console.log("potentials get for id ", cookieid)
     Promise.all([
 
@@ -116,7 +116,7 @@ app.get('/api/potentials', (req, res) => {
       })
 
 app.post('/api/matchesrejected', (req, res) => {
-  let userid1 = 1//Number(cookie_id);
+  let userid1 = Number(cookie_id);
   let userid2 = Number(req.body.user2);
 
     knex('userlikes')
@@ -143,7 +143,7 @@ app.post('/api/matchesrejected', (req, res) => {
 });
 
 app.post('/api/matchesliked', (req, res) => {
-  let userid1 = 1//Number(cookie_id);
+  // let userid1 = 1//Number(cookie_id);
   let userid2 = Number(req.body.user2);
 
     knex('userlikes')
@@ -165,7 +165,7 @@ app.post('/api/matchesliked', (req, res) => {
 });
 
 app.get('/api/matches', (req, res) => {
-  const cookieid = 1 //req.session.id
+  // const cookieid = 1 //req.session.id
   console.log("matches for id ", cookieid)
   Promise.all([
     knex.from('userlikes')
@@ -200,7 +200,7 @@ app.get('/api/matches', (req, res) => {
 
 
 app.post('/api/friendremoved', (req, res) => {
-  let userid1 = 1//Number(cookie_id);
+  let userid1 = Number(cookie_id);
   let userid2 = Number(req.body.user2);
 console.log("userid2", userid2)
     Promise.all([
@@ -277,7 +277,7 @@ app.post('/api/edit_filters', (req, res) => {
 });
 
 app.get('/api/message_list', (req, res) => {
-  const cookieid = 1 //req.session.id
+  // const cookieid = 1 //req.session.id
   console.log("matches for id ", cookieid)
 
   Promise.all([

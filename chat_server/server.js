@@ -14,6 +14,7 @@ const server = express()
 
 // Create the WebSockets server
 const wss = new SocketServer({ server });
+const webSockets = {}
 
 // Create broadcast function that will send data to client
 wss.broadcast = function broadcast(data) {
@@ -28,10 +29,20 @@ wss.broadcast = function broadcast(data) {
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
+let userID = parseInt(ws.upgradeReq.url.substr(1), 10)
+webSockets[userID] = ws
+  console.log(webSockets[userID]);
+  console.log(userID);
   console.log('A client connected');
 
 ws.on('message', function incoming(message) {
+  console.log('receive from ' + userID)
     let msg = JSON.parse(message);
+    let toUserWebsocket = webSockets[msg[0]]
+    if( toUserWebsocket ) {
+      console.log('sent to ' + msg[0] + ': ' + JSON.stringify(msg))
+      msg[0] = userID
+    }
     msg.key = uuidv4();
 
     if(msg.type === 'postMessage') {
