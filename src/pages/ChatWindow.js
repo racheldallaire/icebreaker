@@ -57,6 +57,8 @@ export default class ChatWindow extends Component {
             <span>
             <img src={user.facebook_picture_url}  className="chatimg" />
             <span className="name">{user.first_name}  {user.last_name}</span>
+            <span className="removeUser">
+            <Button alt="Remove Friend" onClick={this.removeFromFriendsArray}  className="unfriend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
             </span>
             </div>
 
