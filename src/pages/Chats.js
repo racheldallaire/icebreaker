@@ -11,6 +11,7 @@ class Chats extends Component {
     this.socket = new WebSocket('ws:localhost:3001');
     this.brandNewMessage = this.brandNewMessage.bind(this);
     this.chattingWithUser = this.chattingWithUser.bind(this);
+    this.removeFromFriends = this.removeFromFriends.bind(this);
     this.state = {
       currentUser: {name: 'Anonymous'},
       matches:[],
@@ -21,13 +22,58 @@ class Chats extends Component {
       user2Info: []
     };
   }
+  removeFromFriends(e){
+    console.log( " Removed from Friends...", this.state.user2)
+    var that = this
+    var matchArray = this.state.matches
+          for (let friend of matchArray){
+            console.log("friend", friend)
+            if (friend.id == this.state.user2){
+              matchArray.splice(friend, 1)
+              }
+        this.setState({
+         matches: matchArray,
+         user2Info: [],
+         hasData:false
+         })
+
+        console.log(" NEW MATCH ARRAY", this.state.matches )
+        }
+
+       axios.post(`/api/friendremoved/${this.state.user2}`, {
+
+      })
+      .then(function (response) {
+          that.setState({
+          user2: 0
+
+
+        });
+        console.log("NEW MATCHES ARRAY", that.state.matches)
+        console.log("has been removed",  response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+      //  axios.get('/api/message_list')
+      // .then(response => {
+      //   this.setState({
+      //       matches: response.data
+      //   });
+      //   console.log("MESSAGE LIST MATCHED 1", response.data)
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      // });
+  }
 
   brandNewMessage(message) {
     const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input, fromMe: true};
     this.socket.send(JSON.stringify(newMessage));
   }
 
-chattingWithUser(e){
+  chattingWithUser(e){
     this.setState({
        user2: e.target.value
     })
@@ -78,7 +124,7 @@ chattingWithUser(e){
 
     return (
       <div>
-      <ChatWindow messages = {this.state.messages} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
+      <ChatWindow messages = {this.state.messages}  removeFromFriends={this.removeFromFriends} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
       <MessageList messages = {this.state.messages}  chattingWithUser={this.chattingWithUser} matches = {this.state.matches} />
       <ChatBar defaultValue={this.state.currentUser.name} brandNewMessage={this.brandNewMessage}/>
       </div>

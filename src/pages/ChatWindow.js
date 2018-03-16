@@ -15,7 +15,7 @@ export default class ChatWindow extends Component {
         game: ""
         };
      this.getNewGame = this.getNewGame.bind(this);
-     this.removeFromFriendArray = this.removeFromFriendArray.bind(this);
+
     }
 
     componentDidMount(){
@@ -56,26 +56,6 @@ export default class ChatWindow extends Component {
       });
     }
 
-  removeFromFriendArray(e){
-    console.log("Remove from Friends clicked")
-    var data = []
-      data = this.props.user2
-        this.setState({
-
-            user2: data.splice(1)
-        });
-    axios.post('/api/friendremoved', {
-        user2: this.state.user2[0].id,
-      })
-      .then(function (response) {
-        console.log("has been removed",  response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-  }
-
   componentDidUpdate() {
     // There is a new message in the state, scroll to bottom of list
     const objDiv = document.getElementById('current-chat');
@@ -94,8 +74,9 @@ export default class ChatWindow extends Component {
             <span>
             <img src={user.facebook_picture_url}  className="chatimg" />
             <span className="name">{user.first_name}  {user.last_name}</span>
-            <span className="removeUser">
-            <Button alt="Remove Friend" onClick={this.removeFromFriendsArray}  className="unfriend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
+             <span className="removeUser">
+            <Button alt="Remove Friend" onClick={this.props.removeFromFriends}  className="unfriend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
+
             </span>
             </div>
 
@@ -105,9 +86,8 @@ export default class ChatWindow extends Component {
             <div style={{color: '#999', textAlign: 'center'}}>Select a friend to start chatting!
             <p><i>No friends yet? <a href="/Potentials">Go make some!</a></i></p>
             </div>
+
             </div>
-
-
      }
 
 
@@ -121,8 +101,6 @@ export default class ChatWindow extends Component {
         <div className="right">
 
              {chattingWith}
-
-
 
             <div className="active-chat">
 
