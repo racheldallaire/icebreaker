@@ -122,7 +122,7 @@ export default class ChatWindow extends Component {
                     <p/><span>Today, 6:28 AM</span>
                 </div>
                     <p> {this.state.game} </p>
-                    <button className="cool-button2" style={{marginBottom: '30px'}} onClick={this.getNewGame}> Get Another Mini-Game! </button> 
+                    <button className="cool-button3" onClick={this.getNewGame}> Get Another Mini-Game! </button> 
                     {messages}
 
             </div>
