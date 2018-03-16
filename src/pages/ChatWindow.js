@@ -65,12 +65,9 @@ export default class ChatWindow extends Component {
     }  else {
       chattingWith =
           <div className="top">
-            <span>
-            <img src="https://s16.postimg.org/ete1l89z5/img5.jpg" className="chatimg" />
-            <span className="name">Michael Jordan</span>
-            <span className="removeUser">
-            <Button alt="Remove Friend" onClick={this.removeFromFriendsArray}  className="unfriend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
-            </span>
+            <div style={{color: '#999', textAlign: 'center'}}>Select a friend to start chatting!
+            <p><i>No friends yet? <a href="/Potentials">Go make some!</a></i></p>
+            </div>
             </div>
 
 
@@ -92,9 +89,7 @@ export default class ChatWindow extends Component {
 
             <div className="active-chat">
 
-                <div className="conversation-start">
-                    <p/><span>Today, 6:28 AM</span>
-                </div>
+                <div className="conversation-start"><span/></div>
 
                     {messages}
 
