@@ -234,15 +234,19 @@ app.get('/api/profile', (req, res) => {
 });
 
 app.get('/api/alreadyLiked', (req, res) => {
-  knex.select("userid1")
+  knex.select("*")
         .from("userlikes")
         .where({
           userid2: 1,
           liked:  null
         })
         .then((result) => {
-          console.log("ALREADT LIKED:!! ", result);
-          res.send(result);
+          let just_ids = [];
+          for(let i = 0; i < result.length; i++){
+            just_ids.push(result[i].userid1);
+          }
+          console.log("ALREADT LIKED:!! ", just_ids);
+          res.send(just_ids);
         });
 });
 

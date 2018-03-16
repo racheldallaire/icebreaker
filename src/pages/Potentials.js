@@ -39,9 +39,13 @@ class Potentials extends React.Component{
         });
         console.log("AlreaDy Liked: ", response.data);
       });
+
+
+
     }
 
   removeFromMatchesArray(e){
+    console.log("HEY YOU, THAT WAS MY ID!: ", this.state.potentials[0].id);
     console.log("remove from Potentials clicked");
     var data = [];
       data = this.state.potentials;
@@ -62,6 +66,8 @@ class Potentials extends React.Component{
   }
 
   addToUserLikes(e){
+    let current_user_id =  this.state.potentials[0].id;
+
     var data = [];
      data = this.state.potentials;
         this.setState({
@@ -78,7 +84,7 @@ class Potentials extends React.Component{
         console.log(error);
       });
 
-      if(this.state.alreadyLiked.indexOf(this.state.potentials[0]) >= 0){
+      if(this.state.alreadyLiked.indexOf(current_user_id) >= 0){
       e.preventDefault();
         Alert.success('Wooh that\'s a match!', {
             position: 'top-right',
