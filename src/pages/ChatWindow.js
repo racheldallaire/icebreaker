@@ -10,13 +10,50 @@ export default class ChatWindow extends Component {
     constructor(props) {
     super(props);
     this.state = {
-        content: ""
-        }
-    this.removeFromFriendArray = this.removeFromFriendArray.bind(this);
+        content: "",
+        game_played: false,
+        game: ""
+        };
+     this.getNewGame = this.getNewGame.bind(this);
+     this.removeFromFriendArray = this.removeFromFriendArray.bind(this);
     }
 
-  componentDidMount(e, props){
+    componentDidMount(){
+      axios.get('/api/new_game')
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+            game: response.data
+            // first_name: response.data[0].first_name,
+            // last_name: response.data[0].last_name,
+            // age: response.data[0].age,
+            // gender: response.data[0].gender,
+            // description: response.data[0].description,
+            // fb_pic: response.data[0].facebook_picture_url
+        });
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
+    }
 
+    getNewGame(){
+      axios.get('/api/new_game')
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+            game: response.data
+            // first_name: response.data[0].first_name,
+            // last_name: response.data[0].last_name,
+            // age: response.data[0].age,
+            // gender: response.data[0].gender,
+            // description: response.data[0].description,
+            // fb_pic: response.data[0].facebook_picture_url
+        });
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
     }
 
   removeFromFriendArray(e){
@@ -95,7 +132,8 @@ export default class ChatWindow extends Component {
                 <div className="conversation-start">
                     <p/><span>Today, 6:28 AM</span>
                 </div>
-
+                    <p> {this.state.game} </p>
+                    <button className="cool-button3" onClick={this.getNewGame}> Get Another Mini-Game! </button> 
                     {messages}
 
             </div>
