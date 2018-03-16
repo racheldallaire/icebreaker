@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-// import Message from './Message.js';
+import Message from './Message.js';
 import { Button, Col, Container, Row  } from 'reactstrap';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import { faUserTimes } from '@fortawesome/fontawesome-free-solid'
