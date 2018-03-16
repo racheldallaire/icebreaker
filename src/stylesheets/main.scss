@@ -76,6 +76,22 @@ body, html {
   }
 }
 
+.cool-button3 {
+  margin-bottom: 30px;
+  border-radius: 20px;
+  padding: 10px 25px;
+  background-color: white;
+  color: #4ca2cd;
+  text-transform: uppercase;
+  box-shadow: 0px 7px 25px lightblue;
+  border: none;
+  font-size: 0.75vw;
+  letter-spacing: 2.2px;
+  &:hover {
+    background-color: gray;
+  }
+}
+
 .card {
   margin-top: 20px;
   border-radius: 10px;
@@ -175,7 +191,7 @@ label {
   width: 20px;
   height: 20px;
   float: right;
-  padding-top: 10px;
+  padding-top: 8px;
 }
 
 .left {
@@ -187,6 +203,8 @@ label {
     width: 100%;
     height: 96px;
     padding: 29px;
+    font-size: 20px;
+    text-align: center;
     &:after {
       position: absolute;
       bottom: 0;
@@ -214,19 +232,7 @@ label {
       outline: none;
     }
   }
-  a.search {
-    display: block;
-    float: right;
-    width: 42px;
-    height: 42px;
-    margin-left: 10px;
-    border: 1px solid #e6e6e6;
-    background-color: #00b0ff;
-    background-image: url("https://s11.postimg.org/dpuahewmn/name_type.png");
-    background-repeat: no-repeat;
-    background-position: top 12px left 14px;
-    border-radius: 50%;
-  }
+
   .people {
     margin-left: -1px;
     border-right: 1px solid #e6e6e6;
@@ -236,8 +242,8 @@ label {
     .person {
       position: relative;
       width: 100%;
-      height: 15%;
-      padding: 12px 17% 16px;
+      height: 14%;
+      padding: 0px 17% 0px;
       cursor: pointer;
       background-color: #fff;
       &:after {
@@ -254,16 +260,16 @@ label {
       }
       img {
         float: left;
-        width: 40px;
-        height: 40px;
-        margin-right: 12px;
+        height: 50px;
+        border: none;
+        margin-right: 20px;
         border-radius: 50%;
+        margin-left: -60px;
       }
       .name {
-        font-size: 14px;
+        font-size: 15px;
         color: #1a1a1a;
-        font-family: 'Lato', sans-serif;
-        font-weight: 600;
+        line-height: 6.2;
       }
       .time {
         font-size: 14px;
@@ -274,23 +280,11 @@ label {
         color: #999;
         background-color: #fff;
       }
-      .preview {
-        font-size: 14px;
-        display: inline-block;
-        overflow: hidden !important;
-        width: 70%;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        color: #999;
-      }
       &.active, &:hover {
-        margin-top: -1px;
-        margin-left: -1px;
-        padding-top: 13px;
         border: 0;
         background-color: #00b0ff;
-        width: calc(100% + 2px);
-        padding-left: calc(10% + 1px);
+        width: calc(100% + 40px);
+        margin-left: -40px;
       }
       &.active span, &:hover span {
         color: #fff;
@@ -314,12 +308,12 @@ label {
       .chatimg {
         padding-top: 0;
         margin-top: -10px;
+        height: 60px;
       }
       .name {
         color: #1a1a1a;
-        font-family: 'Lato', sans-serif;
-        font-weight: 600;
         padding: 10px;
+        font-size: 20px;
       }
     }
   }

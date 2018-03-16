@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-// import Message from './Message.js';
-import { Button, Col, Container, Row , Alert } from 'reactstrap';
+import Message from './Message.js';
+import { Button, Col, Container, Row  } from 'reactstrap';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import { faUserTimes } from '@fortawesome/fontawesome-free-solid'
 
@@ -10,12 +10,50 @@ export default class ChatWindow extends Component {
     constructor(props) {
     super(props);
     this.state = {
-        content: ""
-        }
+        content: "",
+        game_played: false,
+        game: ""
+        };
+     this.getNewGame = this.getNewGame.bind(this);
+
     }
 
-  componentDidMount(e, props){
+    componentDidMount(){
+      axios.get('/api/new_game')
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+            game: response.data
+            // first_name: response.data[0].first_name,
+            // last_name: response.data[0].last_name,
+            // age: response.data[0].age,
+            // gender: response.data[0].gender,
+            // description: response.data[0].description,
+            // fb_pic: response.data[0].facebook_picture_url
+        });
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
+    }
 
+    getNewGame(){
+      axios.get('/api/new_game')
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+            game: response.data
+            // first_name: response.data[0].first_name,
+            // last_name: response.data[0].last_name,
+            // age: response.data[0].age,
+            // gender: response.data[0].gender,
+            // description: response.data[0].description,
+            // fb_pic: response.data[0].facebook_picture_url
+        });
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
     }
 
   componentDidUpdate() {
@@ -38,6 +76,7 @@ export default class ChatWindow extends Component {
             <span className="name">{user.first_name}  {user.last_name}</span>
              <span className="removeUser">
             <Button alt="Remove Friend" onClick={this.props.removeFromFriends}  className="unfriend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
+
             </span>
             </div>
 
@@ -67,7 +106,8 @@ export default class ChatWindow extends Component {
                 <div className="conversation-start">
                     <p/><span>Today, 6:28 AM</span>
                 </div>
-
+                    <p> {this.state.game} </p>
+                    <button className="cool-button3" onClick={this.getNewGame}> Get Another Mini-Game! </button>
                     {messages}
 
             </div>

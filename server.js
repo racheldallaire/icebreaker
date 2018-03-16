@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const graph = require('fbgraph');
 const app = express();
 const morgan = require('morgan');
+const game = require('./random-game.js');
 const databaseRoutes  = express.Router();
 const webpackMiddleware = require("webpack-dev-middleware");
 const webpackConfig = require('./webpack.config.js');
@@ -225,6 +226,10 @@ app.get('/api/alreadyLiked', (req, res) => {
         });
 });
 
+app.get('/api/new_game', (req, res) => {
+  res.send(game());
+});
+
 app.get('/api/filters', (req, res) => {
   res.send(fb_pic);
 });
@@ -403,6 +408,5 @@ app.post('/filters', (req, res) => {
   req.session = {"id": cookie_id};
   res.redirect('/potentials');
 });
-
 
 app.listen(8080, () => console.log('Server listening on 8080'));
