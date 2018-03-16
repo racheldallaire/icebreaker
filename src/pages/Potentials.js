@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, CardFooter, Button, Container, Row, Col } from 'reactstrap';
 import axios from 'axios';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/fontawesome-free-solid';
 import { faHeart } from '@fortawesome/fontawesome-free-solid';
-
+import Alert from 'react-s-alert';
 
 class Potentials extends React.Component{
   constructor(){
@@ -15,8 +15,9 @@ class Potentials extends React.Component{
 
     this.state = {
       hasData: false,
-      potentials :[]
-    }
+      potentials : [],
+      alreadyLiked : []
+    };
      this.removeFromMatchesArray = this.removeFromMatchesArray.bind(this);
      this.addToUserLikes = this.addToUserLikes.bind(this);
   }
@@ -29,14 +30,27 @@ class Potentials extends React.Component{
             potentials: response.data
 
         });
-        console.log("response.data", response.data)
-      })
+        console.log("response.data", response.data);
+      });
+
+      axios.get('/api/alreadyLiked')
+      .then(response => {
+        this.setState({
+            alreadyLiked: response.data
+
+        });
+        console.log("AlreaDy Liked: ", response.data);
+      });
+
+
+
     }
 
   removeFromMatchesArray(e){
-    console.log("remove from Potentials clicked")
-    var data = []
-      data = this.state.potentials
+    console.log("HEY YOU, THAT WAS MY ID!: ", this.state.potentials[0].id);
+    console.log("remove from Potentials clicked");
+    var data = [];
+      data = this.state.potentials;
         this.setState({
             hasData: true,
             potentials: data.splice(1)
@@ -54,8 +68,10 @@ class Potentials extends React.Component{
   }
 
   addToUserLikes(e){
-    var data = []
-     data = this.state.potentials
+    let current_user_id =  this.state.potentials[0].id;
+
+    var data = [];
+     data = this.state.potentials;
         this.setState({
             hasData: true,
             potentials: data.splice(1)
@@ -70,18 +86,28 @@ class Potentials extends React.Component{
         console.log(error);
       });
 
+      if(this.state.alreadyLiked.indexOf(current_user_id) >= 0){
+      e.preventDefault();
+        Alert.success('Wooh that\'s a match!', {
+            position: 'top-right',
+            effect: 'jelly',
+            onShow: function () {
+                console.log('aye!');
+            },
+            beep: false,
+            timeout: 2000,
+            offset: 100
+        });
+      }
+
   }
 
   render() {
 
 
-    var usercard = 'Not able to find Potential Matches';
-
     if (this.state.hasData) {
-      var user= this.state.potentials[0]
-       // for (let user of  matchesArray){
-        console.log("user", user)
-        usercard =
+      var user= this.state.potentials[0];
+
       <div>
     <Container fluid>
     <Row>
@@ -105,16 +131,26 @@ class Potentials extends React.Component{
         </Container>
     </div>
 
-     } else if
-      (this.state.potentials.length < 0){
-      usercard = 'Sorry, You are out of Potential Matches';
      }
 
   return (
 
       <div>
-        {usercard}
-      </div>
+    <Container fluid>
+    <Row>
+
+    <Col sm={{ size: 3, offset: 2 }} className="err">
+    Looks like you don't have any available matches yet. Check back soon!
+    </Col>
+
+    <Col sm="5">
+    <img src="https://www.earthrangers.com/public/content/wildwire/polarbear-in-water.png"/>
+    </Col>
+
+    </Row>
+    </Container>
+
+    </div>
     );
   }
 }

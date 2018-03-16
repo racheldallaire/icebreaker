@@ -2,15 +2,19 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import Message from './Message.js';
 import { Button, Col, Container, Row  } from 'reactstrap';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
 
-export default class MessageList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      matches: []
-    }
+    export default class MessageList extends Component {
+      constructor(props) {
+        super(props);
+        console.log("Message list props", props)
+        this.state = {
+        }
+      }
 
-  }
+      componentDidMount(e){
+
 
   componentDidMount(e){
     axios.get('/api/message_list')
@@ -23,33 +27,34 @@ export default class MessageList extends Component {
         console.log(error);
       });
   }
+      }
 
-  render () {
-    const matchedChat = this.state.matches.map((matches) => {
-            return <li className="person">
-                    <img src={matches.facebook_picture_url} alt="" />
-                    <span className="name">{matches.first_name} {matches.last_name}</span>
+      render () {
 
-                  </li>
-    });
+        const matchedChat = this.props.matches.map((matches) => {
+                return <li key={matches.id}  onClick= {this.props.chattingWithUser}  value={matches.id}   className="person">
+                        <img src={matches.facebook_picture_url} alt="" />
+                        <span className="name">{matches.first_name} {matches.last_name}</span>
 
-      return (
+                      </li>
+        });
 
-        <Col sm="5">
-          <div className="left">
+          return (
 
-              <div className="top">
-                  <input type="text" />
+            <Col sm="5">
+              <div className="left">
+
+                  <div className="top">
+                  <FontAwesomeIcon icon={faCommentAlt} /> Messages
+                  </div>
+
+                  <ul className="people">
+
+                      {matchedChat}
+
+                  </ul>
               </div>
-
-              <ul className="people">
-
-                  {matchedChat}
-
-
-              </ul>
-          </div>
-        </Col>
-      )
-  };
-}
+            </Col>
+          )
+      }
+    }

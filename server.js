@@ -4,7 +4,8 @@ const path = require('path');
 const webpack = require('webpack');
 const graph = require('fbgraph');
 const app = express();
-const morgan = require('morgan')
+const morgan = require('morgan');
+const game = require('./random-game.js');
 const databaseRoutes  = express.Router();
 const webpackMiddleware = require("webpack-dev-middleware");
 const webpackConfig = require('./webpack.config.js');
@@ -82,7 +83,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile']}));
 
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { successRedirect: '/matches',
+  passport.authenticate('facebook', { successRedirect: '/potentials',
                                       failureRedirect: '/signup' }));
 
 
@@ -198,31 +199,6 @@ app.get('/api/matches', (req, res) => {
   })
 })
 
-
-app.post('/api/friendremoved', (req, res) => {
-  let userid1 = 1//Number(cookie_id);
-  let userid2 = Number(req.body.user2);
-console.log("userid2", userid2)
-    Promise.all([
-    knex('userlikes')
-      .select('userlikes.id').where({'userid1': Number(userid1)})
-      .where({'userid2': Number(userid2)})
-      .update({'liked': false}),
-       knex('userlikes')
-      .select('userlikes.id').where({'userid2': Number(userid1)})
-      .where({'userid1': Number(userid2)})
-      .update({'liked': false})
-
-      ])
-      .then((result) => {
-        console.log(userid1, " has removed from friends", userid2, " updating userlikes table ", result)
-    })
-       .catch((err) => {
-          console.log("error", err)
-
-        })
-});
-
 app.get('/api/profile', (req, res) => {
   knex.select("*")
         .from("users")
@@ -231,6 +207,27 @@ app.get('/api/profile', (req, res) => {
           console.log(result);
           res.send(result);
         });
+});
+
+app.get('/api/alreadyLiked', (req, res) => {
+  knex.select("*")
+        .from("userlikes")
+        .where({
+          userid2: 1,
+          liked:  null
+        })
+        .then((result) => {
+          let just_ids = [];
+          for(let i = 0; i < result.length; i++){
+            just_ids.push(result[i].userid1);
+          }
+          console.log("ALREADT LIKED:!! ", just_ids);
+          res.send(just_ids);
+        });
+});
+
+app.get('/api/new_game', (req, res) => {
+  res.send(game());
 });
 
 app.get('/api/filters', (req, res) => {
@@ -312,20 +309,47 @@ app.get('/api/message_list', (req, res) => {
   })
 })
 
+app.get('/api/chat_window/:id', (req, res) => {
+  const cookieid = 1 //req.session.id
+  let userid2 = Number(req.params.id);
+  console.log("GET you are chatting with userID #", userid2 )
 
-// app.get('/api/chat_window', (req, res) => {
-//   knex.select("content")
-//         .from("messages")
-//         // .join('messages', 'userlikesid.id', 'messages.userlikesid')
-//         .where("userid", Number(cookie_id))
-//         // .orWhere("userid2", messages.userid)
-//         .then((result) => {
-//           console.log("CHAT WINDOW CONSOLE")
-//           console.log(result);
-//           res.send(result);
-//         });
-// });
+    knex.from('users')
+      .select('*')
+      .where('users.id', userid2)
+      .then((result) => {
+        console.log("GET chat_window post Knex query result", result);
+        res.send(result);
+        })
+      .catch((err) => {
+       console.log("error", err)
+        })
+});
 
+
+app.post('/api/friendremoved/:id', (req, res) => {
+  console.log("friendremoved req.params ", req.params)
+  let userid1 = 1//Number(cookie_id);
+  let userid2 = Number(req.params.id);
+    Promise.all([
+    knex('userlikes')
+      .select('userlikes.id').where({'userid1': Number(userid1)})
+      .where({'userid2': Number(userid2)})
+      .update({'liked': false}),
+       knex('userlikes')
+      .select('userlikes.id').where({'userid2': Number(userid1)})
+      .where({'userid1': Number(userid2)})
+      .update({'liked': false})
+
+      ])
+      .then((result) => {
+        console.log(userid1, " has removed from friends", userid2, " updating userlikes table ", result);
+    })
+       .catch((err) => {
+          console.log("error", err);
+
+        });
+});
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));
@@ -384,6 +408,5 @@ app.post('/filters', (req, res) => {
   req.session = {"id": cookie_id};
   res.redirect('/potentials');
 });
-
 
 app.listen(8080, () => console.log('Server listening on 8080'));

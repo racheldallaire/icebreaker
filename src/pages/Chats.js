@@ -10,11 +10,62 @@ class Chats extends Component {
     super(props);
     this.socket = new WebSocket('ws:localhost:3001');
     this.brandNewMessage = this.brandNewMessage.bind(this);
+    this.chattingWithUser = this.chattingWithUser.bind(this);
+    this.removeFromFriends = this.removeFromFriends.bind(this);
     this.state = {
       currentUser: {name: 'Anonymous'},
+      matches:[],
       messages: [],
-      fromMe: true
+      fromMe: true,
+      user2: 0,
+      hasData: false,
+      user2Info: []
     };
+  }
+  removeFromFriends(e){
+    console.log( " Removed from Friends...", this.state.user2)
+    var that = this
+    var matchArray = this.state.matches
+          for (let friend of matchArray){
+            console.log("friend", friend)
+            if (friend.id == this.state.user2){
+              matchArray.splice(friend, 1)
+              }
+        this.setState({
+         matches: matchArray,
+         user2Info: [],
+         hasData:false
+         })
+
+        console.log(" NEW MATCH ARRAY", this.state.matches )
+        }
+
+       axios.post(`/api/friendremoved/${this.state.user2}`, {
+
+      })
+      .then(function (response) {
+          that.setState({
+          user2: 0
+
+
+        });
+        console.log("NEW MATCHES ARRAY", that.state.matches)
+        console.log("has been removed",  response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+      //  axios.get('/api/message_list')
+      // .then(response => {
+      //   this.setState({
+      //       matches: response.data
+      //   });
+      //   console.log("MESSAGE LIST MATCHED 1", response.data)
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      // });
   }
 
   brandNewMessage(message) {
@@ -22,8 +73,42 @@ class Chats extends Component {
     this.socket.send(JSON.stringify(newMessage));
   }
 
+  chattingWithUser(e){
+    this.setState({
+       user2: e.target.value
+    })
+    const that = this
+    axios.get(`/api/chat_window/${e.target.value}`, {
+
+      })
+      .then(function (response) {
+          that.setState({
+              hasData: true,
+              user2Info: response.data
+
+            })
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
+
   // Called after the component was rendered and it was attached to the DOM.
   componentDidMount() {
+
+     axios.get('/api/message_list')
+      .then(response => {
+        this.setState({
+            matches: response.data
+        });
+        console.log("MESSAGE LIST MATCHED 1", response.data)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
     this.socket.onopen = (event) => {
       console.log('Connected to server')
      }
@@ -32,34 +117,15 @@ class Chats extends Component {
     const messages = this.state.messages.concat(newMess);
     this.setState({messages: messages});
     }
-    axios.get('/api/chat_user')
-    .then(response => {
-      console.log("chat_user ", response.data[0].first_name);
-      this.setState({ currentUser: {user: response.data[0].first_name} });
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
-    // axios.get('/api/message_list')
-    // .then(response => {
-    //     this.setState({
-    //         hasData: true,
-    //         matchedUsers: response.data
-    //     });
-    // console.log("MESSAGE LIST MATCHED USERS response.data", response.data)
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
   }
 
   // Called any time the props or state changes. The JSX elements returned in this method will be rendered to the DOM.
   render() {
+
     return (
       <div>
-      <ChatWindow messages = {this.state.messages} />
-      <MessageList messages = {this.state.messages} />
+      <ChatWindow messages = {this.state.messages}  removeFromFriends={this.removeFromFriends} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
+      <MessageList messages = {this.state.messages}  chattingWithUser={this.chattingWithUser} matches = {this.state.matches} />
       <ChatBar defaultValue={this.state.currentUser.name} brandNewMessage={this.brandNewMessage}/>
       </div>
     );

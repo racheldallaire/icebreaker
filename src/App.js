@@ -6,6 +6,10 @@ import {
   Link
 } from 'react-router-dom'
 
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
+
 import {
   Button,
   Collapse,
@@ -25,7 +29,6 @@ import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Logout from './pages/Logout'
 import Signup from './pages/Signup'
-import Matches from './pages/Matches'
 import Potentials from './pages/Potentials'
 import Chats from './pages/Chats'
 import ChatBar from './pages/ChatBar'
@@ -81,14 +84,10 @@ export default class App extends React.Component {
                   <NavLink><Link to="/profile">Profile</Link></NavLink>
                 </NavItem>
               }
+
               {isLoggedIn &&
                 <NavItem>
-                  <NavLink><Link to="/Matches">Matches</Link></NavLink>
-                </NavItem>
-              }
-              {isLoggedIn &&
-                <NavItem>
-                  <NavLink><Link to="/Potentials">Potentials</Link></NavLink>
+                  <NavLink><Link to="/Potentials">Matches</Link></NavLink>
                 </NavItem>
               }
               {isLoggedIn &&
@@ -112,7 +111,7 @@ export default class App extends React.Component {
       <Route path="/potentials" component={Potentials}/>
       <Route path="/chats" component={Chats}/>
       <Route path="/logout" component={Logout}/>
-      <Route path="/matches" component={Matches}/>
+      <Alert stack={{limit: 3}} />
       </div>
       </Router>
     );
