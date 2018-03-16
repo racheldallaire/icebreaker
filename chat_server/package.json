@@ -10,7 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.3",
+    "knex": "^0.14.4",
+    "pg": "^7.4.1",
     "random-color": "^1.0.1",
     "uuid-v4": "^0.1.0",
     "ws": "^5.0.0"

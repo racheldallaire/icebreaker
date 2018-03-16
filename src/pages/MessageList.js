@@ -17,8 +17,6 @@ export default class MessageList extends Component {
         this.setState({
             matches: response.data
         });
-        console.log("MESSAGE LIST MATCHED 1", response.data)
-        console.log("MESSAGE LIST MATCHED 1", matches)
       })
       .catch(function (error) {
         console.log(error);
