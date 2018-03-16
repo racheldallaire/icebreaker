@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 // import Message from './Message.js';
-import { Button, Col, Container, Row  } from 'reactstrap';
+import { Button, Col, Container, Row , Alert } from 'reactstrap';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import { faUserTimes } from '@fortawesome/fontawesome-free-solid'
 
@@ -12,32 +12,11 @@ export default class ChatWindow extends Component {
     this.state = {
         content: ""
         }
-    this.removeFromFriendArray = this.removeFromFriendArray.bind(this);
     }
 
   componentDidMount(e, props){
 
     }
-
-  removeFromFriendArray(e){
-    console.log("Remove from Friends clicked")
-    var data = []
-      data = this.props.user2
-        this.setState({
-
-            user2: data.splice(1)
-        });
-    axios.post('/api/friendremoved', {
-        user2: this.state.user2[0].id,
-      })
-      .then(function (response) {
-        console.log("has been removed",  response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-  }
 
   componentDidUpdate() {
     // There is a new message in the state, scroll to bottom of list
@@ -57,6 +36,8 @@ export default class ChatWindow extends Component {
             <span>
             <img src={user.facebook_picture_url}  className="chatimg" />
             <span className="name">{user.first_name}  {user.last_name}</span>
+             <span className="removeUser">
+            <Button alt="Remove Friend" onClick={this.props.removeFromFriends}  className="unfriend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
             </span>
             </div>
 
@@ -64,14 +45,9 @@ export default class ChatWindow extends Component {
       chattingWith =
           <div className="top">
             <span>
-            <img src="https://s16.postimg.org/ete1l89z5/img5.jpg" className="chatimg" />
-            <span className="name">Michael Jordan</span>
-            <span className="removeUser">
-            <Button alt="Remove Friend" onClick={this.removeFromFriendsArray}  className="unfriend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
+            <span className="name">CLICK a friend in your MATCH LIST to open a chat</span>
             </span>
             </div>
-
-
      }
 
 
@@ -85,8 +61,6 @@ export default class ChatWindow extends Component {
         <div className="right">
 
              {chattingWith}
-
-
 
             <div className="active-chat">
 

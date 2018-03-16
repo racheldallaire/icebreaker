@@ -14,7 +14,6 @@ export default class MessageList extends Component {
 
   }
 
-
   render () {
 
     const matchedChat = this.props.matches.map((matches) => {
