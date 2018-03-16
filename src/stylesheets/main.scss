@@ -130,7 +130,10 @@ label {
   background: linear-gradient(#56ab2f, #a8e063);
   border: none;
   display: block;
-  margin: 220 auto;
+  height: 60px;
+  width: 60px;
+  margin-top: -50px;
+  margin-left: 110%;
 }
 
 .reject-user {
@@ -138,7 +141,22 @@ label {
   background: linear-gradient(#cb2d3e, #ef473a);
   border: none;
   display: block;
-  margin: 220 auto;
+  height: 60px;
+  width: 60px;
+  margin-top: -250px;
+  margin-left: -115px;
+}
+
+@media only screen and (max-width: 930px) {
+  .reject-user {
+    margin-top: 25px;
+    margin-left: 23%;
+  }
+
+  .like-user {
+    margin-top: -58px;
+    margin-left: 60%;
+  }
 }
 
 /*Chats*/
@@ -150,6 +168,14 @@ label {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
   }
+}
+
+.removeUser {
+  color: gray;
+  width: 20px;
+  height: 20px;
+  float: right;
+  padding-top: 10px;
 }
 
 .left {
@@ -210,7 +236,7 @@ label {
     .person {
       position: relative;
       width: 100%;
-      height: 12%;
+      height: 15%;
       padding: 12px 17% 16px;
       cursor: pointer;
       background-color: #fff;
@@ -235,7 +261,6 @@ label {
       }
       .name {
         font-size: 14px;
-        line-height: 22px;
         color: #1a1a1a;
         font-family: 'Lato', sans-serif;
         font-weight: 600;
@@ -286,11 +311,9 @@ label {
     background-color: white;
     span {
       font-size: 15px;
-      color: white;
       .chatimg {
         padding-top: 0;
-        margin-top: -18px;
-        margin-left: 33%;
+        margin-top: -10px;
       }
       .name {
         color: #1a1a1a;

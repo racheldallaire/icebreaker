@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import axios from 'axios';
 // import Message from './Message.js';
 import { Button, Col, Container, Row  } from 'reactstrap';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import { faUserTimes } from '@fortawesome/fontawesome-free-solid'
 
 
 export default class ChatWindow extends Component {
@@ -64,8 +66,11 @@ export default class ChatWindow extends Component {
             <span>
             <img src="https://s16.postimg.org/ete1l89z5/img5.jpg" className="chatimg" />
             <span className="name">Michael Jordan</span>
+            <span className="removeUser">
+            <Button alt="Remove Friend" onClick={this.removeFromFriendsArray}  className="unfriend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
             </span>
             </div>
+
 
      }
 
@@ -80,6 +85,7 @@ export default class ChatWindow extends Component {
         <div className="right">
 
              {chattingWith}
+
 
 
             <div className="active-chat">
