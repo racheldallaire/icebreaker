@@ -105,7 +105,6 @@ class Potentials extends React.Component{
             offset: 100
         });
       }
-
   }
 
   inputChange(e) {
@@ -162,7 +161,7 @@ class Potentials extends React.Component{
        <Button onClick={this.returnToMatches} type="button" ref="returnToMatches" >Back to Match</Button>
       </div>
 
-    if (this.state.hasData) {
+    if (this.state.potentials[0] && this.state.hasData) {
       var user= this.state.potentials[0];
       var usercard =
       <div>
