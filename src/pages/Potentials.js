@@ -141,7 +141,7 @@ class Potentials extends React.Component{
             potentials: response.data
 
         });
-        console.log("response.data", response.data);
+
       });
 
       axios.get('/api/alreadyLiked')
@@ -150,7 +150,7 @@ class Potentials extends React.Component{
             alreadyLiked: response.data
 
         });
-        console.log("AlreaDy Liked: ", response.data);
+        document.getElementById("back").style.display = "none";
       });
     }
 
