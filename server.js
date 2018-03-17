@@ -270,7 +270,8 @@ app.get('/api/loggedIn', (req, res) => {
 });
 
 app.get('/api/userID', (req, res) => {
-  res.send(req.session.id)
+  let currentUserID = "1"
+  res.send(currentUserID)
 })
 
 app.get('/api/logout', (req, res) => {
@@ -305,6 +306,33 @@ app.post('/api/edit_filters', (req, res) => {
           console.log("Woo!");
          });
     res.redirect('/profile');
+});
+
+app.get('/api/message_db', (req, res) => {
+  knex.select("*")
+        .from("messages")
+        .where("userlikesid", Number(req.body.userlikesid))
+        .then((result) => {
+          console.log(result);
+          res.send(result);
+        });
+});
+
+app.post('/api/message_db', (req, res) => {
+  console.log(req.body)
+  let content = req.body.input
+  let userid = req.body.currentUser
+  let userlikesid = req.body.userlikesid
+
+  knex('messages')
+    .insert({
+      userid: userid, 
+      userlikesid: userlikesid, 
+      content: content
+    })
+    .then(function (woo) {
+        console.log("WOO!");
+    });  
 });
 
 app.get('/api/message_list', (req, res) => {
