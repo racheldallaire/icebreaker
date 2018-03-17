@@ -15,18 +15,6 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
 
       componentDidMount(e){
 
-
-  componentDidMount(e){
-    axios.get('/api/message_list')
-      .then(response => {
-        this.setState({
-            matches: response.data
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
       }
 
       render () {
