@@ -87,17 +87,17 @@ export default class ChatWindow extends Component {
        if(this.props.hasData && this.props.user2Info[0].lovemale){
         lookingForMen =
             <span className="lookingfor">
-              <Badge color="primary"><FontAwesomeIcon icon={faHeart} /></Badge>
+              💙
              </span>}
       if(this.props.hasData && this.props.user2Info[0].lovefemale){
         lookingForWomen =
             <span className="lookingfor">
-              <Badge color="danger"><FontAwesomeIcon icon={faHeart} /></Badge>
+              ❤️
              </span>}
       if(this.props.hasData && this.props.user2Info[0].loveother){
         lookingForOther =
             <span className="lookingfor">
-              <Badge color="success"><FontAwesomeIcon icon={faHeart} /></Badge>
+              💚
              </span>}
 
 
@@ -113,6 +113,7 @@ export default class ChatWindow extends Component {
             <span>
             <img src={user.facebook_picture_url}  className="chatimg" />
             <span className="name">{user.first_name}  {user.last_name}</span>
+            {lookingForMen}  {lookingForWomen} {lookingForOther}
              <span className="removeUser">
             <Button alt="Remove Friend" onClick={this.props.removeFromFriends}  className="unfriend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
            </span>
@@ -138,7 +139,7 @@ export default class ChatWindow extends Component {
     <Col sm={{ size: 7, offset: 5 }} style={{position: 'absolute', overflow: 'scroll', height: '80%'}} id="current-chat">
         <div className="right">
 
-             {chattingWith}  {lookingForMen}  {lookingForWomen} {lookingForOther}
+             {chattingWith}
 
             <div className="active-chat">
 
