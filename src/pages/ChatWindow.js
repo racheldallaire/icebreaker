@@ -81,18 +81,27 @@ export default class ChatWindow extends Component {
   }
 
    render () {
-    var lookingFor = <span>  </span>
+    var lookingForMen = <span>  </span>
+    var lookingForWomen = <span>  </span>
+    var lookingForOther = <span>  </span>
        if(this.props.hasData && this.props.user2Info[0].lovemale){
-      lookingFor =
+        lookingForMen =
             <span className="lookingfor">
               <Badge color="primary"><FontAwesomeIcon icon={faHeart} /></Badge>
-             </span>
-           } else if(this.props.hasData && this.props.user2Info[0].lovefemale){
-            lookingFor =
+             </span>}
+      if(this.props.hasData && this.props.user2Info[0].lovefemale){
+        lookingForWomen =
             <span className="lookingfor">
               <Badge color="danger"><FontAwesomeIcon icon={faHeart} /></Badge>
-             </span>
-           }
+             </span>}
+      if(this.props.hasData && this.props.user2Info[0].loveother){
+        lookingForOther =
+            <span className="lookingfor">
+              <Badge color="success"><FontAwesomeIcon icon={faHeart} /></Badge>
+             </span>}
+
+
+
 
     var chattingWith = "You have no Matches to Chat with";
     if (this.props.hasData) {
@@ -129,7 +138,7 @@ export default class ChatWindow extends Component {
     <Col sm={{ size: 7, offset: 5 }} style={{position: 'absolute', overflow: 'scroll', height: '80%'}} id="current-chat">
         <div className="right">
 
-             {chattingWith}  {lookingFor}
+             {chattingWith}  {lookingForMen}  {lookingForWomen} {lookingForOther}
 
             <div className="active-chat">
 
