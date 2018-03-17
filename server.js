@@ -93,7 +93,7 @@ app.get('/api/potentials', (req, res) => {
   console.log("potentials get for id ", cookieid)
     Promise.all([
     knex('users')
-     .select('filters.min_age','filters.max_age', 'filters.female','filters.male')
+     .select('filters.min_age','filters.max_age', 'filters.female','filters.male','filters.other')
      .innerJoin('filters', 'users.id', 'filters.userid')
      .where('users.id',cookieid ),
 
@@ -103,9 +103,18 @@ app.get('/api/potentials', (req, res) => {
 
      .then((result) => {
         const[filterCriteria, users] = result
-        const [min_age, max_age, female, male] = Object.values(filterCriteria[0])
+        const [min_age, max_age, female, male, other] = Object.values(filterCriteria[0])
           res.send(users.filter(user => {
-           if((user.age >= min_age) && (user.age <= max_age) && ( (user.gender = female) || (user.gender = male) ||  (user.gender = female) && (user.gender = male) ) ) {
+           if((user.age >= min_age)
+            && (user.age <= max_age)
+            &&((user.gender == female)
+              || (user.gender == male)
+              || (user.gender == other)
+              || ((user.gender == female) && (user.gender == male))
+              || ((user.gender == female) && (user.gender == other))
+              || ((user.gender == male) && (user.gender == other))
+              || ((user.gender == female) && (user.gender == male) && (user.gender == other))
+            )){
             return user
           }
         }))
