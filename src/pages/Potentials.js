@@ -17,14 +17,13 @@ class Potentials extends React.Component{
       hasData: false,
       potentials : [],
       alreadyLiked : [],
-      searchWord: "",
-      keywordMatches: [],
-      previousPotentials: []
+      searchWord: ""
     };
      this.removeFromMatchesArray = this.removeFromMatchesArray.bind(this);
      this.addToUserLikes = this.addToUserLikes.bind(this);
-     this.handleChange = this.handleChange.bind(this);
-     this.handleClick = this.handleClick.bind(this);
+     this.inputChange = this.inputChange.bind(this);
+     this.searchClick = this.searchClick.bind(this);
+       this.returnToMatches = this.returnToMatches.bind(this);
   }
 
   componentDidMount(e, props){
@@ -50,9 +49,10 @@ class Potentials extends React.Component{
 
 
   removeFromMatchesArray(e){
-    console.log("HEY YOU, THAT WAS MY ID!: ", this.state.potentials[0].id);
-    console.log("remove from Potentials clicked");
+     console.log("HEY YOU, THAT WAS MY ID!: ", this.state.potentials[0].id);
+
     var data = [];
+
       data = this.state.potentials;
         this.setState({
             hasData: true,
@@ -62,6 +62,9 @@ class Potentials extends React.Component{
         user2: this.state.potentials[0].id,
       })
       .then(function (response) {
+        if(!potentials[0].id){
+          hasData: false
+        }
         console.log(response);
       })
       .catch(function (error) {
@@ -105,12 +108,12 @@ class Potentials extends React.Component{
 
   }
 
-   handleChange(e) {
+  inputChange(e) {
   console.log(" e.target.value", e.target.value)
     this.setState({searchWord: e.target.value });
   }
 
-  handleClick(e) {
+  searchClick(e) {
     const potentials = this.state.potentials
      this.setState({
             previousPotentials: potentials,
@@ -127,12 +130,35 @@ class Potentials extends React.Component{
 
       });
   }
+  returnToMatches(e){
+      axios.get('/api/potentials')
+      .then(response => {
+        this.setState({
+            hasData: true,
+            potentials: response.data
 
+        });
+        console.log("response.data", response.data);
+      });
+
+      axios.get('/api/alreadyLiked')
+      .then(response => {
+        this.setState({
+            alreadyLiked: response.data
+
+        });
+        console.log("AlreaDy Liked: ", response.data);
+      });
+    }
 
   render() {
 
 
-    var usercard = 'Not able to find Potential Matches';
+    var usercard =
+      <div>
+      <span>Not able to find Potential Matches</span>
+       <Button onClick={this.returnToMatches} type="button" ref="returnToMatches" >Back to Match</Button>
+       </div>
 
     if (this.state.hasData) {
       var user= this.state.potentials[0];
@@ -142,9 +168,10 @@ class Potentials extends React.Component{
       <div>
     <Container fluid>
    <InputGroup>
-         <Input onChange={this.handleChange}  placeholder="ex: skydiving" />
-       <Button onClick={this.handleClick} type="button" ref="myInput" >Search</Button>
+         <Input onChange={this.inputChange}  placeholder="ex: skydiving" />
+       <Button onClick={this.searchClick} type="button" ref="myInput" >Search</Button>
       </InputGroup>
+       <Button onClick={this.returnToMatches} type="button" ref="returnToMatches" >Back to Match</Button>
       <br />
     <Row>
 
@@ -170,6 +197,7 @@ class Potentials extends React.Component{
      } else if
       (this.state.potentials.length < 0){
       usercard = 'Sorry, You are out of Potential Matches';
+      <Button onClick={this.returnToMatches} type="button" ref="returnToMatches" >Back to Match</Button>
      }
 
   return (
