@@ -204,13 +204,15 @@ label {
 }
 
 .cool-button5 {
+  display: none;
   border-radius: 20px;
   padding: 10px 25px;
   background-color: white;
   color: #4ca2cd;
   text-transform: uppercase;
   box-shadow: 0px 7px 25px lightblue;
-  margin-left: 33%;
+  margin-left: 30%;
+  margin-top: 210px;
   border: none;
   font-size: 1.5vw;
   letter-spacing: 2.2px;
@@ -240,6 +242,11 @@ label {
   .like-user {
     margin-top: -58px;
     margin-left: 60%;
+  }
+
+  .cool-button5 {
+    margin-top: 20px;
+    margin-left: 27%;
   }
 }
 

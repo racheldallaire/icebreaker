@@ -115,6 +115,7 @@ class Potentials extends React.Component{
   }
 
   searchClick(e) {
+
     const potentials = this.state.potentials
      this.setState({
             previousPotentials: potentials,
@@ -127,7 +128,7 @@ class Potentials extends React.Component{
             potentials: response.data[0],
             hasData: true
         });
-        console.log("potentials", potentials)
+        document.getElementById("back").style.display = "block";
 
       });
   }
@@ -170,8 +171,6 @@ class Potentials extends React.Component{
     <Container fluid>
     <Row>
 
-    <Button className="cool-button5" onClick={this.returnToMatches} ref="returnToMatches" alt="Back to Match" ><FontAwesomeIcon icon={faArrowLeft} /></Button>
-
     <Col sm={{ size: 6, offset: 3 }}>
 
       <Input onChange={this.inputChange}  placeholder="Search matches by keyword ex: skydiving" />
@@ -190,9 +189,12 @@ class Potentials extends React.Component{
         <Button onClick={this.removeFromMatchesArray}  value={user.id } className="reject-user"><FontAwesomeIcon icon={faTimes} /></Button>
 
         <Button onClick={this.addToUserLikes}  value={user.id }  className="like-user"><FontAwesomeIcon icon={faHeart} /></Button>
+
+        <Button className="cool-button5" id="back" onClick={this.returnToMatches} ref="returnToMatches" alt="Back to Match" >Back to Match</Button>
         </Col>
 
         </Row>
+
         </Container>
     </div>
 
