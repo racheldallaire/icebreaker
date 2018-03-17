@@ -13,9 +13,6 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
         }
       }
 
-      componentDidMount(e){
-
-
   componentDidMount(e){
     axios.get('/api/message_list')
       .then(response => {
@@ -27,7 +24,7 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
         console.log(error);
       });
   }
-      }
+      
 
       render () {
 
