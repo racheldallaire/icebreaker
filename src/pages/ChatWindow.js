@@ -13,7 +13,7 @@ export default class ChatWindow extends Component {
         content: "",
         game_played: false,
         game: "",
-        userlikesid: 0, 
+        userlikesid: 0,
         userid: 0,
         timestamp: ""
         };
@@ -93,7 +93,7 @@ export default class ChatWindow extends Component {
             <span className="name">{user.first_name}  {user.last_name}</span>
              <span className="removeUser">
             <Button alt="Remove Friend" onClick={this.props.removeFromFriends}  className="unfriend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
-
+             <i className="like-user"><FontAwesomeIcon icon={faHeart} /></i>
             </span>
             </div>
 

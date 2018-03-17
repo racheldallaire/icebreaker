@@ -7,6 +7,15 @@ function showPosition(pos) {
   position = pos;
   console.log(pos);
 }
+function  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+      this.setState({
+        [name]: value
+      });
+    }
 
 const Signup = () =>
 
@@ -111,6 +120,24 @@ const Signup = () =>
                 </Label>
                 </FormGroup>
               </FormGroup>
+
+                <FormGroup check inline>
+                     <Label for="exampleLove">Looking for Love with </Label>
+                   <Label check>
+                    <Input type="checkbox"  name= "lovemale" /> Men
+                     </Label>
+                </FormGroup>
+                   <FormGroup check inline>
+                   <Label check>
+                     <Input type="checkbox" name="lovefemale" /> Women
+                   </Label>
+                 </FormGroup>
+                 <FormGroup check inline>
+                   <Label check>
+                     <Input type="checkbox" name="loveother"  /> Other
+                  </Label>
+                 </FormGroup>
+
 
               <FormGroup row>
               <Label sm={2}>Description</Label>
