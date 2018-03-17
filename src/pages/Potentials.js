@@ -5,6 +5,8 @@ import axios from 'axios';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/fontawesome-free-solid';
 import { faHeart } from '@fortawesome/fontawesome-free-solid';
+import { faSearch } from '@fortawesome/fontawesome-free-solid';
+import { faArrowLeft } from '@fortawesome/fontawesome-free-solid';
 import Alert from 'react-s-alert';
 
 class Potentials extends React.Component{
@@ -158,7 +160,7 @@ class Potentials extends React.Component{
     var usercard =
       <div>
       <span>Not able to find Matches</span>
-       <Button onClick={this.returnToMatches} type="button" ref="returnToMatches" >Back to Match</Button>
+       <Button className="cool-button4" onClick={this.returnToMatches} ref="returnToMatches" alt="Back to Match" ><FontAwesomeIcon icon={faArrowLeft} /></Button>
       </div>
 
     if (this.state.potentials[0] && this.state.hasData) {
@@ -166,11 +168,11 @@ class Potentials extends React.Component{
       var usercard =
       <div>
     <Container fluid>
-   <InputGroup>
-         <Input onChange={this.inputChange}  placeholder="ex: skydiving" />
-       <Button onClick={this.searchClick} type="button" ref="myInput" >Search</Button>
-      </InputGroup>
-       <Button onClick={this.returnToMatches} type="button" ref="returnToMatches" >Back to Match</Button>
+
+         <Input onChange={this.inputChange}  placeholder="Search matches by keyword ex: skydiving" />
+       <Button className="cool-button4" onClick={this.searchClick} ref="myInput" ><FontAwesomeIcon icon={faSearch} /></Button>
+
+       <Button className="cool-button4" onClick={this.returnToMatches} ref="returnToMatches" alt="Back to Match" ><FontAwesomeIcon icon={faArrowLeft} /></Button>
       <br />
     <Row>
 
