@@ -161,7 +161,7 @@ class Potentials extends React.Component{
     var usercard =
       <div>
       <span>Not able to find Matches</span>
-       <Button className="cool-button5" onClick={this.returnToMatches} ref="returnToMatches" alt="Back to Match" ><FontAwesomeIcon icon={faArrowLeft} /></Button>
+       <Button className="cool-button4" onClick={this.returnToMatches} ref="returnToMatches" alt="Back to Match" ><FontAwesomeIcon icon={faArrowLeft} /></Button>
       </div>
 
     if (this.state.potentials[0] && this.state.hasData) {
