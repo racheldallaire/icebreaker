@@ -103,8 +103,9 @@ class Chats extends Component {
 
       axios.get('/api/userID')
       .then(response => {
+        console.log('USER ID =======>', response.data)
         this.setState({
-            currentUserID: response.data
+            currentUserID: Number(response.data)
         });
       })
       .catch(function (error) {
@@ -128,7 +129,7 @@ class Chats extends Component {
       <div>
       <ChatWindow messages = {this.state.messages}  removeFromFriends={this.removeFromFriends} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
       <MessageList messages = {this.state.messages}  chattingWithUser={this.chattingWithUser} matches = {this.state.matches} />
-      <ChatBar defaultValue={this.state.currentUser.name} brandNewMessage={this.brandNewMessage}/>
+      <ChatBar  currentUser= {this.state.currentUserID} brandNewMessage={this.brandNewMessage}/>
       </div>
     );
   }

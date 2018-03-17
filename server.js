@@ -261,7 +261,8 @@ app.get('/api/loggedIn', (req, res) => {
 });
 
 app.get('/api/userID', (req, res) => {
-  res.send(req.session.id)
+  let currentUserID = "1"
+  res.send(currentUserID)
 })
 
 app.get('/api/logout', (req, res) => {
