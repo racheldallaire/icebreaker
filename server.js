@@ -308,25 +308,31 @@ app.post('/api/edit_filters', (req, res) => {
     res.redirect('/profile');
 });
 
+app.get('/api/message_db', (req, res) => {
+  knex.select("*")
+        .from("messages")
+        .where("userlikesid", Number(req.body.userlikesid))
+        .then((result) => {
+          console.log(result);
+          res.send(result);
+        });
+});
+
 app.post('/api/message_db', (req, res) => {
   console.log(req.body)
   let content = req.body.input
   let userid = req.body.currentUser
   let userlikesid = req.body.userlikesid
-  // let userid = Number(cookie_id);
-  // let max_age = Number(req.body.max_age);
-  // let radius = Number(req.body.distance);
-  // let female = (req.body.female) ? "female" : null;
-  // let male = (req.body.male) ? "male" : null;
-  // let other = (req.body.other) ? "other" : null;
 
-  // knex('filters').insert({userid: userid, min_age: min_age, max_age: max_age, radius: radius, female: female, male: male, other: other})
-  //   .then(function (woo) {
-  //       console.log("WOO!");
-  //      });
-
-  // req.session = {"id": cookie_id};
-  
+  knex('messages')
+    .insert({
+      userid: userid, 
+      userlikesid: userlikesid, 
+      content: content
+    })
+    .then(function (woo) {
+        console.log("WOO!");
+    });  
 });
 
 app.get('/api/message_list', (req, res) => {
