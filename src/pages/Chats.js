@@ -20,7 +20,11 @@ class Chats extends Component {
       fromMe: true,
       user2: 0,
       hasData: false,
-      user2Info: []
+      user2Info: [],
+      lovemale: null,
+      lovefemale: null,
+      loveother: null
+
     };
   }
   removeFromFriends(e){

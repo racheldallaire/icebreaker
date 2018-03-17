@@ -1,19 +1,20 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import Message from './Message.js';
-import { Button, Col, Container, Row  } from 'reactstrap';
+import { Button, Col, Container, Row , Badge } from 'reactstrap';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import { faUserTimes } from '@fortawesome/fontawesome-free-solid'
+import { faHeart } from '@fortawesome/fontawesome-free-solid';
 
 
 export default class ChatWindow extends Component {
     constructor(props) {
     super(props);
     this.state = {
-        content: [],
+        content: "",
         game_played: false,
         game: "",
-        userlikesid: 0, 
+        userlikesid: 0,
         userid: 0,
         timestamp: ""
         };
@@ -39,14 +40,14 @@ export default class ChatWindow extends Component {
       console.log(error);
       });
 
-      // GET CONTENT (IN MESSAGES DB) ONLY FROM USERLIKESID 
       axios.get('/api/messages_db')
       .then(response => {
         console.log(response.data);
         this.setState({
-            content: response.data[0].content,
+            content: response.data[0].description,
             userlikesid: response.data[0].userlikesid,
-            userid: response.data[0].userid
+            userid: response.data[0].userid,
+            timestamp: response.data[0].timestamp
         });
       })
       .catch(function (error) {
@@ -80,6 +81,18 @@ export default class ChatWindow extends Component {
   }
 
    render () {
+    var lookingFor = <span>  </span>
+       if(this.props.hasData && this.props.user2Info[0].lovemale){
+      lookingFor =
+            <span className="lookingfor">
+              <Badge color="primary"><FontAwesomeIcon icon={faHeart} /></Badge>
+             </span>
+           } else if(this.props.hasData && this.props.user2Info[0].lovefemale){
+            lookingFor =
+            <span className="lookingfor">
+              <Badge color="danger"><FontAwesomeIcon icon={faHeart} /></Badge>
+             </span>
+           }
 
     var chattingWith = "You have no Matches to Chat with";
     if (this.props.hasData) {
@@ -93,8 +106,7 @@ export default class ChatWindow extends Component {
             <span className="name">{user.first_name}  {user.last_name}</span>
              <span className="removeUser">
             <Button alt="Remove Friend" onClick={this.props.removeFromFriends}  className="unfriend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
-
-            </span>
+           </span>
             </div>
 
     }  else {
@@ -117,7 +129,7 @@ export default class ChatWindow extends Component {
     <Col sm={{ size: 7, offset: 5 }} style={{position: 'absolute', overflow: 'scroll', height: '80%'}} id="current-chat">
         <div className="right">
 
-             {chattingWith}
+             {chattingWith}  {lookingFor}
 
             <div className="active-chat">
 
