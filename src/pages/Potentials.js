@@ -160,7 +160,7 @@ class Potentials extends React.Component{
     var usercard =
       <div>
       <span>Not able to find Matches</span>
-       <Button className="cool-button4" onClick={this.returnToMatches} ref="returnToMatches" alt="Back to Match" ><FontAwesomeIcon icon={faArrowLeft} /></Button>
+       <Button className="cool-button5" onClick={this.returnToMatches} ref="returnToMatches" alt="Back to Match" ><FontAwesomeIcon icon={faArrowLeft} /></Button>
       </div>
 
     if (this.state.potentials[0] && this.state.hasData) {
@@ -168,15 +168,16 @@ class Potentials extends React.Component{
       var usercard =
       <div>
     <Container fluid>
-
-         <Input onChange={this.inputChange}  placeholder="Search matches by keyword ex: skydiving" />
-       <Button className="cool-button4" onClick={this.searchClick} ref="myInput" ><FontAwesomeIcon icon={faSearch} /></Button>
-
-       <Button className="cool-button4" onClick={this.returnToMatches} ref="returnToMatches" alt="Back to Match" ><FontAwesomeIcon icon={faArrowLeft} /></Button>
-      <br />
     <Row>
 
+    <Button className="cool-button5" onClick={this.returnToMatches} ref="returnToMatches" alt="Back to Match" ><FontAwesomeIcon icon={faArrowLeft} /></Button>
+
     <Col sm={{ size: 6, offset: 3 }}>
+
+      <Input onChange={this.inputChange}  placeholder="Search matches by keyword ex: skydiving" />
+       <Button className="cool-button4" onClick={this.searchClick} ref="myInput" ><FontAwesomeIcon icon={faSearch} /></Button>
+      <p />
+
         <Card>
             <CardBody className="card-body">
             <CardImg top src={user.facebook_picture_url} /><p/>
