@@ -98,7 +98,9 @@ const Signup = () =>
                 </Col>
               </FormGroup>
 
-              <FormGroup tag="fieldset">
+              <FormGroup row>
+                <Label sm={2}>Gender</Label>
+                <Col sm={10}>
                 <FormGroup check inline>
                 <Label check>
                   <Input type="radio" name="gender" value="female" />{' '}
@@ -113,16 +115,20 @@ const Signup = () =>
                 </Label>
                 </FormGroup>
 
+
                 <FormGroup check inline>
                 <Label check>
                   <Input type="radio" name="gender" value="other" />{' '}
                   Other
                 </Label>
                 </FormGroup>
+                </Col>
               </FormGroup>
 
+                 <FormGroup row>
+                <Label sm={2}>Looking for Love with</Label>
+                <Col sm={10}>
                 <FormGroup check inline>
-                     <Label for="exampleLove">Looking for Love with </Label>
                    <Label check>
                     <Input type="checkbox"  name= "lovemale" /> Men
                      </Label>
@@ -136,6 +142,8 @@ const Signup = () =>
                    <Label check>
                      <Input type="checkbox" name="loveother"  /> Other
                   </Label>
+                 </FormGroup>
+                 </Col>
                  </FormGroup>
 
 
