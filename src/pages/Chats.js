@@ -13,7 +13,7 @@ class Chats extends Component {
     this.chattingWithUser = this.chattingWithUser.bind(this);
     this.removeFromFriends = this.removeFromFriends.bind(this);
     this.state = {
-      currentUser: {name: 'Anonymous'},
+      currentUserID: 0,
       matches:[],
       messages: [],
       fromMe: true,
@@ -56,16 +56,6 @@ class Chats extends Component {
         console.log(error);
       });
 
-      //  axios.get('/api/message_list')
-      // .then(response => {
-      //   this.setState({
-      //       matches: response.data
-      //   });
-      //   console.log("MESSAGE LIST MATCHED 1", response.data)
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      // });
   }
 
   brandNewMessage(message) {
@@ -106,6 +96,16 @@ class Chats extends Component {
             matches: response.data
         });
         console.log("MESSAGE LIST MATCHED 1", response.data)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+      axios.get('/api/userID')
+      .then(response => {
+        this.setState({
+            currentUserID: response.data
+        });
       })
       .catch(function (error) {
         console.log(error);

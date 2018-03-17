@@ -12,7 +12,10 @@ export default class ChatWindow extends Component {
     this.state = {
         content: "",
         game_played: false,
-        game: ""
+        game: "",
+        userlikesid: 0, 
+        userid: 0,
+        timestamp: ""
         };
      this.getNewGame = this.getNewGame.bind(this);
 
@@ -30,6 +33,20 @@ export default class ChatWindow extends Component {
             // gender: response.data[0].gender,
             // description: response.data[0].description,
             // fb_pic: response.data[0].facebook_picture_url
+        });
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
+
+      axios.get('/api/messages_db')
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+            content: response.data[0].description,
+            userlikesid: response.data[0].userlikesid,
+            userid: response.data[0].userid,
+            timestamp: response.data[0].timestamp
         });
       })
       .catch(function (error) {

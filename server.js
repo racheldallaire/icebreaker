@@ -260,6 +260,10 @@ app.get('/api/loggedIn', (req, res) => {
     res.send("true");
 });
 
+app.get('/api/userID', (req, res) => {
+  res.send(req.session.id)
+})
+
 app.get('/api/logout', (req, res) => {
   cookie_id = 0;
   req.session = null;
