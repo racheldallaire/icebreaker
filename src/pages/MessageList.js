@@ -23,7 +23,8 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
                 return <li key={matches.id}  onClick= {this.props.chattingWithUser}  value={matches.id}   className="person">
                         <img src={matches.facebook_picture_url} alt="" />
                         <span className="name">{matches.first_name} {matches.last_name}</span>
-
+                        <span className="preview">This is a message preview</span>
+                        <span className="time">1:00pm</span>
                       </li>
         });
 

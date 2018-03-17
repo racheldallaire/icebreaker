@@ -277,7 +277,7 @@ label {
       .name {
         font-size: 15px;
         color: #1a1a1a;
-        line-height: 6.2;
+        line-height: 2.7;
       }
       .time {
         font-size: 14px;
@@ -287,6 +287,15 @@ label {
         padding: 0 0 5px 5px;
         color: #999;
         background-color: #fff;
+      }
+       .preview {
+        font-size: 14px;
+        display: inline-block;
+        overflow: hidden !important;
+        width: 70%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: #999;
       }
       &.active, &:hover {
         border: 0;
