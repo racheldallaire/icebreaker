@@ -23,7 +23,7 @@ class Potentials extends React.Component{
      this.addToUserLikes = this.addToUserLikes.bind(this);
      this.inputChange = this.inputChange.bind(this);
      this.searchClick = this.searchClick.bind(this);
-       this.returnToMatches = this.returnToMatches.bind(this);
+     this.returnToMatches = this.returnToMatches.bind(this);
   }
 
   componentDidMount(e, props){
@@ -130,6 +130,7 @@ class Potentials extends React.Component{
 
       });
   }
+
   returnToMatches(e){
       axios.get('/api/potentials')
       .then(response => {
@@ -157,13 +158,13 @@ class Potentials extends React.Component{
 
     var usercard =
       <div>
-      <span>Not able to find Potential Matches</span>
+      <span>Not able to find Matches</span>
        <Button onClick={this.returnToMatches} type="button" ref="returnToMatches" >Back to Match</Button>
-       </div>
+      </div>
 
     if (this.state.hasData) {
       var user= this.state.potentials[0];
-
+      var usercard =
       <div>
     <Container fluid>
    <InputGroup>
@@ -196,29 +197,33 @@ class Potentials extends React.Component{
      } else if
       (this.state.potentials.length < 0){
       usercard = 'Sorry, You are out of Potential Matches';
+
+    <Container fluid>
+    <Row>
+
+    <Col sm={{ size: 3, offset: 2 }} className="err">
+    Looks like you don't have any available matches yet. Check back soon!
+    </Col>
+
+    <Col sm="5">
+    <img src="https://www.earthrangers.com/public/content/wildwire/polarbear-in-water.png"/>
+    </Col>
+
+    </Row>
       <Button onClick={this.returnToMatches} type="button" ref="returnToMatches" >Back to Match</Button>
+    </Container>
+
+
 
      }
 
-  // return (
+  return (
+   <div>
+   {usercard}
+   </div>
 
-  //     <div>
-  //   <Container fluid>
-  //   <Row>
 
-  //   <Col sm={{ size: 3, offset: 2 }} className="err">
-  //   Looks like you don't have any available matches yet. Check back soon!
-  //   </Col>
-
-  //   <Col sm="5">
-  //   <img src="https://www.earthrangers.com/public/content/wildwire/polarbear-in-water.png"/>
-  //   </Col>
-
-  //   </Row>
-  //   </Container>
-  //    <Button onClick={this.returnToMatches} type="button" ref="returnToMatches" >Back to Match</Button>
-  //   </div>
-  //   );
+    );
   }
 }
 
