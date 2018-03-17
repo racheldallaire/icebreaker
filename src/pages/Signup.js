@@ -7,6 +7,15 @@ function showPosition(pos) {
   position = pos;
   console.log(pos);
 }
+function  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+      this.setState({
+        [name]: value
+      });
+    }
 
 const Signup = () =>
 
@@ -89,7 +98,9 @@ const Signup = () =>
                 </Col>
               </FormGroup>
 
-              <FormGroup tag="fieldset">
+              <FormGroup row>
+                <Label sm={2}>Gender</Label>
+                <Col sm={10}>
                 <FormGroup check inline>
                 <Label check>
                   <Input type="radio" name="gender" value="female" />{' '}
@@ -104,13 +115,37 @@ const Signup = () =>
                 </Label>
                 </FormGroup>
 
+
                 <FormGroup check inline>
                 <Label check>
                   <Input type="radio" name="gender" value="other" />{' '}
                   Other
                 </Label>
                 </FormGroup>
+                </Col>
               </FormGroup>
+
+                 <FormGroup row>
+                <Label sm={2}>Looking for Love with</Label>
+                <Col sm={10}>
+                <FormGroup check inline>
+                   <Label check>
+                    <Input type="checkbox"  name= "lovemale" /> Men
+                     </Label>
+                </FormGroup>
+                   <FormGroup check inline>
+                   <Label check>
+                     <Input type="checkbox" name="lovefemale" /> Women
+                   </Label>
+                 </FormGroup>
+                 <FormGroup check inline>
+                   <Label check>
+                     <Input type="checkbox" name="loveother"  /> Other
+                  </Label>
+                 </FormGroup>
+                 </Col>
+                 </FormGroup>
+
 
               <FormGroup row>
               <Label sm={2}>Description</Label>

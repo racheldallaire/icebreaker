@@ -1,19 +1,20 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import Message from './Message.js';
-import { Button, Col, Container, Row  } from 'reactstrap';
+import { Button, Col, Container, Row , Badge } from 'reactstrap';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import { faUserTimes } from '@fortawesome/fontawesome-free-solid'
+import { faHeart } from '@fortawesome/fontawesome-free-solid';
 
 
 export default class ChatWindow extends Component {
     constructor(props) {
     super(props);
     this.state = {
-        content: [],
+        content: "",
         game_played: false,
         game: "",
-        userlikesid: 0, 
+        userlikesid: 0,
         userid: 0,
         timestamp: ""
         };
@@ -22,7 +23,6 @@ export default class ChatWindow extends Component {
     }
 
     componentWillReceiveProps(props) {
-      console.log(props);
       axios.get('/api/messages_db', {
         params: {
           userlikesid: props.userlikesid,
@@ -30,7 +30,7 @@ export default class ChatWindow extends Component {
       })
       .then(response => {
         console.log(response.data);
-        that.setState({
+        this.setState({
             content: response.data[0].content,
             userid: response.data[0].userid,
             userlikesid: response.data[0].userlikesid
@@ -41,23 +41,18 @@ export default class ChatWindow extends Component {
       });
     }
 
-
     componentDidMount(){
      
-     
-
       axios.get('/api/new_game')
       .then(response => {
         console.log(response.data);
         this.setState({
             game: response.data
-        });
+        })
       })
       .catch(function (error) {
-      console.log(error);
+        console.log(error);
       });
-
-    
     }
 
     getNewGame(){
@@ -68,9 +63,10 @@ export default class ChatWindow extends Component {
         });
       })
       .catch(function (error) {
-      console.log(error);
+        console.log(error);
       });
     }
+    
 
   componentDidUpdate() {
     // There is a new message in the state, scroll to bottom of list
@@ -79,6 +75,27 @@ export default class ChatWindow extends Component {
   }
 
    render () {
+    var lookingForMen = <span>  </span>
+    var lookingForWomen = <span>  </span>
+    var lookingForOther = <span>  </span>
+       if(this.props.hasData && this.props.user2Info[0].lovemale){
+        lookingForMen =
+            <span className="lookingfor">
+              💙
+             </span>}
+      if(this.props.hasData && this.props.user2Info[0].lovefemale){
+        lookingForWomen =
+            <span className="lookingfor">
+              ❤️
+             </span>}
+      if(this.props.hasData && this.props.user2Info[0].loveother){
+        lookingForOther =
+            <span className="lookingfor">
+              💚
+             </span>}
+
+
+
 
     var chattingWith = "You have no Matches to Chat with";
     if (this.props.hasData) {
@@ -90,10 +107,10 @@ export default class ChatWindow extends Component {
             <span>
             <img src={user.facebook_picture_url}  className="chatimg" />
             <span className="name">{user.first_name}  {user.last_name}</span>
+            {lookingForMen}  {lookingForWomen} {lookingForOther}
              <span className="removeUser">
             <Button alt="Remove Friend" onClick={this.props.removeFromFriends}  className="unfriend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
-
-            </span>
+           </span>
             </div>
 
     }  else {

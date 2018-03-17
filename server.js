@@ -426,13 +426,17 @@ app.get('*', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
+  console.log("signup", req.body )
   if(req.session.id){
     let first_name = req.body.first_name;
     let last_name = req.body.last_name;
     let age = Number(req.body.age);
     let gender = req.body.gender;
     let description = req.body.description;
-    knex('users').where("id", Number(req.session.id)).update({first_name: first_name, last_name: last_name, age: age, gender: gender, description: description})
+    let lovefemale = req.body.lovefemale;
+    let lovemale = req.body.lovemale;
+    let loveother = req.body.loveother;
+    knex('users').where("id", Number(req.session.id)).update({first_name: first_name, last_name: last_name, age: age, gender: gender, lovefemale: lovefemale, lovemale: lovemale, loveother: loveother,  description: description})
       .then(function (woo) {
           console.log("Woo!");
          });
@@ -445,9 +449,12 @@ app.post('/signup', (req, res) => {
     let age = Number(req.body.age);
     let gender = req.body.gender;
     let description = req.body.description;
+    let lovefemale = (req.body.lovefemale) ? "lovefemale" : null;
+    let lovemale = (req.body.lovemale) ? "lovemale" : null;
+    let loveother = (req.body.loveother) ? "loveother" : null;
     let location = "45.490998036, -73.56833106";
     console.log(req.body);
-    knex('users').insert({facebook_id: facebook_id, first_name: first_name, last_name: last_name, age: age, gender: gender, description: description, facebook_picture_url: facebook_picture_url, location: location})
+    knex('users').insert({facebook_id: facebook_id, first_name: first_name, last_name: last_name, age: age, gender: gender, lovefemale: lovefemale, lovemale: lovemale, loveother: loveother, description: description, facebook_picture_url: facebook_picture_url, location: location})
       .returning('id')
       .then(function (id) {
 
