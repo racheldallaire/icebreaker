@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
       table.increments('id').primary().unsigned();
       table.integer('userlikesid').unsigned().notNullable().references('id').inTable('chats').onDelete('CASCADE').index();
       table.string('content');
-      table.timestamp('timestamp');
+      table.timestamp('timestamp').defaultTo(knex.fn.now());
     })
   ]);
 };
