@@ -74,6 +74,8 @@ class Chats extends Component {
   }
 
   chattingWithUser(e){
+
+    if(e.target.value){
     this.setState({
        user2: e.target.value
     })
@@ -92,7 +94,7 @@ class Chats extends Component {
       .catch(function (error) {
         console.log(error);
       });
-
+    }
   }
 
   // Called after the component was rendered and it was attached to the DOM.
