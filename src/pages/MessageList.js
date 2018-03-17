@@ -13,9 +13,11 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
         }
       }
 
+
       componentDidMount(e){
 
       }
+      
 
       render () {
 
