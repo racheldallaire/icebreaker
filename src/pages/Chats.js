@@ -14,6 +14,7 @@ class Chats extends Component {
     this.removeFromFriends = this.removeFromFriends.bind(this);
     this.state = {
       currentUserID: 0,
+      userlikesid: 0,
       matches:[],
       messages: [],
       fromMe: true,
@@ -76,7 +77,8 @@ class Chats extends Component {
       .then(function (response) {
           that.setState({
               hasData: true,
-              user2Info: response.data
+              user2Info: response.data,
+              userlikesid: response.data[0].userlikesid
 
             })
         console.log(response);
@@ -129,7 +131,7 @@ class Chats extends Component {
       <div>
       <ChatWindow messages = {this.state.messages}  removeFromFriends={this.removeFromFriends} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
       <MessageList messages = {this.state.messages}  chattingWithUser={this.chattingWithUser} matches = {this.state.matches} />
-      <ChatBar  currentUser= {this.state.currentUserID} brandNewMessage={this.brandNewMessage}/>
+      <ChatBar  currentUser= {this.state.currentUserID} userlikesid = {this.state.userlikesid} brandNewMessage={this.brandNewMessage}/>
       </div>
     );
   }

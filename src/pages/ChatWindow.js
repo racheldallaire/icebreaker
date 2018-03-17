@@ -39,19 +39,20 @@ export default class ChatWindow extends Component {
       console.log(error);
       });
 
-      axios.get('/api/messages_db')
-      .then(response => {
-        console.log(response.data);
-        this.setState({
-            content: response.data[0].description,
-            userlikesid: response.data[0].userlikesid,
-            userid: response.data[0].userid,
-            timestamp: response.data[0].timestamp
-        });
-      })
-      .catch(function (error) {
-      console.log(error);
-      });
+      //GET CONTENT (IN MESSAGES DB) ONLY FROM USERLIKESID 
+      // axios.get('/api/messages_db')
+      // .then(response => {
+      //   console.log(response.data);
+      //   this.setState({
+      //       content: response.data[0].description,
+      //       userlikesid: response.data[0].userlikesid,
+      //       userid: response.data[0].userid,
+      //       timestamp: response.data[0].timestamp
+      //   });
+      // })
+      // .catch(function (error) {
+      // console.log(error);
+      // });
     }
 
     getNewGame(){
