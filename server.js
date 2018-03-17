@@ -308,12 +308,14 @@ app.post('/api/edit_filters', (req, res) => {
     res.redirect('/profile');
 });
 
-app.get('/api/message_db', (req, res) => {
+app.get('/api/messages_db', (req, res) => {
+  console.log("QUERY yooooooooooo", req.query.userlikesid)
+  console.log("QUERY yooooooooooo", req.query.string)
   knex.select("*")
         .from("messages")
-        .where("userlikesid", Number(req.body.userlikesid))
+        .where("userlikesid", req.query.userlikesid)
         .then((result) => {
-          console.log(result);
+          console.log("RESULTS OF GETTING MSG_DB", result);
           res.send(result);
         });
 });

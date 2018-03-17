@@ -21,32 +21,19 @@ export default class ChatWindow extends Component {
 
     }
 
-    componentDidMount(){
-      axios.get('/api/new_game')
-      .then(response => {
-        console.log(response.data);
-        this.setState({
-            game: response.data
-            // first_name: response.data[0].first_name,
-            // last_name: response.data[0].last_name,
-            // age: response.data[0].age,
-            // gender: response.data[0].gender,
-            // description: response.data[0].description,
-            // fb_pic: response.data[0].facebook_picture_url
-        });
+    componentWillReceiveProps(props) {
+      console.log(props);
+      axios.get('/api/messages_db', {
+        params: {
+          userlikesid: props.userlikesid,
+        }
       })
-      .catch(function (error) {
-      console.log(error);
-      });
-
-      // GET CONTENT (IN MESSAGES DB) ONLY FROM USERLIKESID 
-      axios.get('/api/messages_db')
       .then(response => {
         console.log(response.data);
-        this.setState({
+        that.setState({
             content: response.data[0].content,
-            userlikesid: response.data[0].userlikesid,
-            userid: response.data[0].userid
+            userid: response.data[0].userid,
+            userlikesid: response.data[0].userlikesid
         });
       })
       .catch(function (error) {
@@ -54,18 +41,30 @@ export default class ChatWindow extends Component {
       });
     }
 
-    getNewGame(){
+
+    componentDidMount(){
+     
+     
+
       axios.get('/api/new_game')
       .then(response => {
         console.log(response.data);
         this.setState({
             game: response.data
-            // first_name: response.data[0].first_name,
-            // last_name: response.data[0].last_name,
-            // age: response.data[0].age,
-            // gender: response.data[0].gender,
-            // description: response.data[0].description,
-            // fb_pic: response.data[0].facebook_picture_url
+        });
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
+
+    
+    }
+
+    getNewGame(){
+      axios.get('/api/new_game')
+      .then(response => {
+        this.setState({
+            game: response.data
         });
       })
       .catch(function (error) {

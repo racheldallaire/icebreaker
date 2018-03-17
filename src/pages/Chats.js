@@ -129,7 +129,7 @@ class Chats extends Component {
 
     return (
       <div>
-      <ChatWindow messages = {this.state.messages}  removeFromFriends={this.removeFromFriends} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
+      <ChatWindow messages = {this.state.messages} userlikesid = {this.state.userlikesid} removeFromFriends={this.removeFromFriends} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
       <MessageList messages = {this.state.messages}  chattingWithUser={this.chattingWithUser} matches = {this.state.matches} />
       <ChatBar  currentUser= {this.state.currentUserID} userlikesid = {this.state.userlikesid} brandNewMessage={this.brandNewMessage}/>
       </div>
