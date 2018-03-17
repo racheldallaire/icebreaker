@@ -154,6 +154,7 @@ class Potentials extends React.Component{
   render() {
 
 
+
     var usercard =
       <div>
       <span>Not able to find Potential Matches</span>
@@ -162,9 +163,7 @@ class Potentials extends React.Component{
 
     if (this.state.hasData) {
       var user= this.state.potentials[0];
-       // for (let user of  matchesArray){
-        console.log("user", user);
-        usercard =
+
       <div>
     <Container fluid>
    <InputGroup>
@@ -198,14 +197,28 @@ class Potentials extends React.Component{
       (this.state.potentials.length < 0){
       usercard = 'Sorry, You are out of Potential Matches';
       <Button onClick={this.returnToMatches} type="button" ref="returnToMatches" >Back to Match</Button>
+
      }
 
-  return (
+  // return (
 
-      <div>
-        {usercard}
-      </div>
-    );
+  //     <div>
+  //   <Container fluid>
+  //   <Row>
+
+  //   <Col sm={{ size: 3, offset: 2 }} className="err">
+  //   Looks like you don't have any available matches yet. Check back soon!
+  //   </Col>
+
+  //   <Col sm="5">
+  //   <img src="https://www.earthrangers.com/public/content/wildwire/polarbear-in-water.png"/>
+  //   </Col>
+
+  //   </Row>
+  //   </Container>
+  //    <Button onClick={this.returnToMatches} type="button" ref="returnToMatches" >Back to Match</Button>
+  //   </div>
+  //   );
   }
 }
 
