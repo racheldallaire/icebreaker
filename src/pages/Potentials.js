@@ -173,7 +173,7 @@ class Potentials extends React.Component{
 
     <Col sm={{ size: 6, offset: 3 }}>
 
-      <Input onChange={this.inputChange}  placeholder="Search matches by keyword ex: skydiving" />
+      <Input className="searchysearch" onChange={this.inputChange}  placeholder="Search matches by keyword ex: skydiving" />
        <Button className="cool-button4" onClick={this.searchClick} ref="myInput" ><FontAwesomeIcon icon={faSearch} /></Button>
       <p />
 
