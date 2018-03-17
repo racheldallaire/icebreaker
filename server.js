@@ -92,7 +92,6 @@ app.get('/api/potentials', (req, res) => {
   const cookieid = 1//req.session.id
   console.log("potentials get for id ", cookieid)
     Promise.all([
-
     knex('users')
      .select('filters.min_age','filters.max_age', 'filters.female','filters.male')
      .innerJoin('filters', 'users.id', 'filters.userid')
@@ -198,6 +197,28 @@ app.get('/api/matches', (req, res) => {
     })
   })
 })
+
+app.get('/api/potentials/:id', (req, res) => {
+  const cookieid = 1
+  const searchid = req.params.id
+  const searchWord = '%' + searchid + '%'
+  console.log("searchWord", searchid)
+    Promise.all([
+    knex('users')
+    .where('users.description', 'ilike', searchWord)
+    .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid1 = ?', [cookieid]).andWhereRaw('users.id = userlikes.userid2'))
+    .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid2 = ?', [cookieid]).andWhereRaw('users.id = userlikes.userid1'))
+      ])
+
+     .then((result) => {
+      console.log("potentials by keyword are ",result);
+      res.send(result);
+      })
+    .catch((err) => {
+            console.log("error", err)
+          })
+      })
+
 
 app.get('/api/profile', (req, res) => {
   knex.select("*")

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, CardFooter, Button, Container, Row, Col } from 'reactstrap';
+  CardTitle, CardSubtitle, CardFooter, Button, Container, Row, Col, Input, InputGroup, InputGroupAddon} from 'reactstrap';
 import axios from 'axios';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/fontawesome-free-solid';
@@ -16,10 +16,15 @@ class Potentials extends React.Component{
     this.state = {
       hasData: false,
       potentials : [],
-      alreadyLiked : []
+      alreadyLiked : [],
+      searchWord: "",
+      keywordMatches: [],
+      previousPotentials: []
     };
      this.removeFromMatchesArray = this.removeFromMatchesArray.bind(this);
      this.addToUserLikes = this.addToUserLikes.bind(this);
+     this.handleChange = this.handleChange.bind(this);
+     this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount(e, props){
@@ -41,10 +46,8 @@ class Potentials extends React.Component{
         });
         console.log("AlreaDy Liked: ", response.data);
       });
-
-
-
     }
+
 
   removeFromMatchesArray(e){
     console.log("HEY YOU, THAT WAS MY ID!: ", this.state.potentials[0].id);
@@ -102,6 +105,30 @@ class Potentials extends React.Component{
 
   }
 
+   handleChange(e) {
+  console.log(" e.target.value", e.target.value)
+    this.setState({searchWord: e.target.value });
+  }
+
+  handleClick(e) {
+    const potentials = this.state.potentials
+     this.setState({
+            previousPotentials: potentials,
+            hasData:false
+        })
+      axios.get(`/api/potentials/${this.state.searchWord}`)
+
+      .then(response => {
+        this.setState({
+            potentials: response.data[0],
+            hasData: true
+        });
+        console.log("potentials", potentials)
+
+      });
+  }
+
+
   render() {
 
 
@@ -114,6 +141,11 @@ class Potentials extends React.Component{
         usercard =
       <div>
     <Container fluid>
+   <InputGroup>
+         <Input onChange={this.handleChange}  placeholder="ex: skydiving" />
+       <Button onClick={this.handleClick} type="button" ref="myInput" >Search</Button>
+      </InputGroup>
+      <br />
     <Row>
 
     <Col sm={{ size: 6, offset: 3 }}>
