@@ -119,7 +119,7 @@ export default class ChatWindow extends Component {
             {lookingForMen}  {lookingForWomen} {lookingForOther}
             <Button id="Popover1" onClick={this.toggle}><FontAwesomeIcon icon={faBars} /></Button>
                <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
-                <PopoverHeader>About {user.first_name}</PopoverHeader>
+                <PopoverHeader>{user.first_name} ({user.age} years old)</PopoverHeader>
                   <PopoverBody>{user.description}</PopoverBody>
               </Popover>
 
