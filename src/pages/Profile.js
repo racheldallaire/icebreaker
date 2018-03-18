@@ -80,7 +80,6 @@ export default class Profile extends React.Component {
               <CardImg top src={this.state.fb_pic} alt="Image Not Found" /><p/>
                 <CardTitle>{this.state.first_name} {this.state.last_name}</CardTitle>
                 <p>{this.state.age} | {this.state.gender}</p>
-                 <p>{this.state.lovemale} | {this.state.lovefemale} | {this.state.loveother}</p>
                 <Button className="cool-button" href="/signup">Edit </Button>
               </CardBody>
               <CardFooter className="after-button">{this.state.description}</CardFooter>
