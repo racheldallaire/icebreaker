@@ -57,11 +57,11 @@ export default class Profile extends React.Component {
 
     // handles the checkbox to show the gender preferences
     handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+      const target = event.target;
+      const name = target.name;
+      const value = !target.checked ? null : target.name;
 
-      this.setState({
+      this.setState ({
         [name]: value
       });
     }
@@ -205,17 +205,17 @@ export default class Profile extends React.Component {
                   <FormGroup check>
 
                   <label>
-                      <input name="male" type="checkbox" checked={this.state.male} onChange={this.handleInputChange} />{' '}
+                      <Input type="checkbox" name="male" checked={this.state.male} onChange={this.handleInputChange} />{' '}
                       Men
                     </label>
 
                     <label>
-                      <input name="female" type="checkbox" checked={this.state.female} onChange={this.handleInputChange} />{' '}
+                      <Input type="checkbox" name="female" checked={this.state.female} onChange={this.handleInputChange} />{' '}
                       Women
                     </label>
 
                     <label>
-                      <input name="other" type="checkbox" checked={this.state.other} onChange={this.handleInputChange} />{' '}
+                      <Input type="checkbox" name="other" checked={this.state.other} onChange={this.handleInputChange} />{' '}
                       Other
                     </label>
                   </FormGroup>

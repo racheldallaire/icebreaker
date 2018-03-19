@@ -190,7 +190,6 @@ app.get('/api/matches', (req, res) => {
     const [users1, users2] = result
     const users = users1.concat(users2)
     var user_ids = []
-    console.log("users", users)
     for(let user of users){
       user_ids.push(Object.values(user)[0])
       console.log("user_ids",user_ids )
@@ -234,7 +233,6 @@ app.get('/api/profile', (req, res) => {
         .from("users")
         .where("id", Number(req.session.id))
         .then((result) => {
-          console.log(result);
           res.send(result);
         });
 });
@@ -282,25 +280,26 @@ app.get('/api/logout', (req, res) => {
 app.get('/api/edit_filters', (req, res) => {
   knex.select("*")
         .from("filters")
-        .where("userid", Number(req.session.id))
+        .where("userid", Number(req.session.id)) 
+        // use for demo when testing facebook authentication
         .then((result) => {
-          console.log(result);
           res.send(result);
         });
 });
 
 app.post('/api/edit_filters', (req, res) => {
+
     let min_age = Number(req.body.min_age);
     let max_age = Number(req.body.max_age);
     let radius = Number(req.body.distance);
-    let female = (req.body.female) ? true : false;
-    let male = (req.body.male) ? true : false;
-    let other = (req.body.other) ? true : false;
+    let female = (req.body.female === 'on') ? 'female' : null;
+    let male = (req.body.male === 'on') ? 'male' : null;
+    let other = (req.body.other === 'on') ? 'other' : null;
+
     knex('filters')
       .where("userid", Number(req.session.id))
       .update({min_age: min_age, max_age: max_age, female: female, male: male, other: other, radius: radius})
       .then(function (woo) {
-          console.log("Woo!");
          });
     res.redirect('/profile');
 });
@@ -327,7 +326,6 @@ app.post('/api/message_db', (req, res) => {
       content: content
     })
     .then(function (woo) {
-        console.log("WOO!");
     });
 });
 
@@ -413,7 +411,6 @@ app.get('*', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-  console.log("signup", req.body )
   if(req.session.id){
     let first_name = req.body.first_name;
     let last_name = req.body.last_name;
@@ -425,7 +422,6 @@ app.post('/signup', (req, res) => {
     let loveother = req.body.loveother;
     knex('users').where("id", Number(req.session.id)).update({first_name: first_name, last_name: last_name, age: age, gender: gender, lovefemale: lovefemale, lovemale: lovemale, loveother: loveother,  description: description})
       .then(function (woo) {
-          console.log("Woo!");
          });
     res.redirect('/profile');
   } else {
@@ -462,7 +458,6 @@ app.post('/filters', (req, res) => {
 
   knex('filters').insert({userid: userid, min_age: min_age, max_age: max_age, radius: radius, female: female, male: male, other: other})
     .then(function (woo) {
-        console.log("WOO!");
        });
 
   req.session = {"id": cookie_id};
