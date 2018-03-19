@@ -89,12 +89,14 @@ export default class ChatWindow extends Component {
 
       if(this.props.oldMessage === true) {
         console.log("True")
-      oldMessages = this.state.allMessages.map((message) => {
+      oldMessages = this.state.allMessages.map((message, index) => {
           console.log("MESSAGE",message )
       if (message.userid === this.props.currentUser) {
-          return <div className="bubble me" key={message.id}>{message.content}</div>
+
+          return <div className="bubble me" key={index}>{message.content}</div>
              } else {
-         return <div className="bubble you" key={message.id}>{message.content}</div>
+         return <div className="bubble you" key={index}>{message.content}</div>
+
             }
           });
           }
@@ -172,9 +174,9 @@ export default class ChatWindow extends Component {
                     <p> {this.state.game} </p>
                     <button className="cool-button3" onClick={this.getNewGame}> Get Another Mini-Game! </button>
                       <div>
-                      <ul>
+
                      {oldMessages}
-                     </ul>
+
                      </div>
                       {messages}
 
