@@ -199,7 +199,7 @@ class Potentials extends React.Component{
     </div>
 
      } else if
-      (this.state.potentials.length = 0){
+      (this.state.potentials.length === 0){
       usercard =
 
     <Container fluid>
