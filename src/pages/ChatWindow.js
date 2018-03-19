@@ -1,27 +1,36 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import Message from './Message.js';
-import { Button, Col, Container, Row , Badge } from 'reactstrap';
+import { Popover, PopoverHeader, PopoverBody, Button, Col, Container, Row , Badge } from 'reactstrap';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import { faUserTimes } from '@fortawesome/fontawesome-free-solid'
 import { faHeart } from '@fortawesome/fontawesome-free-solid';
+import { faBars } from '@fortawesome/fontawesome-free-solid';
 
 
 export default class ChatWindow extends Component {
     constructor(props) {
-    super(props);
-    this.state = {
-        content: "",
-        game_played: false,
-        game: "",
-        userlikesid: 0,
-        userid: 0,
-        timestamp: "",
-        allMessages: [],
-        oldMessagePost: ""
-        };
-     this.getNewGame = this.getNewGame.bind(this);
 
+      super(props);
+      this.toggle = this.toggle.bind(this);
+      this.state = {
+          content: "",
+          game_played: false,
+          game: "",
+          userlikesid: 0,
+          userid: 0,
+          timestamp: "",
+          popoverOpen: false,
+          allMessages: [],
+          oldMessagePost: ""
+          };
+       this.getNewGame = this.getNewGame.bind(this);
+    }
+
+    toggle() {
+      this.setState({
+        popoverOpen: !this.state.popoverOpen
+      });
     }
 
     componentWillReceiveProps(props) {
@@ -123,8 +132,14 @@ export default class ChatWindow extends Component {
             <img src={user.facebook_picture_url}  className="chatimg" />
             <span className="name">{user.first_name}  {user.last_name}</span>
             {lookingForMen}  {lookingForWomen} {lookingForOther}
+            <Button id="Popover1" onClick={this.toggle}><FontAwesomeIcon icon={faBars} /></Button>
+               <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
+                <PopoverHeader>{user.first_name} ({user.age} years old)</PopoverHeader>
+                  <PopoverBody>{user.description}</PopoverBody>
+              </Popover>
+
              <span className="removeUser">
-            <Button alt="Remove Friend" onClick={this.props.removeFromFriends}  className="unfriend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
+            <Button color="danger" alt="Remove Friend" onClick={this.props.removeFromFriends}  className="unfriend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
            </span>
             </div>
 
