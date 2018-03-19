@@ -12,18 +12,13 @@ export default class Message extends Component {
 if(this.props.currentUser == currentUser) {
 	  return (
     <div>
-      {type === 'postMessage' && <div className="message">
-      <div className="bubble you"> top {content}</div>
-      </div>}
     </div>
     );
     } else {
       console.log("this.props.currentuserID",this.props.currentUser, "currentUser", currentUser  )
          return (
      <div>
-      {type === 'postMessage' && <div className="message">
-      <div className="bubble you"> bottom {content}</div>
-      </div>}
+
     </div>
     );
 
