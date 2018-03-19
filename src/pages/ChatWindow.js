@@ -85,7 +85,7 @@ export default class ChatWindow extends Component {
   }
 
    render () {
-    var oldMessages = <span> Hi </span>
+    var oldMessages = <div/>
 
       if(this.props.oldMessage === true) {
         console.log("True")

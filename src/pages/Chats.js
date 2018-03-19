@@ -67,6 +67,10 @@ class Chats extends Component {
   brandNewMessage(message) {
     const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input, fromMe: true};
     this.socket.send(JSON.stringify(newMessage));
+<<<<<<< HEAD
+=======
+    this.setState({ oldMessage: true })
+>>>>>>> efd1b4e482b77599f409eee94a7e3ad420292900
   }
 
 
@@ -74,8 +78,8 @@ class Chats extends Component {
 
     if(e.target.value){
     this.setState({
-       user2: e.target.value
-
+       user2: e.target.value,
+       messages: []
     })
     const that = this
     axios.get(`/api/chat_window/${e.target.value}`, {
