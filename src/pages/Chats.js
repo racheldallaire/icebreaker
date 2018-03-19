@@ -23,7 +23,8 @@ class Chats extends Component {
       user2Info: [],
       lovemale: null,
       lovefemale: null,
-      loveother: null
+      loveother: null,
+      oldMessage: false
 
     };
   }
@@ -66,13 +67,16 @@ class Chats extends Component {
   brandNewMessage(message) {
     const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input, fromMe: true};
     this.socket.send(JSON.stringify(newMessage));
+    this.state({ oldMessage: true })
   }
+
 
   chattingWithUser(e){
 
     if(e.target.value){
     this.setState({
        user2: e.target.value
+
     })
     const that = this
     axios.get(`/api/chat_window/${e.target.value}`, {
@@ -82,8 +86,8 @@ class Chats extends Component {
           that.setState({
               hasData: true,
               user2Info: response.data,
-              userlikesid: response.data[0].userlikesid
-
+              userlikesid: response.data[0].userlikesid,
+              oldMessage: true
             })
         console.log(response);
       })
@@ -133,7 +137,7 @@ class Chats extends Component {
 
     return (
       <div>
-      <ChatWindow messages = {this.state.messages} userlikesid = {this.state.userlikesid} removeFromFriends={this.removeFromFriends} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
+      <ChatWindow oldMessage= {this.state.oldMessage} currentUser= {this.state.currentUserID} messages = {this.state.messages} userlikesid = {this.state.userlikesid} removeFromFriends={this.removeFromFriends} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
       <MessageList messages = {this.state.messages}  chattingWithUser={this.chattingWithUser} matches = {this.state.matches} />
       <ChatBar  currentUser= {this.state.currentUserID} userlikesid = {this.state.userlikesid} brandNewMessage={this.brandNewMessage}/>
       </div>

@@ -16,7 +16,9 @@ export default class ChatWindow extends Component {
         game: "",
         userlikesid: 0,
         userid: 0,
-        timestamp: ""
+        timestamp: "",
+        allMessages: [],
+        oldMessagePost: ""
         };
      this.getNewGame = this.getNewGame.bind(this);
 
@@ -29,20 +31,20 @@ export default class ChatWindow extends Component {
         }
       })
       .then(response => {
-        console.log(response.data);
+        console.log("past messages", response.data);
         this.setState({
-            content: response.data[0].content,
-            userid: response.data[0].userid,
-            userlikesid: response.data[0].userlikesid
+            allMessages: response.data
         });
       })
       .catch(function (error) {
       console.log(error);
       });
+
+
     }
 
     componentDidMount(){
-     
+
       axios.get('/api/new_game')
       .then(response => {
         console.log(response.data);
@@ -66,7 +68,6 @@ export default class ChatWindow extends Component {
         console.log(error);
       });
     }
-    
 
   componentDidUpdate() {
     // There is a new message in the state, scroll to bottom of list
@@ -75,6 +76,23 @@ export default class ChatWindow extends Component {
   }
 
    render () {
+    var oldMessages = <span> Hi </span>
+
+      if(this.props.oldMessage === true) {
+        console.log("True")
+      oldMessages = this.state.allMessages.map((message) => {
+          console.log("MESSAGE",message )
+      if (message.userid === this.props.currentUser) {
+        console.log("111111")
+          return <li key={message.id}><b>{message.content}</b></li>
+             } else {
+         return<li key={message.id}>{message.content}</li>
+          console.log("22222")
+            }
+          });
+          }
+
+
     var lookingForMen = <span>  </span>
     var lookingForWomen = <span>  </span>
     var lookingForOther = <span>  </span>
@@ -94,9 +112,6 @@ export default class ChatWindow extends Component {
               💚
              </span>}
 
-
-
-
     var chattingWith = "You have no Matches to Chat with";
     if (this.props.hasData) {
     var user= this.props.user2Info[0]
@@ -114,6 +129,7 @@ export default class ChatWindow extends Component {
             </div>
 
     }  else {
+
       chattingWith =
           <div className="top">
             <div style={{color: '#999', textAlign: 'center'}}>Select a friend to start chatting!
@@ -142,8 +158,12 @@ export default class ChatWindow extends Component {
 
                     <p> {this.state.game} </p>
                     <button className="cool-button3" onClick={this.getNewGame}> Get Another Mini-Game! </button>
-
-                    {messages}
+                      <div>
+                      <ul>
+                     {oldMessages}
+                     </ul>
+                     </div>
+                      {messages}
 
             </div>
 

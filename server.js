@@ -311,9 +311,10 @@ app.post('/api/edit_filters', (req, res) => {
 app.get('/api/messages_db', (req, res) => {
   console.log("QUERY yooooooooooo", req.query.userlikesid)
   console.log("QUERY yooooooooooo", req.query.string)
+  const userlikesid = Number(req.query.userlikesid)
   knex.select("*")
         .from("messages")
-        .where("userlikesid", req.query.userlikesid)
+        .where("userlikesid", userlikesid )
         .then((result) => {
           console.log("RESULTS OF GETTING MSG_DB", result);
           res.send(result);
@@ -328,13 +329,13 @@ app.post('/api/message_db', (req, res) => {
 
   knex('messages')
     .insert({
-      userid: userid, 
-      userlikesid: userlikesid, 
+      userid: userid,
+      userlikesid: userlikesid,
       content: content
     })
     .then(function (woo) {
         console.log("WOO!");
-    });  
+    });
 });
 
 app.get('/api/message_list', (req, res) => {
