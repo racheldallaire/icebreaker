@@ -175,15 +175,14 @@ export default class ChatWindow extends Component {
           });
     return (
 
-    <div>
 
 
-    <Col sm={{ size: 7, offset: 5 }} style={{position: 'absolute', overflow: 'scroll', height: '80%'}} id="current-chat">
+    <Col sm={{ size: 7, offset: 5 }} style={{position: 'absolute', height: '80%'}} id="current-chat">
         <div className="right">
             {chattingWith}
 
 
-            <div className="active-chat">
+            <div className="active-chat" style={{overflow: 'scroll', height: '80%'}}>
 
 
                 <div className="conversation-start"><span/></div>
@@ -201,7 +200,7 @@ export default class ChatWindow extends Component {
 
         </div>
     </Col>
-  </div>
+
 
     )
   }
