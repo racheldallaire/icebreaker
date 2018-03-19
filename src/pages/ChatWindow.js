@@ -92,11 +92,9 @@ export default class ChatWindow extends Component {
       oldMessages = this.state.allMessages.map((message) => {
           console.log("MESSAGE",message )
       if (message.userid === this.props.currentUser) {
-        console.log("111111")
-          return <li key={message.id}><b>{message.content}</b></li>
+          return <div className="bubble me" key={message.id}>{message.content}</div>
              } else {
-         return<li key={message.id}>{message.content}</li>
-          console.log("22222")
+         return <div className="bubble you" key={message.id}>{message.content}</div>
             }
           });
           }
