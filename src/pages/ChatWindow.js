@@ -4,8 +4,8 @@ import Message from './Message.js';
 import { Popover, PopoverHeader, PopoverBody, Button, Col, Container, Row , Badge, Tooltip } from 'reactstrap';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import { faUserTimes } from '@fortawesome/fontawesome-free-solid'
-import { faHeart } from '@fortawesome/fontawesome-free-solid';
 import { faBars } from '@fortawesome/fontawesome-free-solid';
+import { faCircle } from '@fortawesome/fontawesome-free-solid';
 
 
 export default class ChatWindow extends Component {
@@ -56,8 +56,6 @@ export default class ChatWindow extends Component {
       .catch(function (error) {
       console.log(error);
       });
-
-
     }
 
     componentDidMount(){
@@ -139,16 +137,13 @@ export default class ChatWindow extends Component {
             <span>
             <img src={user.facebook_picture_url}  className="chatimg" />
             <span className="name">{user.first_name}  {user.last_name}</span>
-            <a href="#" id="male">{lookingForMen}</a>  <a href="#" id="female">{lookingForWomen}</a> <a href="#" id="other">{lookingForOther}</a>
-             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen} target="male" poptoggle={this.poptoggle}>
-                 Into men
+            <a href="#" id="gender">{lookingForMen} {lookingForWomen} {lookingForOther}</a>
+             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen} target="gender" toggle={this.poptoggle}>
+                 <FontAwesomeIcon style={{color: "red"}} icon={faCircle} /> into women
+                 <p/><FontAwesomeIcon style={{color: "blue"}} icon={faCircle} /> into men
+                 <p/><FontAwesomeIcon style={{color: "green"}} icon={faCircle} /> into other
             </Tooltip>
-            <Tooltip placement="bottom" isOpen={this.state.tooltipOpen} target="female" poptoggle={this.poptoggle}>
-                 Into women
-            </Tooltip>
-            <Tooltip placement="bottom" isOpen={this.state.tooltipOpen} target="other" poptoggle={this.poptoggle}>
-                 Into other
-            </Tooltip>
+
 
             <Button id="Popover1" onClick={this.toggle}><FontAwesomeIcon icon={faBars} /></Button>
                <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
@@ -168,21 +163,23 @@ export default class ChatWindow extends Component {
             <div style={{color: '#999', textAlign: 'center'}}>Select a friend to start chatting!
             <p><i>No friends yet? <a href="/Potentials">Go make some!</a></i></p>
             </div>
-
             </div>
      }
 
 
     const messages = this.props.messages.map((message) => {
+      console.log( "MESSAGE", message )
             return <Message message={message} key={message.key} />
           });
     return (
 
+    <div>
+
 
     <Col sm={{ size: 7, offset: 5 }} style={{position: 'absolute', overflow: 'scroll', height: '80%'}} id="current-chat">
         <div className="right">
+            {chattingWith}
 
-             {chattingWith}
 
             <div className="active-chat">
 
@@ -196,13 +193,12 @@ export default class ChatWindow extends Component {
                      {oldMessages}
 
                      </div>
-                      {messages}
 
             </div>
 
         </div>
     </Col>
-
+  </div>
 
     )
   }
