@@ -6,14 +6,20 @@ export default class ChatBar extends Component {
   constructor(props) {
     super(props);
     this.state= {
-      input: '', 
-      currentUser: props.currentUser
+      input: '',
     };
   }
 
   render() {
     const changedText = (evt) => {
-      this.setState({input: evt.target.value, currentUser: this.state.currentUser});
+      this.setState({
+        input: evt.target.value,
+        currentUser: this.props.currentUser,
+        userlikesid:  this.props.userlikesid,
+        currentUserID:  this.props.currentUserID,
+        user2:  this.props.user2
+       });
+
     };
 
     const changedUser = (evt) => {
@@ -21,19 +27,24 @@ export default class ChatBar extends Component {
     };
 
     const sendMessage = (evt) => {
+      console.log()
       if(evt.key === 'Enter') {
+
         this.props.brandNewMessage(this.state);
-        this.setState({input: '', currentUser: this.props.currentUser});
+        this.setState({input: ''});
 
         const that = this
         axios.post('/api/message_db', {
-          input: that.state.input, 
+          input: that.state.input,
           currentUser: that.props.currentUser,
-          userlikesid: that.props.userlikesid
-        })
-        
+          userlikesid: that.props.userlikesid,
+          currentUserID: that.props.currentUserID,
+          user2: that.props.user2
 
-      
+        })
+
+
+
 
       }
     };
@@ -41,10 +52,10 @@ export default class ChatBar extends Component {
     return (
 	    	<div className="right">
 	        <div className="write">
-          
+
                 <input type="text" onChange={changedText} value={this.state.input} onKeyPress={sendMessage} />
                 <a href="javascript:;" className="write-link send"></a>
-          
+
             </div>
           </div>
 	    );

@@ -56,8 +56,6 @@ export default class ChatWindow extends Component {
       .catch(function (error) {
       console.log(error);
       });
-
-
     }
 
     componentDidMount(){
@@ -165,21 +163,23 @@ export default class ChatWindow extends Component {
             <div style={{color: '#999', textAlign: 'center'}}>Select a friend to start chatting!
             <p><i>No friends yet? <a href="/Potentials">Go make some!</a></i></p>
             </div>
-
             </div>
      }
 
 
     const messages = this.props.messages.map((message) => {
+      console.log( "MESSAGE", message )
             return <Message message={message} key={message.key} />
           });
     return (
 
+    <div>
+
 
     <Col sm={{ size: 7, offset: 5 }} style={{position: 'absolute', overflow: 'scroll', height: '80%'}} id="current-chat">
         <div className="right">
+            {chattingWith}
 
-             {chattingWith}
 
             <div className="active-chat">
 
@@ -193,13 +193,12 @@ export default class ChatWindow extends Component {
                      {oldMessages}
 
                      </div>
-                      {messages}
 
             </div>
 
         </div>
     </Col>
-
+  </div>
 
     )
   }
