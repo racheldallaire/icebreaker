@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import Message from './Message.js';
-import { Popover, PopoverHeader, PopoverBody, Button, Col, Container, Row , Badge } from 'reactstrap';
+import { Popover, PopoverHeader, PopoverBody, Button, Col, Container, Row , Badge, Tooltip } from 'reactstrap';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import { faUserTimes } from '@fortawesome/fontawesome-free-solid'
 import { faHeart } from '@fortawesome/fontawesome-free-solid';
@@ -13,6 +13,7 @@ export default class ChatWindow extends Component {
 
       super(props);
       this.toggle = this.toggle.bind(this);
+      this.poptoggle = this.poptoggle.bind(this);
       this.state = {
           content: "",
           game_played: false,
@@ -21,6 +22,7 @@ export default class ChatWindow extends Component {
           userid: 0,
           timestamp: "",
           popoverOpen: false,
+          tooltipOpen: false,
           allMessages: [],
           oldMessagePost: ""
           };
@@ -31,6 +33,12 @@ export default class ChatWindow extends Component {
       this.setState({
         popoverOpen: !this.state.popoverOpen
       });
+    }
+
+    poptoggle() {
+       this.setState({
+      tooltipOpen: !this.state.tooltipOpen
+    });
     }
 
     componentWillReceiveProps(props) {
@@ -131,7 +139,17 @@ export default class ChatWindow extends Component {
             <span>
             <img src={user.facebook_picture_url}  className="chatimg" />
             <span className="name">{user.first_name}  {user.last_name}</span>
-            {lookingForMen}  {lookingForWomen} {lookingForOther}
+            <a href="#" id="male">{lookingForMen}</a>  <a href="#" id="female">{lookingForWomen}</a> <a href="#" id="other">{lookingForOther}</a>
+             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen} target="male" poptoggle={this.poptoggle}>
+                 Into men
+            </Tooltip>
+            <Tooltip placement="bottom" isOpen={this.state.tooltipOpen} target="female" poptoggle={this.poptoggle}>
+                 Into women
+            </Tooltip>
+            <Tooltip placement="bottom" isOpen={this.state.tooltipOpen} target="other" poptoggle={this.poptoggle}>
+                 Into other
+            </Tooltip>
+
             <Button id="Popover1" onClick={this.toggle}><FontAwesomeIcon icon={faBars} /></Button>
                <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
                 <PopoverHeader>{user.first_name} ({user.age} years old)</PopoverHeader>
