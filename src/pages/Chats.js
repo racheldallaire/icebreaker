@@ -67,7 +67,7 @@ class Chats extends Component {
   brandNewMessage(message) {
     const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input, fromMe: true};
     this.socket.send(JSON.stringify(newMessage));
-    this.state({ oldMessage: true })
+    this.setState({ oldMessage: true })
   }
 
 
