@@ -353,25 +353,7 @@ label {
       .name {
         font-size: 15px;
         color: #1a1a1a;
-        line-height: 2.7;
-      }
-      .time {
-        font-size: 14px;
-        position: absolute;
-        top: 16px;
-        right: 10%;
-        padding: 0 0 5px 5px;
-        color: #999;
-        background-color: #fff;
-      }
-       .preview {
-        font-size: 14px;
-        display: inline-block;
-        overflow: hidden !important;
-        width: 70%;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        color: #999;
+        line-height: 6.2;
       }
       &.active, &:hover {
         border: 0;

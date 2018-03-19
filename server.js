@@ -90,7 +90,7 @@ app.get('/auth/facebook/callback',
 ///////////ROUTES//////////////////////////////
 app.get('/api/potentials', (req, res) => {
   const cookieid = 1//req.session.id
-  console.log("potentials get for id ", cookieid)
+  
     Promise.all([
     knex('users')
      .select('filters.min_age','filters.max_age', 'filters.female','filters.male','filters.other')
@@ -175,7 +175,7 @@ app.post('/api/matchesliked', (req, res) => {
 
 app.get('/api/matches', (req, res) => {
   const cookieid = 1 //req.session.id
-  console.log("matches for id ", cookieid)
+
   Promise.all([
     knex.from('userlikes')
       .select('userid1')
@@ -290,8 +290,6 @@ app.get('/api/edit_filters', (req, res) => {
 });
 
 app.post('/api/edit_filters', (req, res) => {
-  console.log(req.body);
-    // let userid = Number(cookie_id);
     let min_age = Number(req.body.min_age);
     let max_age = Number(req.body.max_age);
     let radius = Number(req.body.distance);
@@ -318,7 +316,6 @@ app.get('/api/messages_db', (req, res) => {
 });
 
 app.post('/api/message_db', (req, res) => {
-  console.log(req.body)
   let content = req.body.input
   let userid = req.body.currentUser
   let userlikesid = req.body.userlikesid
@@ -352,7 +349,6 @@ app.get('/api/message_list', (req, res) => {
     .from(userlikesQuery.clone().as('ul'))
     .leftJoin('users', 'ul.userid', 'users.id')
     .then((result) => {
-      console.log(result)
       res.send(result)
     })
     .catch((err) => {
@@ -380,7 +376,6 @@ app.get('/api/chat_window/:id', (req, res) => {
         .from(userlikesQuery.clone().as('ul'))
         .leftJoin('users', 'ul.userid', 'users.id')
         .then((result) => {
-          console.log(result)
           res.send(result)
         })
         .catch((err) => {
