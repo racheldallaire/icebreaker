@@ -15,6 +15,7 @@ export default class ChatWindow extends Component {
       this.toggle = this.toggle.bind(this);
       this.poptoggle = this.poptoggle.bind(this);
       this.state = {
+          currentUser: 0,
           content: "",
           game_played: false,
           game: "",
@@ -45,6 +46,7 @@ export default class ChatWindow extends Component {
       axios.get('/api/messages_db', {
         params: {
           userlikesid: props.userlikesid,
+          currentUser: this.props.currentuserID
         }
       })
       .then(response => {
@@ -169,7 +171,7 @@ export default class ChatWindow extends Component {
 
     const messages = this.props.messages.map((message) => {
       console.log( "MESSAGE", message )
-            return <Message message={message} key={message.key} />
+            return <Message message={message} key={message.key} currentUser= {this.state.currentUserID} />
           });
     return (
 
@@ -193,6 +195,7 @@ export default class ChatWindow extends Component {
                      {oldMessages}
 
                      </div>
+              {messages}
 
             </div>
 
