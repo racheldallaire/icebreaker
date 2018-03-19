@@ -1,0 +1,629 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.10
+-- Dumped by pg_dump version 9.5.10
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: chats; Type: TABLE; Schema: public; Owner: final
+--
+
+CREATE TABLE chats (
+    id integer NOT NULL,
+    userlikesid integer NOT NULL
+);
+
+
+ALTER TABLE chats OWNER TO final;
+
+--
+-- Name: chats_id_seq; Type: SEQUENCE; Schema: public; Owner: final
+--
+
+CREATE SEQUENCE chats_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE chats_id_seq OWNER TO final;
+
+--
+-- Name: chats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: final
+--
+
+ALTER SEQUENCE chats_id_seq OWNED BY chats.id;
+
+
+--
+-- Name: filters; Type: TABLE; Schema: public; Owner: final
+--
+
+CREATE TABLE filters (
+    id integer NOT NULL,
+    userid integer NOT NULL,
+    min_age integer,
+    max_age integer,
+    female character varying(255),
+    male character varying(255),
+    other character varying(255),
+    radius integer
+);
+
+
+ALTER TABLE filters OWNER TO final;
+
+--
+-- Name: filters_id_seq; Type: SEQUENCE; Schema: public; Owner: final
+--
+
+CREATE SEQUENCE filters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE filters_id_seq OWNER TO final;
+
+--
+-- Name: filters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: final
+--
+
+ALTER SEQUENCE filters_id_seq OWNED BY filters.id;
+
+
+--
+-- Name: messages; Type: TABLE; Schema: public; Owner: final
+--
+
+CREATE TABLE messages (
+    id integer NOT NULL,
+    userlikesid integer NOT NULL,
+    content character varying(255),
+    "timestamp" timestamp with time zone DEFAULT now(),
+    userid integer NOT NULL
+);
+
+
+ALTER TABLE messages OWNER TO final;
+
+--
+-- Name: messages_id_seq; Type: SEQUENCE; Schema: public; Owner: final
+--
+
+CREATE SEQUENCE messages_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE messages_id_seq OWNER TO final;
+
+--
+-- Name: messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: final
+--
+
+ALTER SEQUENCE messages_id_seq OWNED BY messages.id;
+
+
+--
+-- Name: migrations; Type: TABLE; Schema: public; Owner: final
+--
+
+CREATE TABLE migrations (
+    id integer NOT NULL,
+    name character varying(255),
+    batch integer,
+    migration_time timestamp with time zone
+);
+
+
+ALTER TABLE migrations OWNER TO final;
+
+--
+-- Name: migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: final
+--
+
+CREATE SEQUENCE migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE migrations_id_seq OWNER TO final;
+
+--
+-- Name: migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: final
+--
+
+ALTER SEQUENCE migrations_id_seq OWNED BY migrations.id;
+
+
+--
+-- Name: migrations_lock; Type: TABLE; Schema: public; Owner: final
+--
+
+CREATE TABLE migrations_lock (
+    is_locked integer
+);
+
+
+ALTER TABLE migrations_lock OWNER TO final;
+
+--
+-- Name: userlikes; Type: TABLE; Schema: public; Owner: final
+--
+
+CREATE TABLE userlikes (
+    id integer NOT NULL,
+    userid1 integer NOT NULL,
+    userid2 integer NOT NULL,
+    liked boolean
+);
+
+
+ALTER TABLE userlikes OWNER TO final;
+
+--
+-- Name: userlikes_id_seq; Type: SEQUENCE; Schema: public; Owner: final
+--
+
+CREATE SEQUENCE userlikes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE userlikes_id_seq OWNER TO final;
+
+--
+-- Name: userlikes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: final
+--
+
+ALTER SEQUENCE userlikes_id_seq OWNED BY userlikes.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: final
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    first_name character varying(255),
+    last_name character varying(255),
+    age integer,
+    gender character varying(255),
+    location character varying(255),
+    description character varying(255),
+    facebook_id character varying(255),
+    facebook_picture_url character varying(255),
+    lovemale character varying(255),
+    lovefemale character varying(255),
+    loveother character varying(255)
+);
+
+
+ALTER TABLE users OWNER TO final;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: final
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE users_id_seq OWNER TO final;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: final
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY chats ALTER COLUMN id SET DEFAULT nextval('chats_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY filters ALTER COLUMN id SET DEFAULT nextval('filters_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY messages ALTER COLUMN id SET DEFAULT nextval('messages_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY migrations ALTER COLUMN id SET DEFAULT nextval('migrations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY userlikes ALTER COLUMN id SET DEFAULT nextval('userlikes_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Data for Name: chats; Type: TABLE DATA; Schema: public; Owner: final
+--
+
+COPY chats (id, userlikesid) FROM stdin;
+6	2
+7	3
+8	4
+5	1
+\.
+
+
+--
+-- Name: chats_id_seq; Type: SEQUENCE SET; Schema: public; Owner: final
+--
+
+SELECT pg_catalog.setval('chats_id_seq', 8, true);
+
+
+--
+-- Data for Name: filters; Type: TABLE DATA; Schema: public; Owner: final
+--
+
+COPY filters (id, userid, min_age, max_age, female, male, other, radius) FROM stdin;
+1	1	18	60	female	\N	other	15
+2	3	40	80	\N	male	\N	100
+3	2	23	35	female	\N	other	20
+4	4	40	80	\N	male	\N	100
+5	5	18	28	female	\N	\N	15
+6	6	23	35	female	\N	other	20
+7	7	40	80	\N	male	\N	100
+8	8	18	28	female	\N	\N	15
+9	9	23	35	female	\N	other	20
+10	10	40	80	\N	male	\N	100
+11	11	40	80	\N	male	\N	100
+12	12	18	28	female	\N	\N	15
+13	13	23	35	female	\N	other	20
+14	14	18	80	female	male	other	100
+\.
+
+
+--
+-- Name: filters_id_seq; Type: SEQUENCE SET; Schema: public; Owner: final
+--
+
+SELECT pg_catalog.setval('filters_id_seq', 14, true);
+
+
+--
+-- Data for Name: messages; Type: TABLE DATA; Schema: public; Owner: final
+--
+
+COPY messages (id, userlikesid, content, "timestamp", userid) FROM stdin;
+1	1	hi	1998-02-05 03:07:21+00	2
+2	1	coffee?	1998-02-05 02:07:21+00	1
+3	1	great times	1999-01-08 04:05:06+00	1
+4	1	anytime you want	1998-02-05 02:07:21+00	2
+5	2	aloha	1995-01-25 13:19:02+00	1
+6	2	oi you	1995-01-25 13:19:02+00	11
+7	2	sup buddy	1995-01-25 13:19:02+00	11
+8	2	salut	1995-01-25 13:20:33+00	1
+\.
+
+
+--
+-- Name: messages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: final
+--
+
+SELECT pg_catalog.setval('messages_id_seq', 8, true);
+
+
+--
+-- Data for Name: migrations; Type: TABLE DATA; Schema: public; Owner: final
+--
+
+COPY migrations (id, name, batch, migration_time) FROM stdin;
+3	1_delete.js	1	2018-03-19 17:43:08.651+00
+4	a_users.js	1	2018-03-19 17:43:08.694+00
+5	ab_update_user_fields.js	1	2018-03-19 17:43:08.698+00
+6	b_filters.js	1	2018-03-19 17:43:08.76+00
+7	c_userlikes.js	1	2018-03-19 17:43:08.788+00
+8	d_chats.js	1	2018-03-19 17:43:08.798+00
+9	e_messages.js	1	2018-03-19 17:43:08.824+00
+10	f_lovegender.js	2	2018-03-19 17:48:47.782+00
+11	ef_messagesuserid.js	3	2018-03-19 17:52:24.71+00
+\.
+
+
+--
+-- Name: migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: final
+--
+
+SELECT pg_catalog.setval('migrations_id_seq', 1, false);
+
+
+--
+-- Data for Name: migrations_lock; Type: TABLE DATA; Schema: public; Owner: final
+--
+
+COPY migrations_lock (is_locked) FROM stdin;
+0
+\.
+
+
+--
+-- Data for Name: userlikes; Type: TABLE DATA; Schema: public; Owner: final
+--
+
+COPY userlikes (id, userid1, userid2, liked) FROM stdin;
+1	1	2	t
+3	3	4	t
+4	1	3	f
+2	1	11	t
+5	8	4	\N
+6	2	12	\N
+7	9	1	t
+8	8	1	t
+9	7	1	t
+10	3	6	\N
+11	3	1	\N
+12	4	1	\N
+13	8	1	\N
+14	10	1	\N
+\.
+
+
+--
+-- Name: userlikes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: final
+--
+
+SELECT pg_catalog.setval('userlikes_id_seq', 14, true);
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: final
+--
+
+COPY users (id, first_name, last_name, age, gender, location, description, facebook_id, facebook_picture_url, lovemale, lovefemale, loveother) FROM stdin;
+2	Rihanna	Fenty	30	female	13.193887, -59.54319799999996	I'm Rihanna. Best friends with Drake from Toronto! Into skydiving.	\N	https://hips.hearstapps.com/hbz.h-cdn.co/assets/cm/14/52/1280x1280/5499f6f5f3d86_-_hbz-rihanna-eowefx-promo.jpg?resize=480:*	lovemale	lovefemale	loveother
+7	Jimbo	Binsd	42	male	38.9108325, -75.52766989999998	I love looking at myself in the mirror.	\N	http://www.clairedorn.com/files/gimgs/4_clairedorn_58_W6W2888_NB%20copie.jpg	\N	lovefemale	\N
+12	caJazz	Diwebs	58	female	45.4963839, -73.57059649999997	Long bike rides on the beach?	\N	https://i.pinimg.com/736x/0e/77/3b/0e773b5f0bf9e4141465f6942db10096--girls-on-bicycles-girls-on-bikes.jpg	\N	\N	\N
+3	Joe	Biden	75	male	38.9108325, -75.52766989999998	Ex-Vice-President of the USA. Barack Obama is my bff no matter what he says!	\N	https://news.northwestern.edu/assets/Stories/2018/03/_resampled/ScaleWidthWyI0ODAiXQ/biden.jpg	lovemale	lovefemale	\N
+8	Billy	Orack	32	male	53.2734, -7.778320310000026	I like making silly faces!	\N	https://smedia.webcollage.net/rwvfp/wc/cp/23715569/module/hasbrous/_cp/products/1490101463593/tab-b679b38e-1f6c-4ac9-90d6-7e247380e4ae/897e475c-8ab5-41d8-92b9-2aed76c69d7b.jpg.w480.jpg	\N	lovefemale	loveother
+13	caJill	eeFens	18	female	13.193887, -59.54319799999996	Let's code together!	\N	https://thetranslationcompany.com/wp-content/uploads/2015/01/small-translator1.jpg	\N	\N	\N
+4	Barack	Obama	56	male	53.2734, -7.778320310000026	I was president of the United States. My wife is my best friend.	\N	https://i2.wp.com/www.saucyhorse.co.uk/wp-content/uploads/2014/01/obama-selfie-bad-news-meaningful-content.jpg	\N	\N	\N
+9	Abie	asDibs	34	female	45.4963839, -73.57059649999997	I like making my own bracelets!	\N	https://ak.picdn.net/offset/photos/marryam@marryamlum.com.au/medium/photo.jpg	lovemale	\N	\N
+14	caJimbo	Biwensd	42	male	38.9108325, -75.52766989999998	I'm not an actor.	\N	https://i.pinimg.com/originals/d8/b8/71/d8b8711d5303e0f068544347e65d1334.jpg	\N	\N	\N
+5	Jazz	Dibs	36	female	45.4963839, -73.57059649999997	I'm a dentist but I promise I'm not scary!	\N	http://www.eastparkdental.co.uk/perch/resources/jodentist.jpg	lovemale	lovefemale	loveother
+10	asJill	weFens	32	other	13.193887, -59.54319799999996	I'm younger than I look!	\N	https://www.uofmhealth.org/sites/default/files/styles/large/public/general/featured/stock%20woman.jpg?itok=Sq54bZ7F	lovemale	lovefemale	\N
+15	deJazz	Dwewibs	72	female	45.4963839, -73.57059649999997	I can't see anything. A skydiving enthusiast.	\N	https://hips.hearstapps.com/cos.h-cdn.co/assets/cm/14/25/53a050a173d62_-_cos-03-beautiful-woman-de.jpg?resize=480:*	\N	\N	\N
+16	deJill	weFens	18	other	13.193887, -59.54319799999996	This is not an ad. The leather is just so soft!	\N	https://cdn.shopify.com/s/files/1/1535/5361/products/Handmade_Small_Leather_Satchel_Women_s_Fashion_Handbags_Shoulder_Bag_AK22_41_large.jpg?v=1519873852	\N	\N	\N
+17	weJazz	Dirbs	28	female	45.4963839, -73.57059649999997	Life is a highway.	\N	https://s3.amazonaws.com/gigsalad_media/p/pure_blind_faith_by_lisa_willice_silva_o/59e324530e332_480_sq	\N	\N	\N
+18	deJimbo	weBinsd	55	male	38.9108325, -75.52766989999998	Talk to me about my moustache.	\N	http://elcome.com/wp-content/uploads/2014/07/Jackson-Mathews-669-480x480.jpg	\N	\N	\N
+19	weJill	Fefassdns	24	female	13.193887, -59.54319799999996	I am terribly allergic to pollen...	\N	https://cdn.shopify.com/s/files/1/2216/7827/files/Categories11_large.jpg?v=1506957242	\N	\N	\N
+20	weJimbo	Bdfdsinsd	35	male	38.9108325, -75.52766989999998	I know nothing.	\N	https://www.telegraph.co.uk/content/dam/beauty/2016/05/26/jon_snow_trans_NvBQzQNjv4BqkemBzas3KIpBLUMocgoXossDv3qRJj3QU9cUdGaCzBA.jpg?imwidth=450	\N	\N	\N
+1	Rachie	D	23	female	45.4963839, -73.57059649999997	I'm Rachel Dallaire Yo! The best in the west!	\N	https://i.pinimg.com/736x/ca/2d/60/ca2d607942fbb74b6be5d69a1c9584af.jpg	lovemale	\N	\N
+6	Jill	Fens	18	other	13.193887, -59.54319799999996	I'm an Indian actress!	\N	https://i.pinimg.com/originals/1d/6a/c1/1d6ac1fe39d39a4aeeefa9dbcda22f4c.jpg	lovemale	lovefemale	\N
+11	asJimbo	Bweinsd	18	male	38.9108325, -75.52766989999998	I wrapped myself in dental floss. HELP ME	\N	https://i1.wp.com/www.out-of-stock.net/wp-content/uploads/2016/07/Depositphotos_99414918_m-2015.jpg?resize=480%2C480	lovemale	\N	\N
+\.
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: final
+--
+
+SELECT pg_catalog.setval('users_id_seq', 20, true);
+
+
+--
+-- Name: chats_pkey; Type: CONSTRAINT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY chats
+    ADD CONSTRAINT chats_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: filters_pkey; Type: CONSTRAINT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY filters
+    ADD CONSTRAINT filters_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: messages_pkey; Type: CONSTRAINT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY messages
+    ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY migrations
+    ADD CONSTRAINT migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: userlikes_pkey; Type: CONSTRAINT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY userlikes
+    ADD CONSTRAINT userlikes_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chats_userlikesid_index; Type: INDEX; Schema: public; Owner: final
+--
+
+CREATE INDEX chats_userlikesid_index ON chats USING btree (userlikesid);
+
+
+--
+-- Name: filters_userid_index; Type: INDEX; Schema: public; Owner: final
+--
+
+CREATE INDEX filters_userid_index ON filters USING btree (userid);
+
+
+--
+-- Name: messages_userid_index; Type: INDEX; Schema: public; Owner: final
+--
+
+CREATE INDEX messages_userid_index ON messages USING btree (userid);
+
+
+--
+-- Name: messages_userlikesid_index; Type: INDEX; Schema: public; Owner: final
+--
+
+CREATE INDEX messages_userlikesid_index ON messages USING btree (userlikesid);
+
+
+--
+-- Name: userlikes_userid1_index; Type: INDEX; Schema: public; Owner: final
+--
+
+CREATE INDEX userlikes_userid1_index ON userlikes USING btree (userid1);
+
+
+--
+-- Name: userlikes_userid2_index; Type: INDEX; Schema: public; Owner: final
+--
+
+CREATE INDEX userlikes_userid2_index ON userlikes USING btree (userid2);
+
+
+--
+-- Name: chats_userlikesid_foreign; Type: FK CONSTRAINT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY chats
+    ADD CONSTRAINT chats_userlikesid_foreign FOREIGN KEY (userlikesid) REFERENCES userlikes(id) ON DELETE CASCADE;
+
+
+--
+-- Name: filters_userid_foreign; Type: FK CONSTRAINT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY filters
+    ADD CONSTRAINT filters_userid_foreign FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: messages_userid_foreign; Type: FK CONSTRAINT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY messages
+    ADD CONSTRAINT messages_userid_foreign FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: messages_userlikesid_foreign; Type: FK CONSTRAINT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY messages
+    ADD CONSTRAINT messages_userlikesid_foreign FOREIGN KEY (userlikesid) REFERENCES userlikes(id) ON DELETE CASCADE;
+
+
+--
+-- Name: userlikes_userid1_foreign; Type: FK CONSTRAINT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY userlikes
+    ADD CONSTRAINT userlikes_userid1_foreign FOREIGN KEY (userid1) REFERENCES users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: userlikes_userid2_foreign; Type: FK CONSTRAINT; Schema: public; Owner: final
+--
+
+ALTER TABLE ONLY userlikes
+    ADD CONSTRAINT userlikes_userid2_foreign FOREIGN KEY (userid2) REFERENCES users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
