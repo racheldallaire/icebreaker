@@ -31,10 +31,13 @@ app.use(bodyParser.json());
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
+
+
+
 // Create broadcast function that will send data to client
-wss.broadcast = function broadcast(id, data) {
+wss.broadcast = function broadcast(data) {
   wss.clients.forEach(function each(client) {
-    console.log("DATA",data , "Client", client)
+    console.log("DATA",data)
     if (client.readyState === WebSocket.OPEN) {
       client.send(JSON.stringify(data));
     }

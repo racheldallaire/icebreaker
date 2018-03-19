@@ -15,7 +15,7 @@ export default class ChatWindow extends Component {
       this.toggle = this.toggle.bind(this);
       this.poptoggle = this.poptoggle.bind(this);
       this.state = {
-          currentUser: 0,
+          currentUser: 6,
           content: "",
           game_played: false,
           game: "",
@@ -171,7 +171,7 @@ export default class ChatWindow extends Component {
 
     const messages = this.props.messages.map((message) => {
       console.log( "MESSAGE", message )
-            return <Message message={message} key={message.key} currentUser= {this.state.currentUserID} />
+            return <Message message={message} key={message.key} currentUser= {this.props.currentUser} />
           });
     return (
 
