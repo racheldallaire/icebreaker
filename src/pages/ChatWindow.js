@@ -93,9 +93,9 @@ export default class ChatWindow extends Component {
           console.log("MESSAGE",message )
       if (message.userid === this.props.currentUser) {
 
-          return <li key={index}><b>{message.content}</b></li>
+          return <div className="bubble me" key={index}>{message.content}</div>
              } else {
-         return<li key={index}>{message.content}</li>
+         return <div className="bubble you" key={index}>{message.content}</div>
 
             }
           });
