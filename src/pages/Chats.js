@@ -75,8 +75,8 @@ class Chats extends Component {
 
     if(e.target.value){
     this.setState({
-       user2: e.target.value
-
+       user2: e.target.value,
+       messages: []
     })
     const that = this
     axios.get(`/api/chat_window/${e.target.value}`, {
