@@ -10,9 +10,10 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
         super(props);
         console.log("Message list props", props)
         this.state = {
+          matches: [],
           filteredFriend: [],
-          search_name: ""
-
+          search_name: "",
+          originalMatches: [],
         }
         this.filterFriends = this.filterFriends.bind(this);
         this.changedText = this.changedText.bind(this);
@@ -21,35 +22,35 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
 
 
       componentDidMount(e){
-         this.setState({matchdisplay: this.props.matches})
+         this.setState({originalMatches: this.props.matches})
       }
 
-           changedText(evt){
-            console.log (evt.target.value)
-            this.setState({search_name: evt.target.value})
-            };
+     changedText(evt){
+      console.log (evt.target.value)
+      this.setState({search_name: evt.target.value})
+      };
 
-          filterFriends(evt) {
-            if(evt.key === 'Enter') {
-              console.log("evt",evt.target.value)
-            var nameMatches = []
-            var matchList = this.props.matches
-            var search_name  = evt.target.value
-              console.log("search_name",this.search_name)
+      filterFriends(evt) {
+      var nameMatches = []
+        var matchList = this.props.matches
 
-
-            for (let user of matchList) {
-             if ((user.first_name === search_name || user.last_name === search_name)) {
-              console.log("namematch user", user)
-              nameMatches.push(user)
+        if(evt.key === 'Enter') {
+          var search_name  = evt.target.value
+          for (let matches of matchList){
+            if ((matches.first_name === search_name || matches.last_name === search_name || (matches.first_name + " " + matches.last_name) === search_name ) ) {
+              nameMatches.push(matches)
+              }
+              this.setState({filteredFriend: nameMatches})
+              console.log("originalMatches", this.state.originalMatches)
             }
-                this.setState({matchdisplay: nameMatches})
-            }
-            // this.setState({filteredFriend: matchList});
-           }
-            };
+        }
+      };
+      originalMatches(evt) {
+
+      }
+
+
       render () {
-
 
       var matchedChat = this.props.matches.map((matches) => {
                 return <li key={matches.id}  onClick= {this.props.chattingWithUser}  value={matches.id}   className="person">
@@ -59,12 +60,20 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
                         <span className="time">1:00pm</span>
                       </li>
         });
-
+      var searchChat = this.state.filteredFriend.map((matches) => {
+                return <li key={matches.id}  onClick= {this.props.chattingWithUser}  value={matches.id}   className="person">
+                        <img src={matches.facebook_picture_url} alt="" />
+                        <span className="name">{matches.first_name} {matches.last_name}</span>
+                        <span className="preview">This is a message preview</span>
+                        <span className="time">1:00pm</span>
+                      </li>
+                 })
 
 
           return (
           <div>
             <input type="text" onChange={this.changedText} value={this.state.input} onKeyPress={this.filterFriends} />
+             <Button onClick={this.originalMatches} type="button" ref="returnToMatches" >X</Button>
             <Col sm="5">
               <div className="left">
 
@@ -78,6 +87,9 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
                       {matchedChat}
 
                   </ul>
+                  <ul className="people">
+                  {searchChat}
+                   </ul>
               </div>
             </Col>
           </div>

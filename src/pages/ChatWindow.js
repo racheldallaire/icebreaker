@@ -89,14 +89,14 @@ export default class ChatWindow extends Component {
 
       if(this.props.oldMessage === true) {
         console.log("True")
-      oldMessages = this.state.allMessages.map((message) => {
+      oldMessages = this.state.allMessages.map((message, index) => {
           console.log("MESSAGE",message )
       if (message.userid === this.props.currentUser) {
-        console.log("111111")
-          return <li key={message.id}><b>{message.content}</b></li>
+
+          return <li key={index}><b>{message.content}</b></li>
              } else {
-         return<li key={message.id}>{message.content}</li>
-          console.log("22222")
+         return<li key={index}>{message.content}</li>
+
             }
           });
           }
@@ -174,9 +174,9 @@ export default class ChatWindow extends Component {
                     <p> {this.state.game} </p>
                     <button className="cool-button3" onClick={this.getNewGame}> Get Another Mini-Game! </button>
                       <div>
-                      <ul>
+
                      {oldMessages}
-                     </ul>
+
                      </div>
                       {messages}
 
