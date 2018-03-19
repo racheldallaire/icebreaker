@@ -72,8 +72,8 @@ class Chats extends Component {
 
     if(e.target.value){
     this.setState({
-       user2: e.target.value
-
+       user2: e.target.value,
+       messages: []
     })
 
     const that = this
@@ -131,6 +131,7 @@ class Chats extends Component {
         console.log(error);
       });
   }
+
 
   // Called any time the props or state changes. The JSX elements returned in this method will be rendered to the DOM.
   render() {

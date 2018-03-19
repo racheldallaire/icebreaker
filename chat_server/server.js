@@ -31,29 +31,8 @@ app.use(bodyParser.json());
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
-
-app.get('/api/messages_db', (req, res) => {
-  const cookieid = 1 //req.session.id
-  knex
-  .select('*')
-  .from('users')
-  // .innerjoin('userlikes','users.id','userlikes.userid1')
-  // .innerjoin('messages', 'userlikes.id', 'messages.userlikesid')
-  .where('users.id', cookieid)
-  // .where('userlikes.liked', true)
-  // .where('userlikes.userid1', cookieid).orWhere('userlikes.userid2',  cookieid)
-  .then((result) => {
-      console.log("HELLOOOOOOOOOO CHAT")
-      res.send(result)
-  })
-  .catch((err) => {
-          console.log("error", err)
-  })
-});
-
-
 // Create broadcast function that will send data to client
-wss.broadcast = function broadcast(data) {
+wss.broadcast = function broadcast(id, data) {
   wss.clients.forEach(function each(client) {
     console.log("DATA",data , "Client", client)
     if (client.readyState === WebSocket.OPEN) {
