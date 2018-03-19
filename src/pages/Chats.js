@@ -24,8 +24,7 @@ class Chats extends Component {
       lovemale: null,
       lovefemale: null,
       loveother: null,
-      oldMessage: false
-
+      oldMessage: false,
     };
   }
   removeFromFriends(e){
@@ -33,7 +32,6 @@ class Chats extends Component {
     var that = this
     var matchArray = this.state.matches
           for (let friend of matchArray){
-            console.log("friend", friend)
             if (friend.id == this.state.user2){
               matchArray.splice(friend, 1)
               }
@@ -65,14 +63,10 @@ class Chats extends Component {
   }
 
   brandNewMessage(message) {
-    const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input, fromMe: true};
+    const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input, fromMe: true, user2: message.user2, userlikesid: message.userlikesid};
     this.socket.send(JSON.stringify(newMessage));
-<<<<<<< HEAD
-=======
     this.setState({ oldMessage: true })
->>>>>>> efd1b4e482b77599f409eee94a7e3ad420292900
   }
-
 
   chattingWithUser(e){
 
@@ -81,6 +75,7 @@ class Chats extends Component {
        user2: e.target.value,
        messages: []
     })
+
     const that = this
     axios.get(`/api/chat_window/${e.target.value}`, {
 
@@ -98,6 +93,16 @@ class Chats extends Component {
       .catch(function (error) {
         console.log(error);
       });
+    this.socket.onopen = (event) => {
+      console.log('Connected to server' , event)
+     }
+    this.socket.onmessage = (event) => {
+    const newMess = JSON.parse(event.data)
+       if(newMess.userlikesid === this.state.userlikesid){
+    const messages = this.state.messages.concat(newMess);
+    this.setState({messages: messages});
+      }
+     }
     }
   }
 
@@ -125,15 +130,6 @@ class Chats extends Component {
       .catch(function (error) {
         console.log(error);
       });
-
-    this.socket.onopen = (event) => {
-      console.log('Connected to server')
-     }
-    this.socket.onmessage = (event) => {
-    const newMess = JSON.parse(event.data)
-    const messages = this.state.messages.concat(newMess);
-    this.setState({messages: messages});
-    }
   }
 
   // Called any time the props or state changes. The JSX elements returned in this method will be rendered to the DOM.
@@ -141,8 +137,8 @@ class Chats extends Component {
 
     return (
       <div>
-      <ChatWindow oldMessage= {this.state.oldMessage} currentUser= {this.state.currentUserID} user2 = {this.state.user2}s userlikesid = {this.state.userlikesid} messages = {this.state.messages} userlikesid = {this.state.userlikesid} removeFromFriends={this.removeFromFriends} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
-      <MessageList messages = {this.state.messages}  chattingWithUser={this.chattingWithUser} matches = {this.state.matches} />
+      <ChatWindow oldMessage= {this.state.oldMessage} currentUser= {this.state.currentUserID} user2 = {this.state.user2} userlikesid = {this.state.userlikesid} messages = {this.state.messages} userlikesid = {this.state.userlikesid} removeFromFriends={this.removeFromFriends} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
+      <MessageList messages = {this.state.messages}  chattingWithUser={this.chattingWithUser} matches = {this.state.matches} user2 = {this.state.user2}  />
       <ChatBar  currentUser= {this.state.currentUserID} user2 = {this.state.user2} userlikesid = {this.state.userlikesid} brandNewMessage={this.brandNewMessage}/>
       </div>
     );

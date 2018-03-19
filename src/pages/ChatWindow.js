@@ -48,8 +48,6 @@ export default class ChatWindow extends Component {
       .catch(function (error) {
       console.log(error);
       });
-
-
     }
 
     componentDidMount(){
