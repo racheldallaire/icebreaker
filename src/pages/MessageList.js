@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import Message from './Message.js';
 import { Button, Col, Container, Row  } from 'reactstrap';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
 
     export default class MessageList extends Component {
       constructor(props) {
@@ -31,7 +29,7 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
       };
 
       filterFriends(evt) {
-      var nameMatches = []
+        var nameMatches = []
         var matchList = this.props.matches
 
         if(evt.key === 'Enter') {
@@ -41,11 +39,23 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
               nameMatches.push(matches)
               }
               this.setState({filteredFriend: nameMatches})
-              console.log("originalMatches", this.state.originalMatches)
+              var peeps = document.getElementsByClassName("person")
+                for (let i=0; i < peeps.length; i++) {
+                  peeps[i].style.display = "none";
+                }
+              document.getElementById("back").style.display = "block";
             }
+
         }
       };
       originalMatches(evt) {
+
+        var peeps = document.getElementsByClassName("person")
+                for (let i=0; i < peeps.length; i++) {
+                  peeps[i].style.display = "block";
+                }
+      document.getElementById("back").style.display = "none";
+      document.getElementById("search").style.display = "none";
 
       }
 
@@ -61,7 +71,7 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
                       </li>
         });
       var searchChat = this.state.filteredFriend.map((matches) => {
-                return <li key={matches.id}  onClick= {this.props.chattingWithUser}  value={matches.id}   className="person">
+                return <li id="search" key={matches.id}  onClick= {this.props.chattingWithUser}  value={matches.id}   className="person">
                         <img src={matches.facebook_picture_url} alt="" />
                         <span className="name">{matches.first_name} {matches.last_name}</span>
                         <span className="preview">This is a message preview</span>
@@ -72,13 +82,12 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
 
           return (
           <div>
-            <input type="text" onChange={this.changedText} value={this.state.input} onKeyPress={this.filterFriends} />
-             <Button onClick={this.originalMatches} type="button" ref="returnToMatches" >X</Button>
             <Col sm="5">
               <div className="left">
 
                   <div className="top">
-                  <FontAwesomeIcon icon={faCommentAlt} /> Messages
+
+                  <input type="text" placeholder="Enter name to search chats" onChange={this.changedText} value={this.state.input} onKeyPress={this.filterFriends} />
 
                   </div>
 
@@ -89,6 +98,7 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
                   </ul>
                   <ul className="people">
                   {searchChat}
+                  <li><Button className="cool-button5" id="back" onClick={this.originalMatches} type="button" >Back to Chats</Button></li>
                    </ul>
               </div>
             </Col>

@@ -127,8 +127,10 @@ class Chats extends Component {
      }
     this.socket.onmessage = (event) => {
     const newMess = JSON.parse(event.data)
-    const messages = this.state.messages.concat(newMess);
-    this.setState({messages: messages});
+    if(newMess.userlikesid === this.state.userlikesid){
+      const messages = this.state.messages.concat(newMess);
+      this.setState({messages: messages});
+      }
     }
   }
 
