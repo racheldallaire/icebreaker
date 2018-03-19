@@ -67,7 +67,6 @@ class Chats extends Component {
   brandNewMessage(message) {
     const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input, fromMe: true};
     this.socket.send(JSON.stringify(newMessage));
-    this.state({ oldMessage: true })
   }
 
 
@@ -85,6 +84,7 @@ class Chats extends Component {
       .then(function (response) {
           that.setState({
               hasData: true,
+              user2: response.data[0].userid,
               user2Info: response.data,
               userlikesid: response.data[0].userlikesid,
               oldMessage: true
@@ -137,9 +137,9 @@ class Chats extends Component {
 
     return (
       <div>
-      <ChatWindow oldMessage= {this.state.oldMessage} currentUser= {this.state.currentUserID} messages = {this.state.messages} userlikesid = {this.state.userlikesid} removeFromFriends={this.removeFromFriends} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
+      <ChatWindow oldMessage= {this.state.oldMessage} currentUser= {this.state.currentUserID} user2 = {this.state.user2}s userlikesid = {this.state.userlikesid} messages = {this.state.messages} userlikesid = {this.state.userlikesid} removeFromFriends={this.removeFromFriends} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
       <MessageList messages = {this.state.messages}  chattingWithUser={this.chattingWithUser} matches = {this.state.matches} />
-      <ChatBar  currentUser= {this.state.currentUserID} userlikesid = {this.state.userlikesid} brandNewMessage={this.brandNewMessage}/>
+      <ChatBar  currentUser= {this.state.currentUserID} user2 = {this.state.user2} userlikesid = {this.state.userlikesid} brandNewMessage={this.brandNewMessage}/>
       </div>
     );
   }

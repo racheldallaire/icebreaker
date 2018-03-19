@@ -29,7 +29,8 @@ const server = express()
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Create the WebSockets server
-const wss = new SocketServer({ server });
+const wss = new SocketServer({ server }),
+ webSockets = {}
 
 app.get('/api/messages_db', (req, res) => {
   const cookieid = 1 //req.session.id
@@ -54,6 +55,7 @@ app.get('/api/messages_db', (req, res) => {
 // Create broadcast function that will send data to client
 wss.broadcast = function broadcast(data) {
   wss.clients.forEach(function each(client) {
+    console.log("DATA",data)
     if (client.readyState === WebSocket.OPEN) {
       client.send(JSON.stringify(data));
     }
@@ -64,6 +66,7 @@ wss.broadcast = function broadcast(data) {
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
+
   console.log('A client connected');
 
   ws.on('message', function incoming(message) {

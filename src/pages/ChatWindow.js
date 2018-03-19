@@ -150,12 +150,12 @@ export default class ChatWindow extends Component {
             <div style={{color: '#999', textAlign: 'center'}}>Select a friend to start chatting!
             <p><i>No friends yet? <a href="/Potentials">Go make some!</a></i></p>
             </div>
-
             </div>
      }
 
 
     const messages = this.props.messages.map((message) => {
+      console.log( "MESSAGE", message )
             return <Message message={message} key={message.key} />
           });
     return (
@@ -179,7 +179,6 @@ export default class ChatWindow extends Component {
 
                      </div>
                       {messages}
-
             </div>
 
         </div>
