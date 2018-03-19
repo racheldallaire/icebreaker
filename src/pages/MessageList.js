@@ -43,11 +43,18 @@ import { Button, Col, Container, Row  } from 'reactstrap';
                 for (let i=0; i < peeps.length; i++) {
                   peeps[i].style.display = "none";
                 }
+              document.getElementById("back").style.display = "block";
             }
 
         }
       };
       originalMatches(evt) {
+
+        var peeps = document.getElementsByClassName("person")
+                for (let i=0; i < peeps.length; i++) {
+                  peeps[i].style.display = "block";
+                }
+      document.getElementById("back").style.display = "none";
 
       }
 
@@ -80,7 +87,7 @@ import { Button, Col, Container, Row  } from 'reactstrap';
                   <div className="top">
 
                   <input type="text" placeholder="Enter name to search chats" onChange={this.changedText} value={this.state.input} onKeyPress={this.filterFriends} />
-                   <Button onClick={this.originalMatches} type="button" ref="returnToMatches" >X</Button>
+
                   </div>
 
                   <ul className="people">
@@ -90,6 +97,7 @@ import { Button, Col, Container, Row  } from 'reactstrap';
                   </ul>
                   <ul className="people">
                   {searchChat}
+                  <li><Button className="cool-button5" id="back" onClick={this.originalMatches} type="button" >Back to Chats</Button></li>
                    </ul>
               </div>
             </Col>
