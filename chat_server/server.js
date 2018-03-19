@@ -29,8 +29,8 @@ const server = express()
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Create the WebSockets server
-const wss = new SocketServer({ server }),
- webSockets = {}
+const wss = new SocketServer({ server });
+
 
 app.get('/api/messages_db', (req, res) => {
   const cookieid = 1 //req.session.id

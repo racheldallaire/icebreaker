@@ -72,8 +72,8 @@ class Chats extends Component {
 
     if(e.target.value){
     this.setState({
-       user2: e.target.value,
-       messages: []
+       user2: e.target.value
+
     })
 
     const that = this
