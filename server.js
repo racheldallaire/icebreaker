@@ -90,7 +90,7 @@ app.get('/auth/facebook/callback',
 ///////////ROUTES//////////////////////////////
 app.get('/api/potentials', (req, res) => {
   const cookieid = 1//req.session.id
-  console.log("potentials get for id ", cookieid)
+  
     Promise.all([
     knex('users')
      .select('filters.min_age','filters.max_age', 'filters.female','filters.male','filters.other')
@@ -175,7 +175,7 @@ app.post('/api/matchesliked', (req, res) => {
 
 app.get('/api/matches', (req, res) => {
   const cookieid = 1 //req.session.id
-  console.log("matches for id ", cookieid)
+
   Promise.all([
     knex.from('userlikes')
       .select('userid1')
@@ -251,7 +251,6 @@ app.get('/api/alreadyLiked', (req, res) => {
           for(let i = 0; i < result.length; i++){
             just_ids.push(result[i].userid1);
           }
-          console.log("ALREADT LIKED:!! ", just_ids);
           res.send(just_ids);
         });
 });
@@ -291,8 +290,6 @@ app.get('/api/edit_filters', (req, res) => {
 });
 
 app.post('/api/edit_filters', (req, res) => {
-  console.log(req.body);
-    // let userid = Number(cookie_id);
     let min_age = Number(req.body.min_age);
     let max_age = Number(req.body.max_age);
     let radius = Number(req.body.distance);
@@ -309,20 +306,16 @@ app.post('/api/edit_filters', (req, res) => {
 });
 
 app.get('/api/messages_db', (req, res) => {
-  console.log("QUERY yooooooooooo", req.query.userlikesid)
-  console.log("QUERY yooooooooooo", req.query.string)
   const userlikesid = Number(req.query.userlikesid)
   knex.select("*")
         .from("messages")
         .where("userlikesid", userlikesid )
         .then((result) => {
-          console.log("RESULTS OF GETTING MSG_DB", result);
           res.send(result);
         });
 });
 
 app.post('/api/message_db', (req, res) => {
-  console.log(req.body)
   let content = req.body.input
   let userid = req.body.currentUser
   let userlikesid = req.body.userlikesid
@@ -356,7 +349,6 @@ app.get('/api/message_list', (req, res) => {
     .from(userlikesQuery.clone().as('ul'))
     .leftJoin('users', 'ul.userid', 'users.id')
     .then((result) => {
-      console.log(result)
       res.send(result)
     })
     .catch((err) => {
@@ -368,62 +360,56 @@ app.get('/api/message_list', (req, res) => {
 app.get('/api/chat_window/:id', (req, res) => {
   const cookieid = 1 //req.session.id
   let userid2 = Number(req.params.id);
-  console.log("GET you are chatting with userID #", userid2 )
-   let userlikesQuery =
- knex
-    .from('userlikes')
-    .select('id as userlikesid', 'userid2 as userid')
-    .where('userid1', cookieid)
-    .where('userid2', userid2)
-    .union(function() {
-      this.from('userlikes')
-      .select('id as userlikesid', 'userid1 as userid')
-      .where('userid2', cookieid)
-      .where('userid1',userid2)
-    })
+  let userlikesQuery =
+    knex
+        .from('userlikes')
+        .select('id as userlikesid', 'userid2 as userid')
+        .where('userid1', cookieid)
+        .where('userid2', userid2)
+        .union(function() {
+          this.from('userlikes')
+          .select('id as userlikesid', 'userid1 as userid')
+          .where('userid2', cookieid)
+          .where('userid1',userid2)
+        })
     knex.select('userlikesid', 'users.*')
-    .from(userlikesQuery.clone().as('ul'))
-    .leftJoin('users', 'ul.userid', 'users.id')
-    .then((result) => {
-      console.log(result)
-      res.send(result)
-    })
-    .catch((err) => {
-      console.log("error", err)
-    })
-
+        .from(userlikesQuery.clone().as('ul'))
+        .leftJoin('users', 'ul.userid', 'users.id')
+        .then((result) => {
+          res.send(result)
+        })
+        .catch((err) => {
+          console.log("error", err)
+        })
 });
 
 
 app.post('/api/friendremoved/:id', (req, res) => {
-  console.log("friendremoved req.params ", req.params)
   let userid1 = 1//Number(cookie_id);
   let userid2 = Number(req.params.id);
     Promise.all([
-    knex('userlikes')
-      .select('userlikes.id').where({'userid1': Number(userid1)})
-      .where({'userid2': Number(userid2)})
-      .update({'liked': false}),
-       knex('userlikes')
-      .select('userlikes.id').where({'userid2': Number(userid1)})
-      .where({'userid1': Number(userid2)})
-      .update({'liked': false})
-
-      ])
+      knex('userlikes')
+        .select('userlikes.id').where({'userid1': Number(userid1)})
+        .where({'userid2': Number(userid2)})
+        .update({'liked': false}),
+         knex('userlikes')
+        .select('userlikes.id').where({'userid2': Number(userid1)})
+        .where({'userid1': Number(userid2)})
+        .update({'liked': false})
+    ])
       .then((result) => {
         console.log(userid1, " has removed from friends", userid2, " updating userlikes table ", result);
-    })
-       .catch((err) => {
-          console.log("error", err);
+      })
+      .catch((err) => {
+        console.log("error", err);
 
-        });
+      });
 });
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));
   if(cookie_id > 0)
     req.session = {"id": cookie_id};
-  console.log(req.session.id);
 });
 
 app.post('/signup', (req, res) => {
@@ -454,11 +440,10 @@ app.post('/signup', (req, res) => {
     let lovemale = (req.body.lovemale) ? "lovemale" : null;
     let loveother = (req.body.loveother) ? "loveother" : null;
     let location = "45.490998036, -73.56833106";
-    console.log(req.body);
+
     knex('users').insert({facebook_id: facebook_id, first_name: first_name, last_name: last_name, age: age, gender: gender, lovefemale: lovefemale, lovemale: lovemale, loveother: loveother, description: description, facebook_picture_url: facebook_picture_url, location: location})
       .returning('id')
       .then(function (id) {
-
           cookie_id = id[0];
 
          });
