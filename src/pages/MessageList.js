@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import Message from './Message.js';
 import { Button, Col, Container, Row  } from 'reactstrap';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
 
     export default class MessageList extends Component {
       constructor(props) {
@@ -31,7 +29,7 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
       };
 
       filterFriends(evt) {
-      var nameMatches = []
+        var nameMatches = []
         var matchList = this.props.matches
 
         if(evt.key === 'Enter') {
@@ -41,8 +39,12 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
               nameMatches.push(matches)
               }
               this.setState({filteredFriend: nameMatches})
-              console.log("originalMatches", this.state.originalMatches)
+              var peeps = document.getElementsByClassName("person")
+                for (let i=0; i < peeps.length; i++) {
+                  peeps[i].style.display = "none";
+                }
             }
+
         }
       };
       originalMatches(evt) {
@@ -72,14 +74,13 @@ import { faCommentAlt } from '@fortawesome/fontawesome-free-solid';
 
           return (
           <div>
-            <input type="text" onChange={this.changedText} value={this.state.input} onKeyPress={this.filterFriends} />
-             <Button onClick={this.originalMatches} type="button" ref="returnToMatches" >X</Button>
             <Col sm="5">
               <div className="left">
 
                   <div className="top">
-                  <FontAwesomeIcon icon={faCommentAlt} /> Messages
 
+                  <input type="text" placeholder="Enter name to search chats" onChange={this.changedText} value={this.state.input} onKeyPress={this.filterFriends} />
+                   <Button onClick={this.originalMatches} type="button" ref="returnToMatches" >X</Button>
                   </div>
 
                   <ul className="people">
