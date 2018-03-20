@@ -185,7 +185,7 @@ export default class ChatWindow extends Component {
                     <p> {this.props.game.question} </p>
                      <p> {this.props.game.answer} </p>
                     <button className="cool-button3" onClick={this.props.getNewGame}> Get Another Mini-Game! </button>
-                    <button className="cool-button3" onClick={this.props.sendGame} > Send Game! </button>
+                    <button className="cool-button3" onClick={this.props.sendGame}  value={this.props.game.question} > Send Game! </button>
                       <div>
 
                      {oldMessages}

@@ -84,8 +84,21 @@ class Chats extends Component {
       });
     }
 
-  sendGame(){
-  const newMessage = {type: 'postMessage', currentUser: this.state.currentUserID, content: this.state.game.question, fromMe: true, user2: message.user2, userlikesid: message.userlikesid};
+  sendGame(e){
+    var userlikesid = this.state.userlikesid
+    var content = this.state.game.question
+    var userid = this.state.currentUserID
+
+     axios.post('/api/message_db', {
+          userlikesid: userlikesid,
+          input: content,
+          currentUser: userid
+        })
+         .catch(function (error) {
+        console.log(error);
+      });
+
+  const newMessage = {type: 'postMessage', currentUser: this.state.currentUserID, content: this.state.game.question, fromMe: true, user2: this.state.user2, userlikesid: this.state.userlikesid};
     this.socket.send(JSON.stringify(newMessage));
     this.setState({ oldMessage: true })
     }
