@@ -25,9 +25,9 @@ export default class ChatWindow extends Component {
           popoverOpen: false,
           tooltipOpen: false,
           allMessages: [],
-          oldMessagePost: ""
+          oldMessagePost: "",
+          lastMessageID: 0
           };
-       this.getNewGame = this.getNewGame.bind(this);
     }
 
     toggle() {
@@ -58,6 +58,7 @@ export default class ChatWindow extends Component {
       .catch(function (error) {
       console.log(error);
       });
+
     }
 
     componentDidMount(){
@@ -86,10 +87,28 @@ export default class ChatWindow extends Component {
       });
     }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     // There is a new message in the state, scroll to bottom of list
     const objDiv = document.getElementById('current-chat');
     objDiv.scrollTop = objDiv.scrollHeight;
+    axios.get('/api/messages_db', {
+        params: {
+          userlikesid: prevProps.userlikesid,
+          currentUser: this.props.currentuserID
+        }
+      })
+      .then(response => {
+         if(response.data[response.data.length - 1].id !== this.state.lastMessageID){
+        console.log("past messages", response.data);
+        this.setState({
+            allMessages: response.data,
+            lastMessageID: response.data[response.data.length - 1].id
+        });
+      }
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
   }
 
    render () {
@@ -170,7 +189,7 @@ export default class ChatWindow extends Component {
 
 
     const messages = this.props.messages.map((message) => {
-      console.log( "MESSAGE", message )
+      console.log( "Chat Window MESSAGE", message )
             return <Message message={message} key={message.key} currentUser= {this.props.currentUser} />
           });
     return (
@@ -187,8 +206,10 @@ export default class ChatWindow extends Component {
 
                 <div className="conversation-start"><span/></div>
 
-                    <p> {this.state.game} </p>
+                    <p> {this.state.game.question} </p>
+                     <p> {this.state.game.answer} </p>
                     <button className="cool-button3" onClick={this.getNewGame}> Get Another Mini-Game! </button>
+
                       <div>
 
                      {oldMessages}

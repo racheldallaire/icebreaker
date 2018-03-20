@@ -12,6 +12,7 @@ class Chats extends Component {
     this.brandNewMessage = this.brandNewMessage.bind(this);
     this.chattingWithUser = this.chattingWithUser.bind(this);
     this.removeFromFriends = this.removeFromFriends.bind(this);
+    this.sendGame = this.sendGame.bind(this);
     this.state = {
       currentUserID: 0,
       userlikesid: 0,
@@ -67,6 +68,12 @@ class Chats extends Component {
     this.socket.send(JSON.stringify(newMessage));
     this.setState({ oldMessage: true })
   }
+  sendGame(){
+  const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input, fromMe: true, user2: message.user2, userlikesid: message.userlikesid};
+    this.socket.send(JSON.stringify(newMessage));
+    this.setState({ oldMessage: true })
+    }
+
 
   chattingWithUser(e){
 
@@ -98,7 +105,7 @@ class Chats extends Component {
      }
     this.socket.onmessage = (event) => {
     const newMess = JSON.parse(event.data)
-       if(newMess.userlikesid === this.state.userlikesid){
+    if(newMess.userlikesid === this.state.userlikesid){
     const messages = this.state.messages.concat(newMess);
     this.setState({messages: messages});
       }
@@ -138,7 +145,7 @@ class Chats extends Component {
 
     return (
       <div>
-      <ChatWindow oldMessage= {this.state.oldMessage} currentUser= {this.state.currentUserID} user2 = {this.state.user2} userlikesid = {this.state.userlikesid} messages = {this.state.messages} userlikesid = {this.state.userlikesid} removeFromFriends={this.removeFromFriends} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
+      <ChatWindow oldMessage= {this.state.oldMessage} sendGame={this.sendGame} currentUser= {this.state.currentUserID} user2 = {this.state.user2} userlikesid = {this.state.userlikesid} messages = {this.state.messages} userlikesid = {this.state.userlikesid} removeFromFriends={this.removeFromFriends} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
       <MessageList messages = {this.state.messages}  chattingWithUser={this.chattingWithUser} matches = {this.state.matches} user2 = {this.state.user2}  />
       <ChatBar  currentUser= {this.state.currentUserID} user2 = {this.state.user2} userlikesid = {this.state.userlikesid} brandNewMessage={this.brandNewMessage}/>
       </div>
