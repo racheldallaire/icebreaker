@@ -1,7 +1,7 @@
 function game() {
 	let all_games = [
 		{question: "How about you play Two Truths and a Lie?", answer: "Here are the rules: Each person tells the other 3 statements about themselves, two of which are factual and one that is false. The other person the tries to guess the lie. What a great way to get to know somebody! 😃"},
-	{question:"Let's play Would You Rather?", answer: "Each person answers the following question! Would you rather always be 10 minutes late or always be 20 minutes early?"},
+	{question:"Let's play Would You Rather? Would you rather always be 10 minutes late or always be 20 minutes early?", answer:" Each person answers the preceding question!"},
 		{question:"Let's play Would You Rather? Would you rather lose all of your money and valuables or all of the pictures you have ever taken?",  answer:" Each person answers the preceding question!"  },
 		{question:"Let's play Would You Rather? Would you rather be able to see 10 minutes into your own future or 10 minutes into the future of anyone but yourself?" answer: " Each person answers the preceding question!" },
 		{question:"Let's play Would You Rather? Would you rather your shirts be always two sizes too big or one size too small?" answer:" Each person answers the preceding question!" },
