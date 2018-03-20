@@ -43,6 +43,66 @@ body, html {
   padding: 10px;
 }
 
+/*About */
+
+.aboutPic {
+  background: url('https://www.dropbox.com/s/kx9615ws10ky9tj/20111923_laughing.jpeg?raw=1');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 60%;
+  width: 100%;
+}
+
+.otherPic {
+  background: url('https://tinyurl.com/yca3tpau');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 60%;
+  width: 100%;
+  margin-top: -410;
+}
+
+.serifHead {
+  font-family: Times;
+}
+
+.tiny {
+  font-size: 12px;
+  color: #4da2cd;
+  text-transform: uppercase;
+}
+
+.blue {
+  background-color: lightsteelblue;
+  margin-top: -400px;
+  height: 45%;
+  opacity: 0.8;
+  padding: 70 40;
+  color: white;
+  font-family: Lato, sans-serif;
+  font-weight: 300;
+}
+
+.blue2 {
+  background-color: lightsteelblue;
+  margin-top: 100px;
+  height: 45%;
+  opacity: 0.8;
+  padding: 70 40;
+  color: white;
+  font-family: Lato, sans-serif;
+  font-weight: 300;
+  position: relative;
+  z-index: 10000;
+}
+
+.info {
+  text-align: center;
+  padding: 50 0;
+}
+
 /*Profile*/
 
 .cool-button {
