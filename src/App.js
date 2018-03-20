@@ -35,6 +35,7 @@ import ChatBar from './pages/ChatBar'
 import MessageList from './pages/MessageList'
 import axios from 'axios';
 import Filters from './pages/Filters'
+import About from './pages/About'
 
 
 export default class App extends React.Component {
@@ -79,6 +80,11 @@ export default class App extends React.Component {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
+              {!isLoggedIn &&
+                <NavItem>
+                  <NavLink><Link to="/About">About</Link></NavLink>
+                </NavItem>
+              }
               {isLoggedIn &&
                 <NavItem>
                   <NavLink><Link to="/profile">Profile</Link></NavLink>
@@ -105,6 +111,7 @@ export default class App extends React.Component {
         </Navbar>
 
       <Route exact path="/" component={Home}/>
+      <Route exact path="/about" component={About}/>
       <Route path="/profile" component={Profile}/>
       <Route path="/signup" component={Signup}/>
       <Route path="/filters" component={Filters}/>
