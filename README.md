@@ -8,7 +8,7 @@
 
 ## Project
 
-Final project for [Lighthouse Labs](https://github.com/lighthouse-labs). Users can register with a Facebook account and match with people to find new friends. The matching process is done through filters chosen by the user (age, gender, location) and a chatroom is created once a match is created. Project is currently being refactored and still under development.
+Final project for [Lighthouse Labs](https://github.com/lighthouse-labs). Trying to make new friends in town? Our app helps people find friends by integrating fun games during their first interaction! Our users can register with a Facebook account and match with other users to start a chatroom. The matching process is done through an algorithm based on filters chosen by the user (age, gender, location). Users can also search descriptions to find common interests quickly. Project is currently being refactored and still under development.
 
 ## Getting Started
 
