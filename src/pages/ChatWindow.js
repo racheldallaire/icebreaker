@@ -17,8 +17,6 @@ export default class ChatWindow extends Component {
       this.state = {
           currentUser: 6,
           content: "",
-          game_played: false,
-          game: "",
           userlikesid: 0,
           userid: 0,
           timestamp: "",
@@ -63,28 +61,6 @@ export default class ChatWindow extends Component {
 
     componentDidMount(){
 
-      axios.get('/api/new_game')
-      .then(response => {
-        console.log(response.data);
-        this.setState({
-            game: response.data
-        })
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    }
-
-    getNewGame(){
-      axios.get('/api/new_game')
-      .then(response => {
-        this.setState({
-            game: response.data
-        });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
     }
 
   componentDidUpdate(prevProps) {
@@ -206,10 +182,10 @@ export default class ChatWindow extends Component {
 
                 <div className="conversation-start"><span/></div>
 
-                    <p> {this.state.game.question} </p>
-                     <p> {this.state.game.answer} </p>
-                    <button className="cool-button3" onClick={this.getNewGame}> Get Another Mini-Game! </button>
-
+                    <p> {this.props.game.question} </p>
+                     <p> {this.props.game.answer} </p>
+                    <button className="cool-button3" onClick={this.props.getNewGame}> Get Another Mini-Game! </button>
+                    <button className="cool-button3" onClick={this.props.sendGame} > Send Game! </button>
                       <div>
 
                      {oldMessages}

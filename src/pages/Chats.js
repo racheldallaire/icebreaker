@@ -12,6 +12,7 @@ class Chats extends Component {
     this.brandNewMessage = this.brandNewMessage.bind(this);
     this.chattingWithUser = this.chattingWithUser.bind(this);
     this.removeFromFriends = this.removeFromFriends.bind(this);
+    this.getNewGame = this.getNewGame.bind(this);
     this.sendGame = this.sendGame.bind(this);
     this.state = {
       currentUserID: 0,
@@ -26,6 +27,8 @@ class Chats extends Component {
       lovefemale: null,
       loveother: null,
       oldMessage: false,
+      game_played: false,
+      game: {question: "Would you rather lose all of your money and valuables or all of the pictures you have ever taken?", answer:""}
     };
   }
   removeFromFriends(e){
@@ -64,12 +67,25 @@ class Chats extends Component {
   }
 
   brandNewMessage(message) {
-    const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input, fromMe: true, user2: message.user2, userlikesid: message.userlikesid};
+    const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input, fromMe: true, user2: this.state.user2, userlikesid: this.state.userlikesid};
     this.socket.send(JSON.stringify(newMessage));
     this.setState({ oldMessage: true })
   }
+    getNewGame(){
+      axios.get('/api/new_game')
+      .then(response => {
+        console.log( "GAME" , response.data )
+        this.setState({
+            game: response.data
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+
   sendGame(){
-  const newMessage = {type: 'postMessage', currentUser: message.currentUser, content: message.input, fromMe: true, user2: message.user2, userlikesid: message.userlikesid};
+  const newMessage = {type: 'postMessage', currentUser: this.state.currentUserID, content: this.state.game.question, fromMe: true, user2: message.user2, userlikesid: message.userlikesid};
     this.socket.send(JSON.stringify(newMessage));
     this.setState({ oldMessage: true })
     }
@@ -137,6 +153,17 @@ class Chats extends Component {
       .catch(function (error) {
         console.log(error);
       });
+
+      axios.get('/api/new_game')
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+            game: response.data
+        })
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
 
@@ -145,7 +172,7 @@ class Chats extends Component {
 
     return (
       <div>
-      <ChatWindow oldMessage= {this.state.oldMessage} sendGame={this.sendGame} currentUser= {this.state.currentUserID} user2 = {this.state.user2} userlikesid = {this.state.userlikesid} messages = {this.state.messages} userlikesid = {this.state.userlikesid} removeFromFriends={this.removeFromFriends} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
+      <ChatWindow oldMessage= {this.state.oldMessage} game={this.state.game} getNewGame={this.getNewGame}  sendGame={this.sendGame}currentUser= {this.state.currentUserID} user2 = {this.state.user2} userlikesid = {this.state.userlikesid} messages = {this.state.messages} userlikesid = {this.state.userlikesid} removeFromFriends={this.removeFromFriends} hasData={this.state.hasData}  user2Info={this.state.user2Info}/>
       <MessageList messages = {this.state.messages}  chattingWithUser={this.chattingWithUser} matches = {this.state.matches} user2 = {this.state.user2}  />
       <ChatBar  currentUser= {this.state.currentUserID} user2 = {this.state.user2} userlikesid = {this.state.userlikesid} brandNewMessage={this.brandNewMessage}/>
       </div>
