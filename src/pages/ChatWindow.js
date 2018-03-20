@@ -89,8 +89,6 @@ export default class ChatWindow extends Component {
 
   componentDidUpdate(prevProps) {
     // There is a new message in the state, scroll to bottom of list
-    const objDiv = document.getElementById('current-chat');
-    objDiv.scrollTop = objDiv.scrollHeight;
     axios.get('/api/messages_db', {
         params: {
           userlikesid: prevProps.userlikesid,
@@ -109,6 +107,9 @@ export default class ChatWindow extends Component {
       .catch(function (error) {
       console.log(error);
       });
+
+      const objDiv = document.getElementById('current-chat');
+      objDiv.scrollTop = objDiv.scrollHeight;
   }
 
    render () {
