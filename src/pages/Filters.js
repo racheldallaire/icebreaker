@@ -140,7 +140,7 @@ class Filters extends React.Component {
         </FormGroup>
 
         <FormGroup tag="fieldset">
-          <legend>Looking For</legend>
+          <legend>Looking for Friendship with:</legend>
           <FormGroup check>
           <Label check>
             <Input type="checkbox" name="male" />{' '}

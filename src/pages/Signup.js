@@ -126,7 +126,7 @@ const Signup = () =>
               </FormGroup>
 
                  <FormGroup row>
-                <Label sm={2}>Optional: sLooking for Love with</Label>
+                <Label sm={2}>Looking for Love with (optional):</Label>
                 <Col sm={10}>
                 <FormGroup check inline>
                    <Label check>
