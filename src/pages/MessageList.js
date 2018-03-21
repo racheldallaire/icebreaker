@@ -33,7 +33,7 @@ export default class MessageList extends Component {
       var search_name  = evt.target.value
 
       for (let matches of matchList) {
-        if ((matches.first_name === search_name || matches.last_name === search_name || (matches.first_name + " " + matches.last_name) === search_name ) ) {
+        if ((matches.first_name.toLowerCase() === search_name.toLowerCase() || matches.last_name.toLowerCase() === search_name.toLowerCase() || (matches.first_name.toLowerCase() + " " + matches.last_name.toLowerCase()) === search_name.toLowerCase() ) ) {
           nameMatches.push(matches)
         }
         this.setState({filteredFriend: nameMatches})

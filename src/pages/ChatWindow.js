@@ -136,9 +136,9 @@ export default class ChatWindow extends Component {
             <span className="name">{user.first_name}  {user.last_name}</span>
             <a href="#" id="gender">{lookingForMen} {lookingForWomen} {lookingForOther}</a>
              <Tooltip placement="bottom" isOpen={this.state.tooltipOpen} target="gender" toggle={this.poptoggle}>
-                 <FontAwesomeIcon style={{color: "red"}} icon={faCircle} /> into women
-                 <p/><FontAwesomeIcon style={{color: "blue"}} icon={faCircle} /> into men
-                 <p/><FontAwesomeIcon style={{color: "green"}} icon={faCircle} /> into other
+                 <FontAwesomeIcon style={{color: "red"}} icon={faCircle} /> Looking for Love with Women
+                 <p/><FontAwesomeIcon style={{color: "blue"}} icon={faCircle} /> Looking for Love with Men
+                 <p/><FontAwesomeIcon style={{color: "green"}} icon={faCircle} /> Looking for Love with "Other"
             </Tooltip>
 
 
