@@ -19,7 +19,8 @@ class Potentials extends React.Component{
       hasData: false,
       potentials : [],
       alreadyLiked : [],
-      searchWord: ""
+      searchWord: "",
+      searchState: false
     };
      this.removeFromMatchesArray = this.removeFromMatchesArray.bind(this);
      this.addToUserLikes = this.addToUserLikes.bind(this);
@@ -126,7 +127,8 @@ class Potentials extends React.Component{
       .then(response => {
         this.setState({
             potentials: response.data[0],
-            hasData: true
+            hasData: true,
+            searchState: true
         });
         document.getElementById("back").style.display = "block";
 
@@ -147,7 +149,8 @@ class Potentials extends React.Component{
       axios.get('/api/alreadyLiked')
       .then(response => {
         this.setState({
-            alreadyLiked: response.data
+            alreadyLiked: response.data,
+            searchState: false
 
         });
         document.getElementById("back").style.display = "none";
@@ -161,7 +164,7 @@ class Potentials extends React.Component{
     var usercard =
       <div>
       <span>Not able to find Matches</span>
-       <Button className="cool-button4" onClick={this.returnToMatches} ref="returnToMatches" alt="Back to Match" ><FontAwesomeIcon icon={faArrowLeft} /></Button>
+
       </div>
 
     if (this.state.potentials[0] && this.state.hasData) {
@@ -173,7 +176,7 @@ class Potentials extends React.Component{
 
     <Col sm={{ size: 6, offset: 3 }}>
 
-      <Input className="searchysearch" onChange={this.inputChange}  placeholder="Search for matches by keyword ex: skydiving" />
+       <Input className="searchysearch" onChange={this.inputChange}  placeholder="Search for matches by keyword ex: skydiving" />
        <Button className="cool-button4" onClick={this.searchClick} ref="myInput" ><FontAwesomeIcon icon={faSearch} /></Button>
       <p />
 
@@ -199,7 +202,27 @@ class Potentials extends React.Component{
     </div>
 
      } else if
-      (this.state.potentials.length === 0){
+      (this.state.potentials.length === 0 && this.state.searchState === true){
+      usercard =
+
+    <Container fluid>
+      <Row>
+
+        <Col sm={{ size: 3, offset: 2 }} className="err">
+        Looks like no left has that keyword in their description. Check back soon! Or search by another keyword.
+        <Button className="cool-button5"  style={{display: "block"}} id="back" onClick={this.returnToMatches} ref="returnToMatches" alt="Back to Match" >Back to Match</Button>
+        </Col>
+
+        <Col sm="5">
+        <img src="https://www.earthrangers.com/public/content/wildwire/polarbear-in-water.png"/>
+        <Input className="searchysearch" onChange={this.inputChange}  placeholder="Search for matches by keyword ex: bike" />
+        <Button className="cool-button4" onClick={this.searchClick} ref="myInput" ><FontAwesomeIcon icon={faSearch} /></Button>
+
+        </Col>
+
+      </Row>
+    </Container>
+         } else {
       usercard =
 
     <Container fluid>
@@ -209,16 +232,15 @@ class Potentials extends React.Component{
         Looks like you don't have any available matches yet. Check back soon! Or search by keyword.
         </Col>
 
-
-
         <Col sm="5">
         <img src="https://www.earthrangers.com/public/content/wildwire/polarbear-in-water.png"/>
-        <Input className="searchysearch" onChange={this.inputChange}  placeholder="Search for matches by keyword ex: skydiving" />
+        <Input className="searchysearch" onChange={this.inputChange}  placeholder="Search for matches by keyword ex: bike" />
         <Button className="cool-button4" onClick={this.searchClick} ref="myInput" ><FontAwesomeIcon icon={faSearch} /></Button>
         </Col>
 
       </Row>
     </Container>
+
 
 
 

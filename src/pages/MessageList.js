@@ -11,6 +11,7 @@ export default class MessageList extends Component {
       filteredFriend: [],
       search_name: "",
       originalMatches: [],
+      input: "",
     }
     this.filterFriends = this.filterFriends.bind(this);
     this.changedText = this.changedText.bind(this);
@@ -22,7 +23,14 @@ export default class MessageList extends Component {
   }
 
   changedText(evt) {
-    this.setState({search_name: evt.target.value})
+     if(evt.key === 'Enter') {
+       this.setState({
+      input: "" })
+      } else {
+    this.setState({
+      search_name: evt.target.value,
+      input: evt.target.value })
+   }
   };
 
   filterFriends(evt) {
@@ -30,7 +38,9 @@ export default class MessageList extends Component {
     var matchList = this.props.matches
 
     if(evt.key === 'Enter') {
-      var search_name  = evt.target.value
+      var search_name  = evt.target.value;
+      this.setState({
+      input: "" })
 
       for (let matches of matchList) {
         if ((matches.first_name.toLowerCase() === search_name.toLowerCase() || matches.last_name.toLowerCase() === search_name.toLowerCase() || (matches.first_name.toLowerCase() + " " + matches.last_name.toLowerCase()) === search_name.toLowerCase() ) ) {

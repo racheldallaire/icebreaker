@@ -75,7 +75,10 @@ export default class ChatWindow extends Component {
       })
       .then(response => {
          if(response.data[response.data.length - 1].id !== this.state.lastMessageID){
-        console.log("past messages", response.data);
+        console.log("past messages", response.data)
+        console.log("response.data.length - 1 ", response.data.length - 1 )
+        console.log("response.data.length - 1 ", response.data[response.data.length - 1].id )
+        ;
         this.setState({
             allMessages: response.data,
             lastMessageID: response.data[response.data.length - 1].id
@@ -143,10 +146,10 @@ export default class ChatWindow extends Component {
 
 
             <Button id="Popover1" onClick={this.toggle}><FontAwesomeIcon icon={faBars} /></Button>
-               <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
-                <PopoverHeader>{user.first_name} ({user.age} years old)</PopoverHeader>
-                  <PopoverBody>{user.description}</PopoverBody>
-              </Popover>
+            <Popover placement="bottom" isOpen={this.state.popoverOpen} target="Popover1" toggle={this.toggle}>
+            <PopoverHeader>{user.first_name} ({user.age} years old)</PopoverHeader>
+            <PopoverBody>{user.description}</PopoverBody>
+            </Popover>
 
              <span className="removeUser">
             <Button color="danger" alt="Remove Friend" onClick={this.props.removeFromFriends}  className="unfriend"><FontAwesomeIcon icon={faUserTimes} /></Button></span>
