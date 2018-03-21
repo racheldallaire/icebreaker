@@ -99,8 +99,8 @@ app.get('/api/potentials', (req, res) => {
 
     knex('users')
     .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid1 = ?', [cookieid]).andWhereRaw('users.id = userlikes.userid2'))
+    .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid2= ?', [cookieid]).andWhereRaw('users.id = userlikes.userid1'))
       ])
-
      .then((result) => {
         const[filterCriteria, users] = result
         const [min_age, max_age, female, male, other] = Object.values(filterCriteria[0])
