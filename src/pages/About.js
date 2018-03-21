@@ -38,9 +38,9 @@ const About = (props) => {
       <Row>
       <Col className="blue2" sm={{ size: 6, offset: 1 }}>
       <div>
-        <span className="tiny">more stuff</span>
-              <p/><h1 className="serifHead">I have more to say.</h1>
-              <p/>And this is where I'm gonna say it. I've been looking for a driver who's qualified, so if you think you're the one, step into my ride. I'm a fine-tuned, supersonic speed machine; got a sunroof top and a gangsta lead.
+        <span className="tiny">why choose us</span>
+              <p/><h1 className="serifHead">The friends you really want.</h1>
+              <p/>Our matching process uses an algorithm based on filters chosen by you. And when filters aren't enough, you can always search profiles by key words to quickly find common interests.
       </div>
       </Col>
 
