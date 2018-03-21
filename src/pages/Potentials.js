@@ -206,11 +206,15 @@ class Potentials extends React.Component{
       <Row>
 
         <Col sm={{ size: 3, offset: 2 }} className="err">
-        Looks like you don't have any available matches yet. Check back soon!
+        Looks like you don't have any available matches yet. Check back soon! Or search by keyword.
         </Col>
+
+
 
         <Col sm="5">
         <img src="https://www.earthrangers.com/public/content/wildwire/polarbear-in-water.png"/>
+        <Input className="searchysearch" onChange={this.inputChange}  placeholder="Search for matches by keyword ex: skydiving" />
+        <Button className="cool-button4" onClick={this.searchClick} ref="myInput" ><FontAwesomeIcon icon={faSearch} /></Button>
         </Col>
 
       </Row>

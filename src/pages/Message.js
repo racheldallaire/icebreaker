@@ -20,7 +20,7 @@ if(this.props.currentUser == currentUser) {
      <div>
 
     </div>
-    );
+      );
 
       }
     }

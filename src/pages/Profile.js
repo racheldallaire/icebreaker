@@ -201,7 +201,7 @@ export default class Profile extends React.Component {
                 </FormGroup>
 
                 <FormGroup tag="fieldset">
-                  <legend>Looking For</legend>
+                  <legend>Looking For Friends Who Are</legend>
                   <FormGroup check>
 
                   <label>
