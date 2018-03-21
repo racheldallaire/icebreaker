@@ -104,11 +104,10 @@ class Chats extends Component {
     }
 
 
-  chattingWithUser(e){
-
+  chattingWithUser(e) {
+console.log("chattingWithUser",e.target)
     if(e.target.value){
     this.setState({
-       user2: e.target.value,
        messages: []
     })
 
@@ -119,12 +118,12 @@ class Chats extends Component {
       .then(function (response) {
           that.setState({
               hasData: true,
-              user2: response.data[0].userid,
+              user2: response.data[0].id,
               user2Info: response.data,
               userlikesid: response.data[0].userlikesid,
               oldMessage: true
             })
-        console.log(response);
+        console.log(response.data);
       })
       .catch(function (error) {
         console.log(error);

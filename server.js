@@ -90,7 +90,7 @@ app.get('/auth/facebook/callback',
 ///////////ROUTES//////////////////////////////
 app.get('/api/potentials', (req, res) => {
   const cookieid = 1//req.session.id
-  
+
     Promise.all([
     knex('users')
      .select('filters.min_age','filters.max_age', 'filters.female','filters.male','filters.other')
@@ -280,7 +280,7 @@ app.get('/api/logout', (req, res) => {
 app.get('/api/edit_filters', (req, res) => {
   knex.select("*")
         .from("filters")
-        .where("userid", Number(req.session.id)) 
+        .where("userid", Number(req.session.id))
         // use for demo when testing facebook authentication
         .then((result) => {
           res.send(result);
@@ -356,6 +356,7 @@ app.get('/api/message_list', (req, res) => {
 });
 
 app.get('/api/chat_window/:id', (req, res) => {
+  console.log("req.params.id",req.params.id)
   const cookieid = 1 //req.session.id
   let userid2 = Number(req.params.id);
   let userlikesQuery =

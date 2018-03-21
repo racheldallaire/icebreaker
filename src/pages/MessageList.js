@@ -59,7 +59,9 @@ export default class MessageList extends Component {
   render () {
 
       var matchedChat = this.props.matches.map((matches) => {
-                return <li key={matches.id}  onClick= {this.props.chattingWithUser}  value={matches.id}   className="person">
+        var user2id = matches.id
+        console.log("MessageList", user2id)
+                return <li key={matches.id}  onClick={this.props.chattingWithUser}  value={user2id} name={user2id}  className="person">
                         <img src={matches.facebook_picture_url} alt="" />
                         <span className="name">{matches.first_name} {matches.last_name}</span>
                       </li>
