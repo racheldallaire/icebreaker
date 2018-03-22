@@ -310,7 +310,6 @@ app.get('/api/messages_db', (req, res) => {
   knex.select("*")
         .from("messages")
         .where("userlikesid", userlikesid )
-        .orderBy("id", "desc")
         .then((result) => {
           res.send(result);
         });
