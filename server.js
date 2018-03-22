@@ -98,6 +98,7 @@ app.get('/api/potentials', (req, res) => {
      .where('users.id',cookieid ),
 
     knex('users')
+    .whereNot('users.id', cookieid )
     .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid1 = ?', [cookieid]).andWhereRaw('users.id = userlikes.userid2'))
     .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid2= ?', [cookieid]).andWhereRaw('users.id = userlikes.userid1'))
       ])
