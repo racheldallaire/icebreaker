@@ -99,8 +99,8 @@ app.get('/api/potentials', (req, res) => {
 
     knex('users')
     .whereNot('users.id', cookieid )
-    .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid1 = ?', [cookieid]).andWhereRaw('users.id = userlikes.userid2'))
-    .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid2= ?', [cookieid]).andWhereRaw('users.id = userlikes.userid1'))
+    .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid1 = ?', [cookieid]).andWhereRaw('users.id = userlikes.userid2').andWhereRaw('liked = ?', true))
+    .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid2= ?', [cookieid]).andWhereRaw('users.id = userlikes.userid1').andWhereRaw('liked = ?', true))
       ])
      .then((result) => {
         const[filterCriteria, users] = result
@@ -215,8 +215,8 @@ app.get('/api/potentials/:id', (req, res) => {
     Promise.all([
     knex('users')
     .where('users.description', 'ilike', searchWord)
-    .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid1 = ?', [cookieid]).andWhereRaw('users.id = userlikes.userid2'))
-    .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid2 = ?', [cookieid]).andWhereRaw('users.id = userlikes.userid1'))
+    .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid1 = ?', [cookieid]).andWhereRaw('users.id = userlikes.userid2').andWhereRaw('userlikes.liked = ?', true))
+    .whereNotExists(knex.select('*').from('userlikes').whereRaw('userlikes.userid2 = ?', [cookieid]).andWhereRaw('users.id = userlikes.userid1').andWhereRaw('userlikes.liked = ?', true))
       ])
 
      .then((result) => {
