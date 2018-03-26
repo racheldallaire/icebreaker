@@ -1,54 +1,65 @@
-# Icebreaker
+# :penguin: Icebreaker
 
-## Team Members
-- [Austin Metka](https://github.com/AugustGit)
+## Project Setup
+
+A full-stack app built with JavaScript, React, WebSockets, & Axios designed to help people make friends by integrating games into their first interaction. Users can register with Facebook and match with other users to start a chatroom. The matching process is done through an algorithm based on filters chosen by the user (age, gender, location). Users can also search descriptions to find common interests quickly. Project is currently being refactored and still under development.
+
+*Final project for [Lighthouse Labs](https://github.com/lighthouse-labs).*
+
+**Team Members:**
+- [Rachel Dallaire](https://github.com/racheldallaire)
 - [Diane Kim-Lim](https://github.com/dkimlim)
 - [Konrad Kipczak](https://github.com/surfman-k)
-- [Rachel Dallaire](https://github.com/racheldallaire)
+- [Austin Metka](https://github.com/AugustGit)
 
-## Project
+## Final Product
 
-Final project for [Lighthouse Labs](https://github.com/lighthouse-labs). Trying to make new friends in town? Our app helps people find friends by integrating fun games during their first interaction! Our users can register with a Facebook account and match with other users to start a chatroom. The matching process is done through an algorithm based on filters chosen by the user (age, gender, location). Users can also search descriptions to find common interests quickly. Project is currently being refactored and still under development.
+![Screenshot of home page](https://github.com/racheldallaire/icebreaker/blob/master/docs/home.gif)
+
+Icebreaker home page. Requires Facebook authentication. 
+
+![Screenshot of auth](https://github.com/racheldallaire/icebreaker/blob/master/docs/facebook-auth.gif)
+
+Registration pulls profile picture from Facebook, but requires the user to fill out their own parameters, filters, and descriptions.
+
+![Screenshot of match page](https://github.com/racheldallaire/icebreaker/blob/master/docs/matching.gif)
+
+Icebreaker's matching feature. Flash message appears on mutual match.
+
+![Screenshot of profile page](https://github.com/racheldallaire/icebreaker/blob/master/docs/Profile.png)
+
+Editable profile page. Filters can be readjusted at will.
+
+![Screenshot of chat page](https://github.com/racheldallaire/icebreaker/blob/master/docs/chats.gif)
+
+Chat page, which pulls information from user database including description, age, and optional 'looking for love' status with matching badges.
+
+![Screenshot of game feature](https://github.com/racheldallaire/icebreaker/blob/master/docs/games.gif)
+
+Users may iterate through games randomly until they find one they want to send to their new friend. The answer (if applicable) is not sent or visible to the user receiving the question.
 
 ## Getting Started
 
-1. Install dependencies for React App: `npm install`
-2. Install dependencies for Chat App (inside chat_server folder): `npm install`
+1. Install dependencies for React App: `npm i`
+2. Install dependencies for Chat App (inside chat_server folder): `npm i`
 3. Run migrations: `knex migrate:latest`
 4. Seed the data: `knex seed:run`
 5. Run the Chat server: `npm start`
 6. Run the React server: `npm start`
 7. Visit `http://localhost:3001/`
 
-## Dependencies for React App
+## Dependencies
 
-- "@fortawesome/fontawesome": "^1.1.4",
-- "@fortawesome/fontawesome-free-solid": "^5.0.8",
-- "@fortawesome/react-fontawesome": "0.0.17",
-- "axios": "^0.18.0",
-- "body-parser": "^1.18.2",
-- "bootstrap": "^4.0.0",
-- "cookie-session": "^2.0.0-beta.3",
-- "dotenv": "^5.0.1",
-- "fbgraph": "^1.4.1",
-- "knex": "^0.14.4",
-- "knex-logger": "^0.1.0",
-- "node-sass": "^4.7.2",
-- "passport": "^0.4.0",
-- "passport-facebook": "^2.1.1",
-- "pg": "^7.4.1",
-- "psql-api": "^0.9.11",
-- "react": "^15.5.4",
-- "react-dom": "^15.5.4",
-- "react-redux": "^5.0.7",
-- "react-router-dom": "^4.1.1",
-- "react-s-alert": "^1.4.1",
-- "reactstrap": "^5.0.0-beta.2",
-- "ws": "^5.0.0"
+* React
+* Axios
+* PostgreSQL
+* Knex
+* Webpack
+* Bootstrap/Reactstrap
+* babel
+* [react-fontawesome](https://github.com/FortAwesome/react-fontawesome)
+* [uuid](https://github.com/kelektiv/node-uuid)
+* Express
+* Passport.js
+* [WebSockets/ws](https://github.com/websockets/ws)
 
-
-## Dependencies for Chat App
-
--  "random-color": "^1.0.1",
--  "uuid-v4": "^0.1.0",
--  "ws": "^5.0.0"
